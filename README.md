@@ -1,6 +1,6 @@
 # Feria de Turismo 3D — ESRN RURAL Virtual
 
-Muestra virtual en 3D: seis puestos de trabajos, maquetas, murales de los cursos y el
+Muestra virtual en 3D: seis puestos de trabajos, murales de los cursos y el
 video de la Feria de Laguna Blanca. Se recorre en primera persona, con ficha de cada
 puesto y foto para descargar.
 

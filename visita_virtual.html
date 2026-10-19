@@ -111,7 +111,7 @@
 <div id="overlay">
   <div id="badge">ESRN RURAL VIRTUAL</div>
   <h1>FERIA DE TURISMO</h1>
-  <p class="sub">Entrá a la muestra 3D: seis puestos de trabajos, maquetas, murales de los cursos y el video
+  <p class="sub">Entrá a la muestra 3D: seis puestos de trabajos, murales de los cursos y el video
      de la Feria de Laguna Blanca. Recorré el salón y llevate una foto.</p>
   <div class="keys">
     <span><b>W A S D</b> / flechas — caminar</span>
@@ -475,26 +475,6 @@ function plant(x,z){
   }
   g.position.set(x,0,z);scene.add(g);addCollider(x,z,.7,.7,1.4);
 }
-function pedestal(x,z){
-  var m=new THREE.Mesh(new THREE.CylinderGeometry(.45,.5,.95,18),
-    new THREE.MeshStandardMaterial({color:0xf2eee6,roughness:.9}));
-  m.position.set(x,.475,z);m.castShadow=true;m.receiveShadow=true;scene.add(m);
-  addCollider(x,z,1,1,1);
-  return m;
-}
-function sculpture(x,z,seed){
-  var r=rnd32(seed);
-  var geo;
-  var t=seed%3;
-  if(t===0)geo=new THREE.TorusKnotGeometry(.34,.11,90,14);
-  else if(t===1)geo=new THREE.IcosahedronGeometry(.44,0);
-  else geo=new THREE.TorusGeometry(.36,.13,12,36);
-  var m=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({
-    color:[0xd8b45a,0xb9c4d4,0x8e5bd6][t],roughness:.25,metalness:.85}));
-  m.position.set(x,1.5,z);m.rotation.set(r()*3,r()*3,r()*3);
-  m.castShadow=true;scene.add(m);
-  return m;
-}
 function desk(x,z){
   box(3.2,1.05,.9,x,.53,z,woodMat,true);
   box(3.4,.1,1.1,x,1.11,z,new THREE.MeshStandardMaterial({color:0x2f3a4d,roughness:.5}),false);
@@ -694,25 +674,12 @@ function pennants(x,y,z,w,ry){
     new THREE.MeshBasicMaterial({map:t,transparent:true,side:THREE.DoubleSide}));
   m.position.set(x,y,z);m.rotation.y=ry||0;scene.add(m);
 }
-function dirSign(x,z,ry,t1,t2){
-  var g=new THREE.Group();
-  var post=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,1.5,8),metalMat);
-  post.position.y=.75;post.castShadow=true;g.add(post);
-  var board=new THREE.Mesh(new THREE.PlaneGeometry(1.45,.5),
-    new THREE.MeshBasicMaterial({map:signTex(t1,t2),side:THREE.DoubleSide}));
-  board.position.y=1.56;g.add(board);
-  g.position.set(x,0,z);g.rotation.y=ry||0;scene.add(g);
-  addCollider(x,z,.14,.14,1.6);
-}
 rug(0,0,11,7.5,'#3a5a7c','#c9a227');
 rug(0,-24,16,9,'#7c3a3a','#e9c46a');
 
-banner(0,3.15,-5.86,0,4.6,'BIENVENIDOS','Puestos, maquetas, murales y video');
+banner(0,3.15,-5.86,0,4.6,'BIENVENIDOS','Puestos, murales y video');
 pennants(0,3.45,4.2,15,0);
 pennants(0,3.45,-19.5,18,0);
-dirSign(-7.6,-1.2,Math.PI/2,'SALA OESTE','Gastronomia y maquetas');
-dirSign(7.6,-1.2,-Math.PI/2,'SALA ESTE','Artesanias y maquetas');
-dirSign(0,-5.2,0,'SALON PRINCIPAL','Puestos, murales y video');
 
 /* ---------------- ambientación de turismo ---------------- */
 var spinners=[];
@@ -928,8 +895,6 @@ stand(-14.5,0,Math.PI/2,'Gastronomia tipica','Recetas y sabores de la region',10
   ['Trucha, cordero y frutas del valle','Recetas de la cocina rio-negrense','Recetario y degustacion en la mesa']);
 stand(14.5,0,-Math.PI/2,'Artesanias locales','Textiles y ceramica artesanal',102,2,
   ['Tejidos mapuche y lana patagonica','Ceramica y madera de talleres locales','Piezas para probar y comprar']);
-pedestal(-12.6,0);sculpture(-12.6,0,3);
-pedestal(12.6,0);sculpture(12.6,0,5);
 bench(-12.6,2.3,0);bench(12.6,2.3,0);
 
 // pasillo
@@ -945,10 +910,6 @@ stand(-4.5,-26,0,'Alojamiento rural','Cabanas y camping',113,5,
   ['Cabanas, camping y refugios','Servicios y comodidades para visitantes','Reservas, tarifas y temporada']);
 stand(4.5,-26,0,'Fauna patagonica','Huemul, condor y guanaco',114,6,
   ['Huemul, condor y guanaco','Miradores y horarios de avistaje','Cuidado de las especies y del bosque']);
-pedestal(-7,-22,0);sculpture(-7,-22,7);
-pedestal(7,-22,0);sculpture(7,-22,8);
-pedestal(-7,-27,0);sculpture(-7,-27,4);
-pedestal(7,-27,0);sculpture(7,-27,6);
 plant(-11,-19.5);plant(11,-19.5);plant(-11,-28.5);plant(11,-28.5);
 banner(-7.5,3.1,-17.87,0,4.4,'SALON PRINCIPAL','Feria de Laguna Blanca');
 banner(2.6,2.3,-29.84,0,2.7,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
@@ -1249,11 +1210,9 @@ var POI=[
  {x:-5.5,z:5.4,tag:'Afiche',t:'Mapa de Rio Negro',d:'Circuitos, ciudades y parques nacionales de la provincia.'},
  {x:5.5,z:5.4,tag:'Afiche',t:'Como llegar',d:'Rutas, micros y aeropuertos para llegar a Rio Negro.'},
  {x:-14.5,z:0,tag:'Puesto',t:'Gastronomia tipica',d:'Mesa de recetas y sabores de la region para probar y preguntar.'},
- {x:-12.6,z:0,tag:'Maqueta',t:'Ciudad historica',d:'Maqueta en escala del centro historico con sus monumentos.'},
  {x:-15.4,z:-2,tag:'Afiche',t:'Trucha y cordero',d:'Sabores patagonicos: trucha, cordero y frutas del valle.'},
  {x:-12,z:-2.7,tag:'Afiche',t:'Fiesta de la Manzana',d:'General Roca celebra la cosecha de frutas en verano.'},
  {x:14.5,z:0,tag:'Puesto',t:'Artesanias locales',d:'Textiles y ceramica hechos por talleres de la zona.'},
- {x:12.6,z:0,tag:'Maqueta',t:'Taller de ceramica',d:'Replica del taller artesanal y sus herramientas.'},
  {x:15.4,z:-2,tag:'Afiche',t:'Tejidos mapuche',d:'Tradicion textil de las comunidades de la zona.'},
  {x:12,z:-2.7,tag:'Afiche',t:'Artesanias del sur',d:'Madera, lana y ceramica de talleres rio-negrenses.'},
  {x:0,z:-9,tag:'Pasillo',t:'Pasillo de proyectos',d:'Murales sobre el turismo en Rio Negro: circuitos, naturaleza y cultura.'},
@@ -1261,15 +1220,11 @@ var POI=[
  {x:2.6,z:-9,tag:'Mural',t:'Cerro Catedral',d:'Uno de los centros de esqui mas grandes de America del Sur.'},
  {x:-2.6,z:-13.5,tag:'Mural',t:'Viedma y el rio',d:'Balnearios, faro y las playas del rio Negro.'},
  {x:2.6,z:-13.5,tag:'Mural',t:'Valle del Rio Negro',d:'Fruticultura, cosecha y pueblos del valle.'},
- {x:0,z:-17,tag:'Sector',t:'Salon principal',d:'Aca estan los cuatro puestos, las maquetas y el video de la Feria de Laguna Blanca.'},
+ {x:0,z:-17,tag:'Sector',t:'Salon principal',d:'Aca estan los cuatro puestos y el video de la Feria de Laguna Blanca.'},
  {x:-4.5,z:-20.5,tag:'Puesto',t:'Rutas de trekking',d:'Senderos graduados con mapa, desnivel y duracion.'},
  {x:4.5,z:-20.5,tag:'Puesto',t:'Turismo aventura',d:'Kayak, cabalgata y ciclo turistico: equipos y seguros.'},
  {x:-4.5,z:-26,tag:'Puesto',t:'Alojamiento rural',d:'Cabanas, camping y servicios para visitantes.'},
  {x:4.5,z:-26,tag:'Puesto',t:'Fauna patagonica',d:'Huemul, condor y guanaco: especies que se pueden avistar.'},
- {x:-7,z:-22,tag:'Maqueta',t:'Sendero del cerro',d:'Replica del recorrido con sus puntos de descanso.'},
- {x:7,z:-22,tag:'Maqueta',t:'Mirador',d:'Maqueta del mirador y la vista al valle.'},
- {x:-7,z:-27,tag:'Maqueta',t:'Camping',d:'Distribution de las carpitas y el salon comun.'},
- {x:7,z:-27,tag:'Maqueta',t:'Puerto de Viedma',d:'Muelle sobre el rio Negro y recorridos en lancha.'},
  {x:-6,z:-28.5,tag:'Afiche',t:'Nahuel Huapi',d:'Parque Nacional: lagos, bosques y senderos del circuito.'},
  {x:6,z:-28.5,tag:'Afiche',t:'Ruta 40',d:'De la meseta patagonica a la cordillera, atravesando Rio Negro.'},
  {x:-11,z:-24,tag:'Afiche',t:'El Bolson',d:'Feria artesanal, cervecerias y Cerro Piltriquitron.'},
