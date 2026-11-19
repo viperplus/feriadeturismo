@@ -77,6 +77,15 @@
   .mbox .close{border:1px solid #2e4160;background:#182437;color:#cfe1f5;border-radius:10px;
     padding:8px 16px;cursor:pointer;font-size:13px}
   .mbox .close:hover{background:#27406a}
+  .mbox.wide{width:min(920px,94vw)}
+  .mbox video{width:100%;max-height:56vh;border-radius:10px;background:#000;display:block}
+  .mbox .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
+  .mbox .gal img{width:100%;height:110px;object-fit:cover;border-radius:8px;cursor:zoom-in}
+  .mbox .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .mbox .tabs button{border:1px solid #2e4160;background:#182437;color:#cfe1f5;border-radius:8px;
+    padding:6px 11px;cursor:pointer;font-size:12px}
+  .mbox .tabs button.on{background:#2a6fb0;border-color:#6ee7ff;color:#fff}
+  .mbox audio{width:100%;margin-top:10px}
   #info{
     position:absolute;left:50%;bottom:26px;transform:translate(-50%,26px);width:min(560px,92vw);
     background:rgba(8,16,30,.88);border:1px solid rgba(120,180,240,.35);border-radius:16px;padding:16px 20px;
@@ -116,7 +125,7 @@
   <div id="badge">ESRN RURAL VIRTUAL</div>
   <h1>FERIA DE TURISMO</h1>
   <p class="sub">Entrá a la muestra 3D: seis puestos de trabajos, murales de los cursos y el video
-     de la Feria de Laguna Blanca y las 9 salas de los corredores turísticos, con sus sedes.
+     de la Feria de Laguna Blanca y las 9 salas de los corredores, con el material de los estudiantes.
      Recorré el salón y llevate una foto. Si va lenta, elegí Baja en Calidad.</p>
   <div class="keys">
     <span><b>W A S D</b> / flechas — caminar</span>
@@ -164,9 +173,11 @@
 
 <script src="three.min.js"></script>
 <script>if(typeof THREE==='undefined')document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');</script>
+<script src="materiales.js"></script>
 <script>
 (function(){
 'use strict';
+var MAT=(typeof MATERIALES==='undefined')?{}:MATERIALES;
 var errBox=document.getElementById('err');
 if(typeof THREE==='undefined'){
   errBox.style.display='block';
@@ -1140,7 +1151,7 @@ poster(11.85,2.4,-20,-Math.PI/2,26,P1,1.3,'Pesca deportiva','Rios Limay y Negro'
   sostenible:'Pendiente de completar en el mapa de origen.'}
 ];
 
-var SALAS=[],POI_EXTRA=[];
+var SALAS=[],EXPO_SLOTS=[],POI_EXTRA=[];
 function textoCorredor(cr){
   return 'Sedes que lo integran: '+cr.sedes.map(function(sd){
     return sd.nombre+' ('+sd.depto+')';}).join(' · ')+
@@ -1199,11 +1210,28 @@ for(si=0;si<SALAS.length;si++){
     plaque(centroX+dxSede,1.45,sl.zN-.14,Math.PI,'SEDE '+sede.num,sede.nombre);
   }
   POI_EXTRA.push({x:centroX,z:sl.zc,tag:'CORREDOR '+cr.n,t:cr.nombre,d:cr.corto,full:textoCorredor(cr)});
+
+  /* --- material de los estudiantes: un poster por sede con material --- */
+  var conMat=cr.sedes.filter(function(sd){return !!MAT[String(sd.num)];});
+  if(conMat.length){
+    var pw=conMat.length<=1?2.6:conMat.length===2?2.2:conMat.length===3?1.75:1.5;
+    var ph=pw*0.625, sep=pw+0.20, xPoster=paredEx+(sl.west?.20:-.20);
+    for(var jm=0;jm<conMat.length;jm++){
+      var sd=conMat[jm], mm=MAT[String(sd.num)];
+      var zp=sl.zc+(jm-(conMat.length-1)/2)*sep;
+      EXPO_SLOTS.push({file:'',id:'',cx:xPoster,cy:1.35,cz:zp,ry:rySal,w:pw,h:ph,
+        label:'SEDE '+sd.num+' · '+mm.sede,poster:mm.poster,media:mm.items,
+        full:mm.texto,sede:mm.sede,proyecto:mm.proyecto,cor:cr.n,
+        short:sd.nombre+' · '+mm.proyecto});
+      POI_EXTRA.push({x:paredEx+(sl.west?1.15:-1.15),z:zp,tag:'EXPO · SEDE '+sd.num,
+        t:mm.sede,d:mm.proyecto,full:mm.texto});
+    }
+  }
 }
 /* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
 var SCREENS=[
  {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:0, cy:2.4, cz:-29.79, ry:0, w:1.5, h:2.65, label:'Feria de Laguna Blanca'}
-];
+].concat(EXPO_SLOTS);
 var screensWrap=document.getElementById('screens');
 function cornersOf(s){
   var rx=Math.cos(s.ry), rz=-Math.sin(s.ry), hw=s.w/2, hh=s.h/2;
@@ -1256,100 +1284,138 @@ function playIconTex(){
   x.fillStyle='#fff';x.beginPath();x.moveTo(106,76);x.lineTo(106,180);x.lineTo(188,128);x.closePath();x.fill();
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
 }
+/* cartel de respaldo mientras carga el poster de la sede */
+function slotTex(s){
+  var c=document.createElement('canvas');c.width=960;c.height=600;var x=c.getContext('2d');
+  var g=x.createLinearGradient(0,0,960,600);
+  g.addColorStop(0,'#12304f');g.addColorStop(1,'#0a1422');
+  x.fillStyle=g;x.fillRect(0,0,960,600);
+  x.strokeStyle='rgba(120,180,240,.45)';x.lineWidth=6;x.strokeRect(18,18,924,564);
+  x.textAlign='center';
+  x.fillStyle='#ffd78f';x.font='bold 40px Segoe UI,Arial';
+  x.fillText('ESRN RURAL VIRTUAL',480,230);
+  x.fillStyle='#8fffc4';x.font='bold 32px Segoe UI,Arial';
+  x.fillText((s.sede||s.label||'').slice(0,34),480,310);
+  x.fillStyle='#c9d8ea';x.font='24px Segoe UI,Arial';
+  x.fillText('Clic para ver el material',480,390);
+  var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
+}
 var use3D=(location.protocol==='http:'||location.protocol==='https:');
 var screenObjs=SCREENS.map(function(s){
   var o={s:s, el:null, mesh:null, icon:null, vid:null, pts:null, visible:false,
          last:0, want:false, w:960, h:Math.round(960*s.h/s.w)};
-  var vid=document.createElement('video');
-  vid.src=s.file||('https://drive.google.com/uc?export=download&id='+s.id);
-  vid.playsInline=true; vid.setAttribute('playsinline','');
-  vid.muted=true; vid.loop=true; vid.preload='auto';
-  o.vid=vid;
+  var vid=null;
+  if(s.file||s.id){
+    vid=document.createElement('video');
+    vid.src=s.file||('https://drive.google.com/uc?export=download&id='+s.id);
+    vid.playsInline=true; vid.setAttribute('playsinline','');
+    vid.muted=true; vid.loop=true; vid.preload='auto';
+    o.vid=vid;
+  }
   if(use3D){
-    document.body.appendChild(vid);
-    vid.style.cssText='position:fixed;left:-30px;top:-30px;width:4px;height:4px;opacity:.01;pointer-events:none';
-    var vtex=new THREE.VideoTexture(vid);
-    vtex.encoding=THREE.sRGBEncoding;
-    vtex.minFilter=THREE.LinearFilter; vtex.magFilter=THREE.LinearFilter;
+    var vtex;
+    if(vid){
+      document.body.appendChild(vid);
+      vid.style.cssText='position:fixed;left:-30px;top:-30px;width:4px;height:4px;opacity:.01;pointer-events:none';
+      vtex=new THREE.VideoTexture(vid);
+      vtex.encoding=THREE.sRGBEncoding;
+      vtex.minFilter=THREE.LinearFilter; vtex.magFilter=THREE.LinearFilter;
+    }else vtex=slotTex(s);
 
-    /* --- cuadro: marco de madera + paspartú + video incrustado --- */
     var grp=new THREE.Group();
     grp.position.set(s.cx,s.cy,s.cz); grp.rotation.y=s.ry;
-    var FD=0.11, FW=0.15, GAP=0.05;
-    var OW=s.w+GAP*2+FW*2, OH=s.h+GAP*2+FW*2;
-    var frameMat=new THREE.MeshStandardMaterial({color:0x6b4423,roughness:.5,metalness:.15});
-    var frameMat2=new THREE.MeshStandardMaterial({color:0x8a5a33,roughness:.55,metalness:.1});
-    function fbar(w,h,x,y,mat){
-      var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,FD),mat||frameMat);
-      m.position.set(x,y,-FD/2);
-      m.castShadow=true;m.receiveShadow=true;
-      grp.add(m);return m;
+    var mesh;
+    if(!vid){
+      /* poster liviano: 2 mallas, sin videos ni sombras */
+      var marco=new THREE.Mesh(new THREE.BoxGeometry(s.w+.18,s.h+.18,.05),
+        new THREE.MeshBasicMaterial({color:0x2b2118}));
+      marco.position.z=-.05;grp.add(marco);
+      mesh=new THREE.Mesh(new THREE.PlaneGeometry(s.w,s.h),
+        new THREE.MeshBasicMaterial({map:vtex}));
+      mesh.position.z=-.015;grp.add(mesh);
+      if(s.poster){
+        new THREE.TextureLoader().load(s.poster,function(t){
+          t.encoding=THREE.sRGBEncoding;
+          mesh.material.map=t;mesh.material.needsUpdate=true;
+        });
+      }
+    }else{
+      var FD=0.11, FW=0.15, GAP=0.05;
+      var OW=s.w+GAP*2+FW*2, OH=s.h+GAP*2+FW*2;
+      var frameMat=new THREE.MeshStandardMaterial({color:0x6b4423,roughness:.5,metalness:.15});
+      var frameMat2=new THREE.MeshStandardMaterial({color:0x8a5a33,roughness:.55,metalness:.1});
+      function fbar(w,h,x,y,mat){
+        var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,FD),mat||frameMat);
+        m.position.set(x,y,-FD/2);
+        m.castShadow=true;m.receiveShadow=true;
+        grp.add(m);return m;
+      }
+      fbar(OW,FW,0, OH/2-FW/2,frameMat2);
+      fbar(OW,FW,0,-(OH/2-FW/2),frameMat2);
+      fbar(FW,OH,-(OW/2-FW/2),0);
+      fbar(FW,OH, OW/2-FW/2,0);
+      var matBoard=new THREE.Mesh(new THREE.PlaneGeometry(s.w+GAP*2,s.h+GAP*2),
+        new THREE.MeshStandardMaterial({color:0xf3ead6,roughness:.95}));
+      matBoard.position.z=-0.045;grp.add(matBoard);
+      var backBoard=new THREE.Mesh(new THREE.BoxGeometry(s.w+GAP*2,s.h+GAP*2,.03),
+        new THREE.MeshStandardMaterial({color:0x1a1f26,roughness:.9}));
+      backBoard.position.z=-0.085;grp.add(backBoard);
+      mesh=new THREE.Mesh(new THREE.PlaneGeometry(s.w,s.h),
+        new THREE.MeshBasicMaterial({map:vtex}));
+      mesh.position.z=-0.035;grp.add(mesh);
+      var LT=0.03,
+          gold=new THREE.MeshStandardMaterial({color:0xc9a227,roughness:.3,metalness:.75});
+      function lip(w,h,x,y){
+        var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,.04),gold);
+        m.position.set(x,y,-0.025);grp.add(m);
+      }
+      lip(s.w+LT*2,LT,0, s.h/2+LT/2);
+      lip(s.w+LT*2,LT,0,-(s.h/2+LT/2));
+      lip(LT,s.h,-(s.w/2+LT/2),0);
+      lip(LT,s.h, (s.w/2+LT/2),0);
     }
-    fbar(OW,FW,0, OH/2-FW/2,frameMat2);
-    fbar(OW,FW,0,-(OH/2-FW/2),frameMat2);
-    fbar(FW,OH,-(OW/2-FW/2),0);
-    fbar(FW,OH, OW/2-FW/2,0);
-
-    /* paspartú (atrás del video, se ve en el borde) */
-    var matBoard=new THREE.Mesh(new THREE.PlaneGeometry(s.w+GAP*2,s.h+GAP*2),
-      new THREE.MeshStandardMaterial({color:0xf3ead6,roughness:.95}));
-    matBoard.position.z=-0.045;grp.add(matBoard);
-    var backBoard=new THREE.Mesh(new THREE.BoxGeometry(s.w+GAP*2,s.h+GAP*2,.03),
-      new THREE.MeshStandardMaterial({color:0x1a1f26,roughness:.9}));
-    backBoard.position.z=-0.085;grp.add(backBoard);
-
-    /* video, asentado sobre el paspartú */
-    var mesh=new THREE.Mesh(new THREE.PlaneGeometry(s.w,s.h),
-      new THREE.MeshBasicMaterial({map:vtex}));
-    mesh.position.z=-0.035;
-    grp.add(mesh);
-
-    /* filo dorado alrededor del video */
-    var LT=0.03,
-        gold=new THREE.MeshStandardMaterial({color:0xc9a227,roughness:.3,metalness:.75});
-    function lip(w,h,x,y){
-      var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,.04),gold);
-      m.position.set(x,y,-0.025);grp.add(m);
-    }
-    lip(s.w+LT*2,LT,0, s.h/2+LT/2);
-    lip(s.w+LT*2,LT,0,-(s.h/2+LT/2));
-    lip(LT,s.h,-(s.w/2+LT/2),0);
-    lip(LT,s.h, (s.w/2+LT/2),0);
-
     scene.add(grp); o.mesh=grp; o.plane=mesh;
-
-    /* placa con el nombre, colgada bajo el marco */
-    var ph=Math.sin(s.ry), pc=Math.cos(s.ry);
-    var plqH=1.05/2.844;
-    var frameBot=s.cy-(s.h/2+GAP+FW);
-    var plq=new THREE.Mesh(new THREE.PlaneGeometry(1.05,plqH),
-      new THREE.MeshBasicMaterial({map:signTex(s.label,'Clic para reproducir')}));
-    plq.position.set(s.cx+ph*0.03, frameBot-0.05-plqH/2, s.cz+pc*0.03);
-    plq.rotation.y=s.ry; scene.add(plq); o.plaque=plq;
-
-    var icon=new THREE.Mesh(new THREE.PlaneGeometry(.5,.5),
-      new THREE.MeshBasicMaterial({map:playIconTex(),transparent:true,depthWrite:false}));
-    icon.position.set(s.cx+ph*(-0.015), s.cy, s.cz+pc*(-0.015));
-    icon.rotation.y=s.ry; icon.visible=true; scene.add(icon); o.icon=icon;
-    vid.addEventListener('play',function(){icon.visible=false;});
-    vid.addEventListener('pause',function(){icon.visible=true;});
+    if(vid){
+      var ph=Math.sin(s.ry), pc=Math.cos(s.ry);
+      var plqH=1.05/2.844;
+      var frameBot=s.cy-(s.h/2+0.25);
+      var plq=new THREE.Mesh(new THREE.PlaneGeometry(1.05,plqH),
+        new THREE.MeshBasicMaterial({map:signTex(s.label,'Clic para reproducir')}));
+      plq.position.set(s.cx+ph*0.03, frameBot-0.05-plqH/2, s.cz+pc*0.03);
+      plq.rotation.y=s.ry; scene.add(plq); o.plaque=plq;
+      var icon=new THREE.Mesh(new THREE.PlaneGeometry(.5,.5),
+        new THREE.MeshBasicMaterial({map:playIconTex(),transparent:true,depthWrite:false}));
+      icon.position.set(s.cx+ph*(-0.015), s.cy, s.cz+pc*(-0.015));
+      icon.rotation.y=s.ry; icon.visible=true; scene.add(icon); o.icon=icon;
+      vid.addEventListener('play',function(){icon.visible=false;});
+      vid.addEventListener('pause',function(){icon.visible=true;});
+    }
   }else{
     var el=document.createElement('div');
     el.className='screen';
     el.style.width=o.w+'px'; el.style.height=o.h+'px';
-    el.appendChild(vid);
-    var play=document.createElement('div');
-    play.className='play'; play.textContent='▶'; el.appendChild(play);
-    var hint=document.createElement('div');
-    hint.className='hint'; hint.textContent='Clic: reproducir con sonido'; el.appendChild(hint);
+    if(vid){
+      el.appendChild(vid);
+      var play=document.createElement('div');
+      play.className='play'; play.textContent='▶'; el.appendChild(play);
+      var hint=document.createElement('div');
+      hint.className='hint'; hint.textContent='Clic: reproducir con sonido'; el.appendChild(hint);
+      vid.addEventListener('play',function(){play.classList.add('hide');});
+      vid.addEventListener('pause',function(){play.classList.remove('hide');});
+      vid.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();vidToggle(o);});
+      vid.addEventListener('touchend',function(e){e.preventDefault();vidToggle(o);});
+    }else{
+      el.style.cssText+=';display:flex;align-items:center;justify-content:center;padding:18px;'+
+        'background:#12304f;color:#8fffc4;font:16px Segoe UI,Arial;text-align:center';
+      el.textContent=(s.sede||s.label||'Material de la sede')+' · clic para ver';
+      if(s.poster)el.style.backgroundImage="url('"+s.poster+"')";
+      el.style.backgroundSize='cover';el.style.backgroundPosition='center';
+    }
     screensWrap.appendChild(el); o.el=el;
-    vid.addEventListener('play',function(){play.classList.add('hide');});
-    vid.addEventListener('pause',function(){play.classList.remove('hide');});
-    vid.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();vidToggle(o);});
-    vid.addEventListener('touchend',function(e){e.preventDefault();vidToggle(o);});
   }
   return o;
 });
+
 function inQuad(px,py,q){
   if(!q)return false;
   var sign=0;
@@ -1363,6 +1429,8 @@ function inQuad(px,py,q){
   return true;
 }
 function vidToggle(o){
+  if(o.s&&o.s.media){openMediaModal(o.s);return;}
+  if(!o.vid)return;
   var now=Date.now(); if(now-o.last<400)return; o.last=now;
   if(o.want){o.want=false; if(!o.vid.paused)o.vid.pause();}
   else o.want=true;
@@ -1411,6 +1479,15 @@ function updateScreens(){
   for(var k=0;k<screenObjs.length;k++){
     var o=screenObjs[k], s=o.s;
     var dist=Math.hypot(camera.position.x-s.cx,camera.position.z-s.cz);
+    if(dist>46){
+      o.visible=false;
+      if(use3D){
+        o.mesh.visible=false;
+        if(o.plaque)o.plaque.visible=false;
+        if(o.icon)o.icon.visible=false;
+      }else o.el.style.display='none';
+      continue;
+    }
     var tapado=screenOccluded(s);
     var cerca=(dist<=MAX_VIDEO_DIST)&&!tapado;
     var cs=cornersOf(s), pts=[], i, ok=true;
@@ -1441,14 +1518,14 @@ function updateScreens(){
     if(use3D){
       o.mesh.visible=vis;
       if(o.plaque)o.plaque.visible=vis;
-      o.icon.visible=vis&&o.vid.paused;
+      if(o.icon)o.icon.visible=vis&&o.vid.paused;
     }else{
       o.el.style.display=vis?'block':'none';
     }
     if(cerca){
-      if(o.want&&o.vid.paused){o.vid.muted=false;o.vid.play().catch(function(){});}
+      if(o.vid&&o.want&&o.vid.paused){o.vid.muted=false;o.vid.play().catch(function(){});}
     }else{
-      if(o.want&&!o.vid.paused)o.vid.pause();
+      if(o.vid&&o.want&&!o.vid.paused)o.vid.pause();
     }
   }
 }
@@ -1696,10 +1773,51 @@ var STANDS=[
 var modalEl=document.getElementById('modal'),mbox=document.getElementById('mbox'),
     toastBox=document.getElementById('toast'),promptEl=document.getElementById('prompt');
 function openModal(html){
+  mbox.className='mbox';
   mbox.innerHTML=html;modalEl.classList.add('show');
   if(document.pointerLockElement){try{document.exitPointerLock();}catch(e){}}
 }
-function closeModal(){modalEl.classList.remove('show');}
+function closeModal(){
+  modalEl.classList.remove('show');mbox.className='mbox';
+  var v=mbox.querySelector('video');if(v){try{v.pause();}catch(e){}}
+  var a=mbox.querySelector('audio');if(a){try{a.pause();}catch(e){}}
+}
+function openMediaModal(s){
+  var items=s.media||[];
+  var h='<div class="tag">EXPO · Corredor '+s.cor+' · '+s.sede+'</div>'+
+        '<h2>'+s.proyecto+'</h2><div class="tabs" id="mTabs"></div><div id="mStage"></div>'+
+        '<div class="row"><button class="close" id="mC">Cerrar</button></div>';
+  openModal(h);mbox.classList.add('wide');
+  var tabs=document.getElementById('mTabs'),stage=document.getElementById('mStage');
+  var labels=items.map(function(it,i){
+    return (it.t==='video'?'Video ':(it.t==='image'?'Imagen ':'Audio '))+(i+1);
+  }).concat(['Ficha']);
+  var btns=labels.map(function(lbl,i){
+    var b=document.createElement('button');b.textContent=lbl;
+    b.addEventListener('click',function(){show(i);});tabs.appendChild(b);return b;
+  });
+  function show(i){
+    btns.forEach(function(b,j){b.classList.toggle('on',i===j);});
+    stage.innerHTML='';
+    if(i===items.length){
+      stage.innerHTML='<p>'+(s.full||'')+'</p>';return;
+    }
+    var it=items[i],el;
+    if(it.t==='video'){
+      el=document.createElement('video');el.src=it.src;el.controls=true;
+      el.playsInline=true;el.preload='metadata';el.setAttribute('playsinline','');
+    }else if(it.t==='audio'){
+      el=document.createElement('audio');el.src=it.src;el.controls=true;el.preload='metadata';
+    }else{
+      var wrap=document.createElement('div');wrap.className='gal';
+      el=document.createElement('img');el.src=it.src;el.alt=it.title||'';
+      wrap.appendChild(el);el=wrap;
+    }
+    stage.appendChild(el);
+  }
+  show(0);
+  document.getElementById('mC').addEventListener('click',closeModal);
+}
 modalEl.addEventListener('click',function(e){if(e.target===modalEl)closeModal();});
 function toast(msg,gold){
   var d=document.createElement('div');d.className='tst'+(gold?' gold':'');d.textContent=msg;

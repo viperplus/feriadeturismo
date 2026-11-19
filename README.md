@@ -5,10 +5,18 @@ video de la Feria de Laguna Blanca y un paseo con 9 salones de corredores turís
 cada uno con las sedes que lo integran. Se recorre en primera persona, con ficha de
 cada puesto y foto para descargar.
 
-Los salones de corredores se fueron incorporando por etapas para cuidar el
-rendimiento: primero la estructura, carteles y fichas; después se agregan los
-espacios preparados para el video/foto de cada expo. Fuente de los corredores:
-<https://viperplus.github.io/mapacorredsores/> (Wikiparajes).
+En cada salón, las sedes muestran en la pared el **poster del proyecto** hecho con el
+material real de los estudiantes. Al hacer clic sobre el poster se abre un reproductor
+con los videos, fotos/flyers, audios y la ficha de esa sede. Así el material se expone
+sin cargar videos como texturas 3D, para que la escena siga andando fluido.
+
+Los salones se incorporaron por etapas para cuidar el rendimiento: primero la
+estructura, carteles y fichas; después los posters con el material. Fuente de los
+corredores: <https://viperplus.github.io/mapacorredsores/> (Wikiparajes).
+
+Los originales entregados por los estudiantes no se modificaron: en `material/`
+hay copias convertidas y comprimidas (MP4 H.264, JPG) para que se vean en cualquier
+navegador y en móviles.
 
 ---
 
@@ -48,6 +56,11 @@ En celular o tablet aparecen botones táctiles para caminar y mirar con el dedo.
 |---|---|
 | `index.html` | dirección raíz: redirige a la feria |
 | `visita_virtual.html` | la feria entera (escena, estilos y lógica) |
+| `materiales.js` | inventario de las 14 sedes con material: poster, texto y archivos |
+| `material/posters/` | posters de las sedes que se ven en la pared |
+| `material/videos/` | videos de los estudiantes (MP4 H.264 comprimidos) |
+| `material/fotos/` | fotos y flyers en JPG |
+| `material/audio/` | audios de los proyectos |
 | `video_galeria.mp4` | video de la pared del salón |
 | `three.min.js` | motor 3D (Three.js r128) |
 
@@ -110,6 +123,8 @@ Se vuelve a publicar sola en 1 o 2 minutos.
 | "No se pudo cargar Three.js" | Faltan `three.min.js` y no hay internet para el respaldo. |
 | No hay audio | Los navegadores lo recién habilitan después del primer clic en **ENTRAR**. |
 | El video no se ve | Que exista `video_galeria.mp4` junto al HTML. |
+| Un poster no muestra su material | Que estén `materiales.js` y la carpeta `material/` completos. |
+| Se ve todo pero el poster queda vacío | Probá con `Ctrl+F5` para renovar la caché del navegador. |
 
 ---
 
