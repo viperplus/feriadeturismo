@@ -72,7 +72,7 @@
     border:1px solid rgba(120,180,240,.4);border-radius:18px;padding:22px 24px;box-shadow:0 22px 70px rgba(0,0,0,.65)}
   .mbox .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ffd78f}
   .mbox h2{font-size:22px;color:#8fffc4;margin:6px 0 10px}
-  .mbox p{font-size:14.5px;color:#c9d8ea;line-height:1.6}
+  .mbox p{font-size:14.5px;color:#c9d8ea;line-height:1.6;white-space:pre-line}
   .mbox .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
   .mbox .close{border:1px solid #2e4160;background:#182437;color:#cfe1f5;border-radius:10px;
     padding:8px 16px;cursor:pointer;font-size:13px}
@@ -84,7 +84,7 @@
   }
   #info.show{opacity:1;transform:translate(-50%,0)}
   #info h3{font-size:18px;color:#8fffc4;margin-bottom:6px}
-  #info p{font-size:14px;color:#c9d8ea;line-height:1.55}
+  #info p{font-size:14px;color:#c9d8ea;line-height:1.55;white-space:pre-line}
   #info .tag{font-size:11px;color:#ffd78f;letter-spacing:2px;text-transform:uppercase}
   #screens{position:fixed;inset:0;z-index:15;pointer-events:none;overflow:hidden}
   body.unlocked #screens{z-index:55}
@@ -116,7 +116,8 @@
   <div id="badge">ESRN RURAL VIRTUAL</div>
   <h1>FERIA DE TURISMO</h1>
   <p class="sub">Entrá a la muestra 3D: seis puestos de trabajos, murales de los cursos y el video
-     de la Feria de Laguna Blanca. Recorré el salón y llevate una foto. Si va lenta, elegí Baja en Calidad.</p>
+     de la Feria de Laguna Blanca y las 9 salas de los corredores turísticos, con sus sedes.
+     Recorré el salón y llevate una foto. Si va lenta, elegí Baja en Calidad.</p>
   <div class="keys">
     <span><b>W A S D</b> / flechas — caminar</span>
     <span><b>Mouse</b> — mirar</span>
@@ -177,7 +178,7 @@ if(typeof THREE==='undefined'){
 /* ---------------- escena ---------------- */
 var scene=new THREE.Scene();
 scene.background=new THREE.Color(0x9ec9e8);
-scene.fog=new THREE.Fog(0x9ec9e8,55,110);
+scene.fog=new THREE.Fog(0x9ec9e8,68,130);
 
 var camera=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,0.05,400);
 camera.rotation.order='YXZ';
@@ -206,9 +207,9 @@ var sun=new THREE.DirectionalLight(0xffe9c4,1.15);
 sun.position.set(28,36,18);
 sun.castShadow=true;
 sun.shadow.mapSize.set(1024,1024);
-sun.shadow.camera.left=-34; sun.shadow.camera.right=34;
-sun.shadow.camera.top=40; sun.shadow.camera.bottom=-40;
-sun.shadow.camera.near=2; sun.shadow.camera.far=110;
+sun.shadow.camera.left=-42; sun.shadow.camera.right=42;
+sun.shadow.camera.top=46; sun.shadow.camera.bottom=-80;
+sun.shadow.camera.near=2; sun.shadow.camera.far=165;
 sun.shadow.bias=-0.00035; sun.shadow.normalBias=0.025;
 scene.add(sun);
 var fill=new THREE.DirectionalLight(0xbfe0ff,0.3);
@@ -399,22 +400,24 @@ wall(-3,-6,-3,-18); wall(3,-6,3,-18);
 // galería x -12..12, z -30..-18
 wall(-12,-18,-3,-18); wall(3,-18,12,-18);
 wall(-12,-18,-12,-30); wall(12,-18,12,-30);
-wall(-12,-30,12,-30);
+// muro posterior con vano hacia el ala de corredores
+wall(-12,-30,-11.7,-30); wall(-9.3,-30,12,-30);
+lintel(-11.7,-30,-9.3,-30,2.3);
 
 /* ---------------- suelo / techo / exterior ---------------- */
 var fTex=floorTex();
-var floor=new THREE.Mesh(new THREE.PlaneGeometry(46,52),
+var floor=new THREE.Mesh(new THREE.PlaneGeometry(58,92),
   new THREE.MeshStandardMaterial({map:fTex,roughness:.42,metalness:.06,
     bumpMap:fTex,bumpScale:.012,envMapIntensity:.7}));
-floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-11);floor.receiveShadow=true;scene.add(floor);
+floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-26);floor.receiveShadow=true;scene.add(floor);
 
 var grass=new THREE.Mesh(new THREE.PlaneGeometry(400,400),
   new THREE.MeshStandardMaterial({color:0x6f9b52,roughness:1}));
 grass.rotation.x=-Math.PI/2;grass.position.y=-0.05;grass.receiveShadow=true;scene.add(grass);
 
-var ceil=new THREE.Mesh(new THREE.PlaneGeometry(46,52),
+var ceil=new THREE.Mesh(new THREE.PlaneGeometry(58,92),
   new THREE.MeshStandardMaterial({color:0xf6f4ef,roughness:1,side:THREE.DoubleSide}));
-ceil.rotation.x=Math.PI/2;ceil.position.set(0,WALL_H,-11);scene.add(ceil);
+ceil.rotation.x=Math.PI/2;ceil.position.set(0,WALL_H,-26);scene.add(ceil);
 
 // lucernarios
 for(var i=-1;i<=1;i++){
@@ -422,6 +425,12 @@ for(var i=-1;i<=1;i++){
     new THREE.MeshBasicMaterial({color:0xeaf7ff}));
   sky.rotation.x=Math.PI/2;sky.position.set(i*7,WALL_H-0.03,-11);scene.add(sky);
 }
+// lucernarios del paseo de corredores
+[-38,-50,-62].forEach(function(z){
+  var s=new THREE.Mesh(new THREE.PlaneGeometry(2.4,2.2),
+    new THREE.MeshBasicMaterial({color:0xeaf7ff}));
+  s.rotation.x=Math.PI/2;s.position.set(-10,WALL_H-0.03,z);scene.add(s);
+});
 
 // ventanas (fachadas)
 var winTex=(function(){
@@ -483,7 +492,7 @@ var clouds=[];
     tries++;
     var ang=r()*Math.PI*2, dd=26+r()*52;
     var x=Math.sin(ang)*dd, z=Math.cos(ang)*dd-8;
-    if(x>-25&&x<25&&z>-40&&z<18)continue;
+    if(x>-30&&x<30&&z>-74&&z<18)continue;
     tree(x,z,.9+r()*.9);n++;
   }
   var cc=document.createElement('canvas');cc.width=256;cc.height=128;var cx=cc.getContext('2d');
@@ -718,8 +727,10 @@ plaque(0,1.75,5.84,Math.PI,'Inscripcion','Plano y cronograma');
 
 // ambiente: luz cálida y flechas del recorrido
 lamp(0,0);lamp(-13,0);lamp(13,0);lamp(0,-12);lamp(0,-21);lamp(0,-26);
+lamp(-10,-34);lamp(-10,-46);lamp(-10,-58);lamp(-10,-66);
 floorArrow(0,2.5,0);floorArrow(0,-1.5,0);floorArrow(-6.5,0,Math.PI/2);floorArrow(6.5,0,-Math.PI/2);
 floorArrow(0,-8,0);floorArrow(0,-12.5,0);floorArrow(0,-16.5,0);floorArrow(0,-19.5,0);floorArrow(0,-25,0);
+floorArrow(-10,-31.5,0);floorArrow(-9.2,-27.6,-Math.PI/2);
 
 /* decorado: alfombras, banderines y señalética */
 function rug(x,z,w,d,c1,c2){
@@ -912,7 +923,9 @@ var NPC_POOL=[
   {p:[[0,-19.2],[9,-19.5],[9,-28.8],[0,-28.5],[-9,-28.8],[-9,-19.5]],a:0xf4a261,b:0x3a2f26},
   {p:[[2.2,-19.5],[8.5,-22],[8.5,-27],[2.2,-28],[0,-24],[0,-20]],a:0x06d6a0,b:0x37465c},
   {p:[[-2.2,-19.5],[-8.5,-22],[-8.5,-27],[-2.2,-28],[0,-24.6],[0,-20.6]],a:0xef476f,b:0x2f3a4d},
-  {p:[[0,-7],[2,-7],[2,-17],[0,-17]],a:0x6ee7ff,b:0x3a2f26}
+  {p:[[0,-7],[2,-7],[2,-17],[0,-17]],a:0x6ee7ff,b:0x3a2f26},
+  {p:[[-10,-32],[-10,-40],[-10,-50],[-10,-58],[-10,-66],[-10,-50]],a:0xffd166,b:0x37465c},
+  {p:[[-10,-66],[-10,-58],[-10,-46],[-10,-36],[-10,-32],[-10,-52]],a:0x8ecae6,b:0x3a2f26}
 ];
 function clearNPCs(){
   for(var i=0;i<npcs.length;i++)scene.remove(npcs[i].g);
@@ -947,7 +960,7 @@ function makeNPC(def){
 function applyNPCs(){
   clearNPCs();
   var n=CFG.quality===2?8:CFG.quality===1?5:0;
-  for(var i=0;i<n;i++)makeNPC(NPC_POOL[i%NPC_POOL.length]);
+  for(var i=0;i<n;i++)makeNPC(NPC_POOL[Math.floor(i*NPC_POOL.length/n)]);
 }
 function updateNPCs(dt,time){
   for(var i=0;i<npcs.length;i++){
@@ -984,7 +997,7 @@ stand(-4.5,-26,0,'Alojamiento rural','Cabanas y camping',113,5,
   ['Cabanas, camping y refugios','Servicios y comodidades para visitantes','Reservas, tarifas y temporada']);
 stand(4.5,-26,0,'Fauna patagonica','Huemul, condor y guanaco',114,6,
   ['Huemul, condor y guanaco','Miradores y horarios de avistaje','Cuidado de las especies y del bosque']);
-plant(-11,-19.5);plant(11,-19.5);plant(-11,-28.5);plant(11,-28.5);
+plant(-11,-19.5);plant(11,-19.5);plant(-8.1,-28.5);plant(11,-28.5);
 banner(-7.5,3.1,-17.87,0,4.4,'SALON PRINCIPAL','Feria de Laguna Blanca');
 banner(2.6,2.3,-29.84,0,2.7,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
 
@@ -1025,10 +1038,179 @@ poster(11.85,2.4,-24,-Math.PI/2,24,P4,1.5,'Sierra Grande','Playas y castillo');
 poster(-11.85,2.4,-20,Math.PI/2,25,P5,1.3,'Leyendas mapuche','Historias del Nahuel Huapi');
 poster(11.85,2.4,-20,-Math.PI/2,26,P1,1.3,'Pesca deportiva','Rios Limay y Negro');
 
-/* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
+/* =========================================================================
+   ALA DE CORREDORES TURÍSTICOS — 9 salones
+   Fuente: https://viperplus.github.io/mapacorredsores/ (Wikiparajes)
+   Cada salón lista sus sedes y tiene un hueco preparado para el video/foto
+   de su expo. Cuando lleguen los archivos, completá file/id en EXPO_SLOTS.
+   ========================================================================= */
+var CORREDORES=[
+ {n:1,nombre:'Lago Pellegrini',color:'#f59e0b',
+  sedes:[{num:23,nombre:'Lago Pellegrini',depto:'General Roca'}],
+  corto:'Oasis de riego, bardas rojas y avifauna lacustre en el embalse Ballester.',
+  patrimonio:'Cuenca artificial del Embalse Ingeniero Ballester, oasis de riego y bardas de areniscas rojas.',
+  fiestas:'Fiesta Provincial de la Pera (Allen) y eventos náuticos de apertura de temporada.',
+  identidad:'Ingeniería hidráulica de principios del siglo XX, pioneros del riego y recreación en el Alto Valle.',
+  flora:'Jarilla, alpataco, matasebo y pastos duros en las bardas; sauces, juncos y cortaderas en el perilago.',
+  fauna:'Cisnes de cuello negro, flamencos australes, macaes, garzas y patos; lagartijas, yararás chicas, zorros grises y quirquinchos en las bardas.',
+  emprendimientos:'A) Museo de Sitio con fósiles vegetales y visitas guiadas a las bardas. B) Puesto de jugos y conservas con fruta de descarte de Allen.',
+  sustentable:'Vivero escolar de nativas (jarilla, alpataco, matasebo) para fijar suelos de barda.',
+  sostenible:'Puesto de refrescos y conservas escolares del oasis, en la Península Ruca Co.'},
+ {n:2,nombre:'Valle Verde y Peñas Blancas',color:'#22c55e',
+  sedes:[{num:32,nombre:'Valle Verde',depto:'General Roca'},{num:19,nombre:'Peñas Blancas',depto:'General Roca'}],
+  corto:'Río Colorado, fósiles y cultura petrolera mezclada con la horticultura de frontera.',
+  patrimonio:'Ribera e islas del Río Colorado en el extremo norte, yacimientos fósiles y formaciones de la Cuenca Neuquina.',
+  fiestas:'Fiesta Provincial del Petróleo y la Energía (Catriel).',
+  identidad:'Cultura petrolera mixturada con la producción hortícola y la vida rural ribereña de frontera con La Pampa.',
+  flora:'Sauce criollo y mimbre, jarillas, zampa y rumi-atish en la transición al secano.',
+  fauna:'Coipos, garzas brujas, biguás, perca y pejerrey en el Colorado; guanacos, choiques y maras en la estepa.',
+  emprendimientos:'A) Cestería de mimbre de las islas del Colorado. B) Parada de ciclistas con herboristería de poleo y carqueja.',
+  sustentable:'Deshidratadero solar de hortalizas: tomates y pimientos en bolsas de papel madera.',
+  sostenible:'Taller gastronómico de repostería tradicional y dulces caseros de frontera.'},
+ {n:3,nombre:'Meseta Norte y Transición',color:'#ef4444',
+  sedes:[{num:9,nombre:'Cerro Policía',depto:'El Cuy'},{num:10,nombre:'Aguada Guzmán',depto:'El Cuy'},{num:13,nombre:'Naupahuen',depto:'El Cuy'},{num:11,nombre:'Mencué',depto:'El Cuy'},{num:20,nombre:'Laguna Blanca',depto:'Pilcaniyeu'},{num:37,nombre:'Blancura Centro',depto:'El Cuy'},{num:36,nombre:'Colan Conhué',depto:'25 de Mayo'}],
+  corto:'Cañadones, fósiles y alta estepa criancera con flamencos en Laguna Blanca.',
+  patrimonio:'Cañadones profundos, geoformas erosivas, fósiles y transición a la alta estepa volcánica (más de 1000 msnm) con lagunas endorreicas.',
+  fiestas:'Fiesta del Encuentro y la Tradición (Cerro Policía) y Fiesta del Criancero (Mencué).',
+  identidad:'Identidad transhumante y criancera, aislamiento invernal, herencia Mapuche y cooperativismo textil de lana y mohair.',
+  flora:'Coirón, neneo, uña de gato, espino negro y jarilla de meseta; juncos y Carex en los mallines.',
+  fauna:'Guanacos, choiques, puma y zorro colorado; flamenco austral, cauquén común y macá tobiano en Laguna Blanca.',
+  emprendimientos:'A) Tintes naturales con neneo, jarilla y barbas de piedra. B) Parador del Criancero: guisos al disco y pan de campo.',
+  sustentable:'Senderismo geológico con la regla de mirar y fotografiar sin extraer fósiles.',
+  sostenible:'Estación textil de tintes naturales y venta de vellones a familias crianceras.'},
+ {n:4,nombre:'Precordillera y Cuenca del Limay',color:'#a855f7',
+  sedes:[{num:12,nombre:'Corralito',depto:'Pilcaniyeu'},{num:24,nombre:'Villa Llanquín',depto:'Pilcaniyeu'},{num:27,nombre:'El Manso',depto:'Bariloche'}],
+  corto:'Bosque y estepa, ríos de deshielo, balsa maroma y vida de montaña.',
+  patrimonio:'Ecotono de transición y Cordillera de los Andes, ríos de deshielo (Limay, Manso), valles glaciarios y formaciones calcáreas.',
+  fiestas:'Fiesta de la Confluencia (Villa Llanquín) y encuentros de destrezas hípicas.',
+  identidad:'Conectividad por balsa maroma, identidad binacional e histórica de arreo, y vida de montaña.',
+  flora:'Ciprés de la cordillera, radal, ñire, mutisia, calafate, rosa mosqueta; coihue y amancay hacia El Manso.',
+  fauna:'Huemul, tuco-tuco, vizcacha de la sierra, cóndor andino; truchas arcoíris y marrón, y puyen nativo.',
+  emprendimientos:'A) Velas de cera de abeja con esencias de ciprés y pino. B) Refugio de montañistas y guardería de equipos con mapas a mano.',
+  sustentable:'Jabonería biodegradable con rosa mosqueta para no alterar el agua de deshielo.',
+  sostenible:'Refugio de acampantes con depósito seguro de mochilas, cañas y bicicletas.'},
+ {n:5,nombre:'Suroeste (La Trochita)',color:'#ec4899',
+  sedes:[{num:14,nombre:'Río Chico',depto:'Ñorquincó'},{num:15,nombre:'Mamuel Choique',depto:'Ñorquincó'}],
+  corto:'Basalto negro, mallines y la historia del Viejo Expreso Patagónico a vapor.',
+  patrimonio:'Relieve quebrado con formaciones de basalto negro, mallines de altura y el cañadón del Río Chico.',
+  fiestas:'Fiesta del Río Chico.',
+  identidad:'Cultura ligada al Viejo Expreso Patagónico (La Trochita), sus puentes, túneles e ingeniería ferroviaria a vapor.',
+  flora:'Coirón amargo y dulce, neneo, charcao y arbustos achaparrados por el viento; mallines en fondos de valles basálticos.',
+  fauna:'Maras, choiques, zorros colorados, zorrinos patagónicos y piches; águila mora, carancho y halconcito colorado.',
+  emprendimientos:'A) Museo ferroviario vivo en el andén con herramientas y testimonios. B) Herrería rústica y souvenirs de vía.',
+  sustentable:'Punto de mate con agua caliente solar en el andén los días que pasa el tren.',
+  sostenible:'Puesto de andén con pan casero y tortas fritas, relatos del ramal a vapor.'},
+ {n:6,nombre:'Somuncura Centro-Oeste y Línea Sur',color:'#06b6d4',
+  sedes:[{num:22,nombre:'El Caín',depto:'25 de Mayo'},{num:4,nombre:'Aguada de Guerra',depto:'25 de Mayo'},{num:6,nombre:'Comicó',depto:'Nueve de Julio'},{num:8,nombre:'Yaminué',depto:'Nueve de Julio'},{num:5,nombre:'Rincón Treneta',depto:'Nueve de Julio'}],
+  corto:'Vertientes de Somuncura, especies endémicas y cielo sin contaminación lumínica.',
+  patrimonio:'Vertientes y cañadones del norte de Somuncura conectan con mesetas basálticas escalonadas y contrafuertes occidentales.',
+  fiestas:'Fiestas patronales, aniversarios de parajes y encuentros camperos locales.',
+  identidad:'Comunidades rurales resistentes de la estepa, técnicas ancestrales de captación de agua y profunda herencia mapuche.',
+  flora:'Plantas en cojín (neneo), arbustos espinosos, jarilla y pastos duros; helechos y musgos en vertientes.',
+  fauna:'Mojarra desnuda y ranita de Somuncura, endémicas; guanaco, chinchilla de la sierra y piche.',
+  emprendimientos:'A) Observatorio astronómico y mapa estelar en piedra. B) Fieltro artesanal con lana de esquila.',
+  sustentable:'Guardianes de vertientes: guías para fotógrafos e investigadores sin alterar los cursos de agua.',
+  sostenible:'Veladas de observación a ojo desnudo con constelaciones tehuelches y mapuches.'},
+ {n:7,nombre:'Chelforó (Valle Medio Oriental)',color:'#f97316',
+  sedes:[{num:1,nombre:'Chelforó',depto:'Avellaneda'}],
+  corto:'Jarilla, alfarería de monte y parada de frutos secos sobre la Ruta 22.',
+  patrimonio:'Valle Medio del Río Negro, transición donde la estepa muerde la llanura aluvial del río.',
+  fiestas:'Fiesta del Pueblo (Chelforó) y vínculo con la Fiesta Nacional del Tomate (Choele Choel).',
+  identidad:'Antigua estación del Ferrocarril Sud e hito caminero clave sobre la Ruta Nacional 22.',
+  flora:'Jarilla macho, hembra y crespa, algarrobo dulce achaparrado, alpataco, zampa y matacebo.',
+  fauna:'Zorro gris pampeano, vizcachas, peludos, liebre europea, martineta copetona, monterita de collar y loro barranquero.',
+  emprendimientos:'A) Parada de almendras y nueces en cucuruchos de papel. B) Alfarería de arcillas de cañadones horneada a leña.',
+  sustentable:'Alfarería de monte con arcillas locales en reemplazo de recuerdos plásticos.',
+  sostenible:'Parada del viajero: frutos secos fraccionados en la escuela y vendidos a automovilistas.'},
+ {n:8,nombre:'Vertiente Oriental, Los Berros y Costa Marítima',color:'#14b8a6',
+  sedes:[{num:21,nombre:'Cona Niyeu',depto:'Nueve de Julio'},{num:18,nombre:'Arroyo Los Berros',depto:'Valcheta'},{num:17,nombre:'Sierra Paileman',depto:'Valcheta'},{num:16,nombre:'Aguada Cecilio',depto:'Valcheta'}],
+  corto:'Piedra laja, cóndores y la colonia de loros barranqueros más grande del mundo.',
+  patrimonio:'Desde la meseta minera (laja, hierro) y los paredones de Paileman hasta los acantilados marinos y la desembocadura del Río Negro.',
+  fiestas:'Fiesta Provincial del Cóndor Andino (Sierra Paileman) y Fiesta de la Piedra Laja (Arroyo Los Berros).',
+  identidad:'Minería artesanal, conservación biológica (reintroducción del cóndor) y arraigo ferroviario en Aguada Cecilio.',
+  flora:'Jarillas, botón de oro y picallín en la estepa; unquillo, espartina y plantas de médano en la costa.',
+  fauna:'Cóndor andino en Paileman; loros barranqueros, lobos marinos de un pelo, elefantes marinos y playeros rojizos en El Cóndor.',
+  emprendimientos:'A) Grabado y pintura en piedra laja con fauna local. B) Estación de avistaje con alquiler de binoculares y cartillas.',
+  sustentable:'Avistaje sin invadir nidos, con binoculares y cartillas hechas por los estudiantes.',
+  sostenible:'Taller de grabado en laja de descarte de canteras como recuerdo auténtico.'},
+ {n:9,nombre:'Litoral Atlántico (Nodo Único)',color:'#0ea5e9',
+  sedes:[{num:28,nombre:'El Cóndor',depto:'Adolfo Alsina'}],
+  corto:'Desembocadura del Río Negro, acantilados, loros barranqueros y Faro Río Negro.',
+  patrimonio:'Desembocadura del Río Negro en el Atlántico (El Pescadero), acantilados marinos, playas extensas y restingas; faro más antiguo de la Patagonia continental.',
+  fiestas:'Fiesta Nacional del Mar y el Acampante y Fiesta Provincial del Viento.',
+  identidad:'Identidad marítima y deportiva, portal del Camino de la Costa (Ruta Provincial 1) e historia del Faro Río Negro.',
+  flora:'Especies halófilas en dunas y acantilados, pastos marinos en restingas y matorrales costeros.',
+  fauna:'Colonia de loros barranqueros más grande del mundo, lobos marinos de un pelo, elefante marino, playeros rojizos, chorlos y peces del golfo San Matías.',
+  emprendimientos:'Pendiente de completar en el mapa de origen.',
+  sustentable:'Observación de fauna costera sin alterar acantilados ni nidos.',
+  sostenible:'Pendiente de completar en el mapa de origen.'}
+];
+
+/* Reparto: 5 salas al oeste del paseo (x -26..-12) y 4 al este (x -8..6) */
+var SALAS=[],EXPO_SLOTS=[],POI_EXTRA=[];
+function textoCorredor(c){
+  return 'Sedes que lo integran: '+c.sedes.map(function(s){
+    return s.nombre+' ('+s.depto+')';}).join(' · ')+
+    '\n\nPatrimonio geográfico: '+c.patrimonio+
+    '\nFiestas: '+c.fiestas+
+    '\nAspectos identitarios: '+c.identidad+
+    '\nFlora: '+c.flora+
+    '\nFauna: '+c.fauna+
+    '\nEmprendimientos: '+c.emprendimientos+
+    '\nOpción sustentable: '+c.sustentable+
+    '\nOpción sostenible: '+c.sostenible;
+}
+function wallConPuertas(x,zN,zS,centros){
+  var cur=zN,cs=centros.slice().sort(function(a,b){return b-a;}),i,hi,lo;
+  for(i=0;i<cs.length;i++){
+    hi=cs[i]+1.35;lo=cs[i]-1.35;
+    if(cur>hi+.01)wall(x,cur,x,hi);
+    lintel(x,hi,x,lo,2.3);
+    cur=lo;
+  }
+  if(cur>zS+.01)wall(x,cur,x,zS);
+}
+for(var ci=0;ci<CORREDORES.length;ci++){
+  var cc=CORREDORES[ci],oeste=ci<5,k=oeste?ci:ci-5;
+  var zN=-30-8*k,zS=zN-8,zc=zN-4;
+  SALAS.push({c:cc,west:oeste,x1:oeste?-26:-8,x2:oeste?-12:6,zN:zN,zS:zS,zc:zc});
+}
+// muros del ala nueva
+wall(-26,-30,-26,-70); wall(6,-30,6,-62);
+wall(-26,-30,-12,-30);
+for(var si=0;si<SALAS.length;si++)wall(SALAS[si].x1,SALAS[si].zS,SALAS[si].x2,SALAS[si].zS);
+wallConPuertas(-12,-30,-70,SALAS.filter(function(S){return S.west;}).map(function(S){return S.zc;}));
+wallConPuertas(-8,-30,-70,SALAS.filter(function(S){return !S.west;}).map(function(S){return S.zc;}));
+wall(-12,-70,-8,-70);
+banner(-10,3.2,-30.16,Math.PI,7.2,'PASEO DE LOS CORREDORES','ESRN Rural Virtual · Feria de Turismo');
+
+// contenido de cada salón
+for(var si=0;si<SALAS.length;si++){
+  var S=SALAS[si],c=S.c,mx=(S.x1+S.x2)/2;
+  rug(mx,S.zc,8.6,5.6,c.color,'#ffffff');
+  var ex=S.west?S.x1:S.x2,ryS=S.west?Math.PI/2:-Math.PI/2;
+  banner(ex+(S.west?.16:-.16),3.05,S.zc,ryS,5.2,'CORREDOR '+c.n,c.nombre.toUpperCase());
+  // cartel con las sedes que integran el corredor
+  var nombres=c.sedes.map(function(sd){return sd.nombre;}),lineas=[];
+  for(var j=0;j<nombres.length;j+=3)lineas.push(nombres.slice(j,j+3).join(' · '));
+  var panel=new THREE.Mesh(new THREE.PlaneGeometry(3.1,2.2),
+    new THREE.MeshStandardMaterial({map:fichaTex('Sedes del corredor','Corredor '+c.n+' · '+c.sedes.length+' sedes',lineas),roughness:.9}));
+  panel.position.set(mx,2.15,S.zS+.14);scene.add(panel);
+  // placa por sede en la pared norte
+  for(j=0;j<c.sedes.length;j++){
+    var sd=c.sedes[j],dx=(j-(c.sedes.length-1)/2)*1.48;
+    plaque(mx+dx,1.45,S.zN-.14,Math.PI,'SEDE '+sd.num,sd.nombre);
+  }
+  // hueco preparado para el video/foto de la expo (igual que Laguna Blanca)
+  EXPO_SLOTS.push({file:'',id:'',cx:ex+(S.west?.2:-.2),cy:2.25,cz:S.zc,
+    ry:ryS,w:2.4,h:1.5,label:'EXPO · Corredor '+c.n+' · '+c.nombre});
+  POI_EXTRA.push({x:mx,z:S.zc,tag:'CORREDOR '+c.n,t:c.nombre,d:c.corto,full:textoCorredor(c)});
+}
+
+/* ---------------- videos embebidos en las paredes ---------------- */
 var SCREENS=[
  {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:0, cy:2.4, cz:-29.79, ry:0, w:1.5, h:2.65, label:'Feria de Laguna Blanca'}
-];
+].concat(EXPO_SLOTS);
 var screensWrap=document.getElementById('screens');
 function cornersOf(s){
   var rx=Math.cos(s.ry), rz=-Math.sin(s.ry), hw=s.w/2, hh=s.h/2;
@@ -1081,21 +1263,46 @@ function playIconTex(){
   x.fillStyle='#fff';x.beginPath();x.moveTo(106,76);x.lineTo(106,180);x.lineTo(188,128);x.closePath();x.fill();
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
 }
+/* cartel provisional de los huecos de video/foto todavía no enviados */
+function slotTex(s){
+  var c=document.createElement('canvas');c.width=960;c.height=600;var x=c.getContext('2d');
+  var g=x.createLinearGradient(0,0,960,600);
+  g.addColorStop(0,'#12304f');g.addColorStop(1,'#0a1422');
+  x.fillStyle=g;x.fillRect(0,0,960,600);
+  x.strokeStyle='rgba(120,180,240,.45)';x.lineWidth=6;x.strokeRect(18,18,924,564);
+  x.textAlign='center';
+  x.fillStyle='#ffd78f';x.font='bold 40px Segoe UI,Arial';
+  x.fillText('ESPACIO PREPARADO',480,215);
+  x.fillStyle='#8fffc4';x.font='bold 32px Segoe UI,Arial';
+  var ls=wrapText(x,s.label.replace(/^EXPO · /,''),820),y=300;
+  for(var i=0;i<ls.length;i++){x.fillText(ls[i],480,y);y+=44;}
+  x.fillStyle='#c9d8ea';x.font='25px Segoe UI,Arial';
+  x.fillText('Aquí irá el video / las fotos de esta expo',480,430);
+  x.fillStyle='#7f93aa';x.font='21px Segoe UI,Arial';
+  x.fillText('ESRN Rural Virtual · Feria de Turismo',480,525);
+  var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
+}
 var use3D=(location.protocol==='http:'||location.protocol==='https:');
 var screenObjs=SCREENS.map(function(s){
   var o={s:s, el:null, mesh:null, icon:null, vid:null, pts:null, visible:false,
          last:0, want:false, w:960, h:Math.round(960*s.h/s.w)};
-  var vid=document.createElement('video');
-  vid.src=s.file||('https://drive.google.com/uc?export=download&id='+s.id);
-  vid.playsInline=true; vid.setAttribute('playsinline','');
-  vid.muted=true; vid.loop=true; vid.preload='auto';
-  o.vid=vid;
+  var vid=null;
+  if(s.file||s.id){
+    vid=document.createElement('video');
+    vid.src=s.file||('https://drive.google.com/uc?export=download&id='+s.id);
+    vid.playsInline=true; vid.setAttribute('playsinline','');
+    vid.muted=true; vid.loop=true; vid.preload='auto';
+    o.vid=vid;
+  }
   if(use3D){
-    document.body.appendChild(vid);
-    vid.style.cssText='position:fixed;left:-30px;top:-30px;width:4px;height:4px;opacity:.01;pointer-events:none';
-    var vtex=new THREE.VideoTexture(vid);
-    vtex.encoding=THREE.sRGBEncoding;
-    vtex.minFilter=THREE.LinearFilter; vtex.magFilter=THREE.LinearFilter;
+    var vtex;
+    if(vid){
+      document.body.appendChild(vid);
+      vid.style.cssText='position:fixed;left:-30px;top:-30px;width:4px;height:4px;opacity:.01;pointer-events:none';
+      vtex=new THREE.VideoTexture(vid);
+      vtex.encoding=THREE.sRGBEncoding;
+      vtex.minFilter=THREE.LinearFilter; vtex.magFilter=THREE.LinearFilter;
+    }else vtex=slotTex(s);
 
     /* --- cuadro: marco de madera + paspartú + video incrustado --- */
     var grp=new THREE.Group();
@@ -1148,30 +1355,39 @@ var screenObjs=SCREENS.map(function(s){
     var plqH=1.05/2.844;
     var frameBot=s.cy-(s.h/2+GAP+FW);
     var plq=new THREE.Mesh(new THREE.PlaneGeometry(1.05,plqH),
-      new THREE.MeshBasicMaterial({map:signTex(s.label,'Clic para reproducir')}));
+      new THREE.MeshBasicMaterial({map:signTex(s.label,vid?'Clic para reproducir':'Video de la expo · próximamente')}));
     plq.position.set(s.cx+ph*0.03, frameBot-0.05-plqH/2, s.cz+pc*0.03);
     plq.rotation.y=s.ry; scene.add(plq); o.plaque=plq;
 
-    var icon=new THREE.Mesh(new THREE.PlaneGeometry(.5,.5),
-      new THREE.MeshBasicMaterial({map:playIconTex(),transparent:true,depthWrite:false}));
-    icon.position.set(s.cx+ph*(-0.015), s.cy, s.cz+pc*(-0.015));
-    icon.rotation.y=s.ry; icon.visible=true; scene.add(icon); o.icon=icon;
-    vid.addEventListener('play',function(){icon.visible=false;});
-    vid.addEventListener('pause',function(){icon.visible=true;});
+    if(vid){
+      var icon=new THREE.Mesh(new THREE.PlaneGeometry(.5,.5),
+        new THREE.MeshBasicMaterial({map:playIconTex(),transparent:true,depthWrite:false}));
+      icon.position.set(s.cx+ph*(-0.015), s.cy, s.cz+pc*(-0.015));
+      icon.rotation.y=s.ry; icon.visible=true; scene.add(icon); o.icon=icon;
+      vid.addEventListener('play',function(){icon.visible=false;});
+      vid.addEventListener('pause',function(){icon.visible=true;});
+    }
   }else{
     var el=document.createElement('div');
     el.className='screen';
     el.style.width=o.w+'px'; el.style.height=o.h+'px';
-    el.appendChild(vid);
-    var play=document.createElement('div');
-    play.className='play'; play.textContent='▶'; el.appendChild(play);
-    var hint=document.createElement('div');
-    hint.className='hint'; hint.textContent='Clic: reproducir con sonido'; el.appendChild(hint);
-    screensWrap.appendChild(el); o.el=el;
-    vid.addEventListener('play',function(){play.classList.add('hide');});
-    vid.addEventListener('pause',function(){play.classList.remove('hide');});
-    vid.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();vidToggle(o);});
-    vid.addEventListener('touchend',function(e){e.preventDefault();vidToggle(o);});
+    if(vid){
+      el.appendChild(vid);
+      var play=document.createElement('div');
+      play.className='play'; play.textContent='▶'; el.appendChild(play);
+      var hint=document.createElement('div');
+      hint.className='hint'; hint.textContent='Clic: reproducir con sonido'; el.appendChild(hint);
+      screensWrap.appendChild(el); o.el=el;
+      vid.addEventListener('play',function(){play.classList.add('hide');});
+      vid.addEventListener('pause',function(){play.classList.remove('hide');});
+      vid.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();vidToggle(o);});
+      vid.addEventListener('touchend',function(e){e.preventDefault();vidToggle(o);});
+    }else{
+      el.style.cssText+='display:flex;align-items:center;justify-content:center;padding:24px;'+
+        'background:#0d1a2b;color:#8fffc4;font:20px Segoe UI,Arial;text-align:center';
+      el.textContent=s.label+' — espacio preparado para el video/foto de la expo';
+      screensWrap.appendChild(el); o.el=el;
+    }
   }
   return o;
 });
@@ -1188,6 +1404,7 @@ function inQuad(px,py,q){
   return true;
 }
 function vidToggle(o){
+  if(!o.vid)return;
   var now=Date.now(); if(now-o.last<400)return; o.last=now;
   if(o.want){o.want=false; if(!o.vid.paused)o.vid.pause();}
   else o.want=true;
@@ -1266,10 +1483,11 @@ function updateScreens(){
     if(use3D){
       o.mesh.visible=vis;
       if(o.plaque)o.plaque.visible=vis;
-      o.icon.visible=vis&&o.vid.paused;
+      o.icon.visible=vis&&!!o.vid&&o.vid.paused;
     }else{
       o.el.style.display=vis?'block':'none';
     }
+    if(!o.vid)continue;
     if(cerca){
       if(o.want&&o.vid.paused){o.vid.muted=false;o.vid.play().catch(function(){});}
     }else{
@@ -1308,6 +1526,7 @@ var POI=[
  {x:2.6,z:-28.8,tag:'Sede',t:'Sede Laguna Blanca',d:'El video de al lado muestra la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual.'},
  {x:0,z:-27,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apunta la mirada a la pantalla y haz clic para reproducirlo con sonido.'}
 ];
+POI=POI.concat(POI_EXTRA);
 
 /* ---------------- polvo en suspensión ---------------- */
 var dust=(function(){
@@ -1488,6 +1707,14 @@ sndBtn.addEventListener('click',function(e){
 });
 
 function zoneName(x,z){
+  if(z<=-30.2){
+    for(var i=0;i<SALAS.length;i++){
+      var S=SALAS[i];
+      if(x>=S.x1&&x<=S.x2&&z<=S.zN&&z>=S.zS)
+        return 'CORREDOR '+S.c.n+' · '+S.c.nombre.toUpperCase();
+    }
+    return 'PASEO DE LOS CORREDORES';
+  }
   if(z>-6.5)return (x<-9.2||x>9.2)?(x<0?'PUESTO GASTRONOMIA':'PUESTO ARTESANIAS'):'INFORMACION';
   if(z>-17.5)return 'PASILLO DE PROYECTOS';
   return 'SALON PRINCIPAL';
@@ -1546,7 +1773,7 @@ function openStandModal(s){
   document.getElementById('mC').addEventListener('click',closeModal);
 }
 function openFichaModal(p){
-  var h='<div class="tag">'+p.tag+'</div><h2>'+p.t+'</h2><p>'+p.d+'</p>'+
+  var h='<div class="tag">'+p.tag+'</div><h2>'+p.t+'</h2><p>'+(p.full||p.d)+'</p>'+
     '<div class="row"><button class="close" id="mC">Cerrar</button></div>';
   openModal(h);
   document.getElementById('mC').addEventListener('click',closeModal);
