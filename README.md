@@ -7,11 +7,12 @@ cada puesto y foto para descargar.
 
 En cada salón, el material de los estudiantes se expone como en una galería: **un
 cuadro enmarcado por cada video, cada foto y cada texto**, con su etiqueta de sede.
-Los cuadros de video usan el mismo marco de madera, cartelito y lupa de play que la
-pantalla de Laguna Blanca, pero muestran una imagen fija del video; al hacer clic se
-abre ese video (o la foto, el audio o la ficha) en el reproductor. Las fotos se ven
-completas, sin recortes. Así todo tiene su lugar en la pared sin cargar videos como
-texturas 3D, para que la escena siga andando fluido.
+Los videos se ven y se reproducen **directamente en la pared**, con el mismo marco de
+madera, cartelito y lupa de play que la pantalla de Laguna Blanca. Se encienden en
+silencio al acercarse (solo el más cercano a la vez) y con un clic se les da sonido:
+no abre ninguna ventana. Las fotos están en cuadros más grandes en la pared del fondo,
+completas y sin recortes; al hacer clic en una foto o en una ficha sí se abre su
+reproductor.
 
 Los salones se incorporaron por etapas para cuidar el rendimiento: primero la
 estructura, carteles y fichas; después los posters con el material. Fuente de los
