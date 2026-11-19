@@ -16,6 +16,12 @@ Las fotos están en cuadros más grandes en la pared del fondo, completas y sin 
 con la imagen original en alta resolución (las infografías se leen desde la pared);
 al hacer clic en una foto o en una ficha sí se abre su reproductor.
 
+La muestra se reorganizó como una **feria rural cálida**: paredes crema y adobe,
+madera, guirnaldas de colores y un paseo con arcos y plazitas arboladas en lugar del
+pasillo recto. Cada salón tiene su mostrador de feria, su banco y cartelería de madera;
+en el vestíbulo el escritorio se cambió por un puesto de inscripción. No se agregaron
+luces ni sombras nuevas: siguen 6 luces y un solo video reproduciéndose a la vez.
+
 Los salones se incorporaron por etapas para cuidar el rendimiento: primero la
 estructura, carteles y fichas; después los posters con el material. Fuente de los
 corredores: <https://viperplus.github.io/mapacorredsores/> (Wikiparajes).
