@@ -1164,6 +1164,15 @@ function textoCorredor(cr){
     '\nOpción sustentable: '+cr.sustentable+
     '\nOpción sostenible: '+cr.sostenible;
 }
+function wrapLines(txt,max){
+  var words=(''+(txt||'')).replace(/\s+/g,' ').split(' '),lines=[],cur='';
+  for(var i=0;i<words.length;i++){
+    if((cur+' '+words[i]).trim().length>max){if(cur)lines.push(cur);cur=words[i];}
+    else cur=(cur+' '+words[i]).trim();
+  }
+  if(cur)lines.push(cur);
+  return lines.slice(0,7);
+}
 function wallConPuertas(x,zN,zS,centros){
   var cur=zN,cs=centros.slice().sort(function(a,b){return b-a;}),i,hi,lo;
   for(i=0;i<cs.length;i++){
@@ -1211,22 +1220,48 @@ for(si=0;si<SALAS.length;si++){
   }
   POI_EXTRA.push({x:centroX,z:sl.zc,tag:'CORREDOR '+cr.n,t:cr.nombre,d:cr.corto,full:textoCorredor(cr)});
 
-  /* --- material de los estudiantes: un poster por sede con material --- */
+  /* --- material de los estudiantes: un cuadro por video, foto y texto --- */
   var conMat=cr.sedes.filter(function(sd){return !!MAT[String(sd.num)];});
   if(conMat.length){
-    var pw=conMat.length<=1?2.6:conMat.length===2?2.2:conMat.length===3?1.75:1.5;
-    var ph=pw*0.625, sep=pw+0.20, xPoster=paredEx+(sl.west?.20:-.20);
-    for(var jm=0;jm<conMat.length;jm++){
-      var sd=conMat[jm], mm=MAT[String(sd.num)];
-      var zp=sl.zc+(jm-(conMat.length-1)/2)*sep;
-      EXPO_SLOTS.push({file:'',id:'',cx:xPoster,cy:1.35,cz:zp,ry:rySal,w:pw,h:ph,
-        label:'SEDE '+sd.num+' · '+mm.sede,poster:mm.poster,media:mm.items,
-        full:mm.texto,sede:mm.sede,proyecto:mm.proyecto,cor:cr.n,
-        short:sd.nombre+' · '+mm.proyecto});
-      POI_EXTRA.push({x:paredEx+(sl.west?1.15:-1.15),z:zp,tag:'EXPO · SEDE '+sd.num,
-        t:mm.sede,d:mm.proyecto,full:mm.texto});
-    }
+    var gal=[];
+    conMat.forEach(function(sd){
+      var mm=MAT[String(sd.num)];
+      mm.items.forEach(function(it,i){
+        gal.push({sd:sd,mm:mm,item:it,idx:i,img:it.wall||mm.poster});
+      });
+      gal.push({sd:sd,mm:mm,item:null,idx:mm.items.length,img:null});
+    });
+    var cols=gal.length<=6?gal.length:Math.min(8,Math.ceil(gal.length/2));
+    var rows=Math.ceil(gal.length/cols);
+    var cw=Math.min(1.55,(7.3/cols)-0.12), ch=cw*0.625;
+    var gapX=cw+0.10, gapY=ch+0.40, yTop=rows===1?1.35:1.62;
+    var xWall=paredEx+(sl.west?.22:-.22);
+    gal.forEach(function(g,j){
+      var row=Math.floor(j/cols), col=j%cols;
+      var inRow=Math.min(cols,gal.length-row*cols);
+      var z=sl.zc+((col-(inRow-1)/2)*gapX), y=yTop-row*gapY;
+      var base={file:'',id:'',cx:xWall,cy:y,cz:z,ry:rySal,w:cw,h:ch,
+        media:g.mm.items,itemIndex:g.idx,full:g.mm.texto,sede:g.mm.sede,
+        proyecto:g.mm.proyecto,cor:cr.n};
+      if(g.item){
+        base.poster=g.img;
+        base.label='SEDE '+g.sd.num+' · '+g.item.label;
+      }else{
+        base.ficha={t:'SEDE '+g.sd.num+' · '+g.mm.sede,s:'PROYECTO',
+                    lines:wrapLines(g.mm.texto,30).slice(0,4)};
+        base.label='SEDE '+g.sd.num+' · Ficha';
+      }
+      EXPO_SLOTS.push(base);
+    });
+    POI_EXTRA.push({x:paredEx+(sl.west?1.15:-1.15),z:sl.zc,
+      tag:'EXPO · CORREDOR '+cr.n,t:'Material de los estudiantes',
+      d:conMat.length+' sedes · videos, fotos y fichas',
+      full:conMat.map(function(sd){
+        var mm=MAT[String(sd.num)];
+        return 'SEDE '+sd.num+' · '+mm.sede+'\n'+mm.proyecto+'\n'+mm.texto;
+      }).join('\n\n')});
   }
+
 }
 /* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
 var SCREENS=[
@@ -1320,6 +1355,11 @@ var screenObjs=SCREENS.map(function(s){
       vtex=new THREE.VideoTexture(vid);
       vtex.encoding=THREE.sRGBEncoding;
       vtex.minFilter=THREE.LinearFilter; vtex.magFilter=THREE.LinearFilter;
+    }else if(s.ficha) vtex=fichaTex(s.ficha.t,s.ficha.s,s.ficha.lines);
+    else if(s.poster){
+      var tiny=document.createElement('canvas');tiny.width=2;tiny.height=2;
+      var tx=tiny.getContext('2d');tx.fillStyle='#12304f';tx.fillRect(0,0,2,2);
+      vtex=new THREE.CanvasTexture(tiny);vtex.encoding=THREE.sRGBEncoding;
     }else vtex=slotTex(s);
 
     var grp=new THREE.Group();
@@ -1327,12 +1367,15 @@ var screenObjs=SCREENS.map(function(s){
     var mesh;
     if(!vid){
       /* poster liviano: 2 mallas, sin videos ni sombras */
-      var marco=new THREE.Mesh(new THREE.BoxGeometry(s.w+.18,s.h+.18,.05),
-        new THREE.MeshBasicMaterial({color:0x2b2118}));
-      marco.position.z=-.05;grp.add(marco);
+      var marco=new THREE.Mesh(new THREE.BoxGeometry(s.w+.18,s.h+.18,.06),
+        new THREE.MeshStandardMaterial({color:0x6b4423,roughness:.55,metalness:.12}));
+      marco.position.z=-.06;grp.add(marco);
+      var passe=new THREE.Mesh(new THREE.PlaneGeometry(s.w+.09,s.h+.09),
+        new THREE.MeshBasicMaterial({color:0xf3ead6}));
+      passe.position.z=-.012;grp.add(passe);
       mesh=new THREE.Mesh(new THREE.PlaneGeometry(s.w,s.h),
         new THREE.MeshBasicMaterial({map:vtex}));
-      mesh.position.z=-.015;grp.add(mesh);
+      mesh.position.z=-.005;grp.add(mesh);
       if(s.poster){
         new THREE.TextureLoader().load(s.poster,function(t){
           t.encoding=THREE.sRGBEncoding;
@@ -1407,7 +1450,7 @@ var screenObjs=SCREENS.map(function(s){
     }else{
       el.style.cssText+=';display:flex;align-items:center;justify-content:center;padding:18px;'+
         'background:#12304f;color:#8fffc4;font:16px Segoe UI,Arial;text-align:center';
-      el.textContent=(s.sede||s.label||'Material de la sede')+' · clic para ver';
+      el.textContent=(s.label||(s.ficha&&s.ficha.t)||'Material de la sede')+' · clic para ver';
       if(s.poster)el.style.backgroundImage="url('"+s.poster+"')";
       el.style.backgroundSize='cover';el.style.backgroundPosition='center';
     }
@@ -1783,7 +1826,7 @@ function closeModal(){
   var a=mbox.querySelector('audio');if(a){try{a.pause();}catch(e){}}
 }
 function openMediaModal(s){
-  var items=s.media||[];
+  var items=s.media||[], start=(typeof s.itemIndex==='number')?s.itemIndex:0;
   var h='<div class="tag">EXPO · Corredor '+s.cor+' · '+s.sede+'</div>'+
         '<h2>'+s.proyecto+'</h2><div class="tabs" id="mTabs"></div><div id="mStage"></div>'+
         '<div class="row"><button class="close" id="mC">Cerrar</button></div>';
@@ -1815,7 +1858,7 @@ function openMediaModal(s){
     }
     stage.appendChild(el);
   }
-  show(0);
+  show(start);
   document.getElementById('mC').addEventListener('click',closeModal);
 }
 modalEl.addEventListener('click',function(e){if(e.target===modalEl)closeModal();});

@@ -10,12 +10,16 @@ var MATERIALES={
    {
     "t": "image",
     "src": "material/fotos/10_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/10_0.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/10_flyer_02.jpg",
-    "title": "Flyer / imagen 2"
+    "title": "Flyer / imagen 2",
+    "wall": "material/wall/10_1.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -29,17 +33,23 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/13_video_1.mp4",
-    "title": "More y Tizi Naupa Huen feria 1"
+    "title": "More y Tizi Naupa Huen feria 1",
+    "wall": "material/wall/13_0.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "video",
     "src": "material/videos/13_video_2.mp4",
-    "title": "Morena y Tiziana Naupa Huen feria turismo"
+    "title": "Morena y Tiziana Naupa Huen feria turismo",
+    "wall": "material/wall/13_1.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "image",
     "src": "material/fotos/13_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/13_2.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -53,7 +63,9 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/11_video_1.mp4",
-    "title": "Alan y Julian Mencue feria turismo 3° año"
+    "title": "Alan y Julian Mencue feria turismo 3° año",
+    "wall": "material/wall/11_0.jpg",
+    "label": "VIDEO"
    }
   ]
  },
@@ -67,22 +79,30 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/20_video_1.mp4",
-    "title": "Clase5-Turismo-Laguna Blanca"
+    "title": "Clase5-Turismo-Laguna Blanca",
+    "wall": "material/wall/20_0.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "video",
     "src": "material/videos/20_video_2.mp4",
-    "title": "Feria Laguna Blanca"
+    "title": "Feria Laguna Blanca",
+    "wall": "material/wall/20_1.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "video",
     "src": "material/videos/20_video_3.mp4",
-    "title": "Laguna Blanca feria turismo"
+    "title": "Laguna Blanca feria turismo",
+    "wall": "material/wall/20_2.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "image",
     "src": "material/fotos/20_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/20_3.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -96,22 +116,30 @@ var MATERIALES={
    {
     "t": "image",
     "src": "material/fotos/14_0_3fca5bad_de9c_4f6d_8f74_439b.jpg",
-    "title": "Foto / flyer 1"
+    "title": "Foto / flyer 1",
+    "wall": "material/wall/14_0.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/14_1_img_1343_heic.jpg",
-    "title": "Foto / flyer 2"
+    "title": "Foto / flyer 2",
+    "wall": "material/wall/14_1.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/14_2_img_1390_heic.jpg",
-    "title": "Foto / flyer 3"
+    "title": "Foto / flyer 3",
+    "wall": "material/wall/14_2.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/14_3_img_1392_heic.jpg",
-    "title": "Foto / flyer 4"
+    "title": "Foto / flyer 4",
+    "wall": "material/wall/14_3.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -125,12 +153,16 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/15_video_1.mp4",
-    "title": "Jonathan Collueque-Mamuel Choique feria"
+    "title": "Jonathan Collueque-Mamuel Choique feria",
+    "wall": "material/wall/15_0.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "image",
     "src": "material/fotos/15_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/15_1.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -144,7 +176,9 @@ var MATERIALES={
    {
     "t": "image",
     "src": "material/fotos/6_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/6_0.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -158,12 +192,16 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/28_video_1.mp4",
-    "title": "FacundoEl Condor feria"
+    "title": "FacundoEl Condor feria",
+    "wall": "material/wall/28_0.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "image",
     "src": "material/fotos/28_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/28_1.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -185,12 +223,16 @@ var MATERIALES={
    {
     "t": "image",
     "src": "material/fotos/12_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/12_0.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/12_flyer_02.jpg",
-    "title": "Flyer / imagen 2"
+    "title": "Flyer / imagen 2",
+    "wall": "material/wall/12_1.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -204,7 +246,9 @@ var MATERIALES={
    {
     "t": "image",
     "src": "material/fotos/21_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/21_0.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -218,17 +262,23 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/19_video_1.mp4",
-    "title": "Peñas Blancas 3 año"
+    "title": "Peñas Blancas 3 año",
+    "wall": "material/wall/19_0.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "video",
     "src": "material/videos/19_video_2.mp4",
-    "title": "Proyecto Esencia Peñas Blancas Mayra "
+    "title": "Proyecto Esencia Peñas Blancas Mayra ",
+    "wall": "material/wall/19_1.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "audio",
     "src": "material/audio/19_audio.ogg",
-    "title": "Audio  Peñas Blancas Aimar-Aixa y Agostina"
+    "title": "Audio  Peñas Blancas Aimar-Aixa y Agostina",
+    "wall": "material/wall/19_2.jpg",
+    "label": "AUDIO"
    }
   ]
  },
@@ -242,27 +292,37 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/23_video_1.mp4",
-    "title": "muñoz melisa orientacion al turismo"
+    "title": "muñoz melisa orientacion al turismo",
+    "wall": "material/wall/23_0.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "image",
     "src": "material/fotos/23_flyer_01.jpg",
-    "title": "Flyer / imagen 1"
+    "title": "Flyer / imagen 1",
+    "wall": "material/wall/23_1.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/23_flyer_02.jpg",
-    "title": "Flyer / imagen 2"
+    "title": "Flyer / imagen 2",
+    "wall": "material/wall/23_2.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/23_flyer_03.jpg",
-    "title": "Flyer / imagen 3"
+    "title": "Flyer / imagen 3",
+    "wall": "material/wall/23_3.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/23_4_folleto_damaris_lago_pellegr.jpg",
-    "title": "Foto / flyer 5"
+    "title": "Foto / flyer 5",
+    "wall": "material/wall/23_4.jpg",
+    "label": "FOTO"
    }
   ]
  },
@@ -276,72 +336,100 @@ var MATERIALES={
    {
     "t": "video",
     "src": "material/videos/24_video_1.mp4",
-    "title": "WhatsApp Video 2026-11-04 at 11.17.29 AM"
+    "title": "WhatsApp Video 2026-11-04 at 11.17.29 AM",
+    "wall": "material/wall/24_0.jpg",
+    "label": "VIDEO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_00.jpg",
-    "title": "Foto / flyer 1"
+    "title": "Foto / flyer 1",
+    "wall": "material/wall/24_1.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_01.jpg",
-    "title": "Foto / flyer 2"
+    "title": "Foto / flyer 2",
+    "wall": "material/wall/24_2.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_02.jpg",
-    "title": "Foto / flyer 3"
+    "title": "Foto / flyer 3",
+    "wall": "material/wall/24_3.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_03.jpg",
-    "title": "Foto / flyer 4"
+    "title": "Foto / flyer 4",
+    "wall": "material/wall/24_4.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_04.jpg",
-    "title": "Foto / flyer 5"
+    "title": "Foto / flyer 5",
+    "wall": "material/wall/24_5.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_05.jpg",
-    "title": "Foto / flyer 6"
+    "title": "Foto / flyer 6",
+    "wall": "material/wall/24_6.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_06.jpg",
-    "title": "Foto / flyer 7"
+    "title": "Foto / flyer 7",
+    "wall": "material/wall/24_7.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_07.jpg",
-    "title": "Foto / flyer 8"
+    "title": "Foto / flyer 8",
+    "wall": "material/wall/24_8.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_08.jpg",
-    "title": "Foto / flyer 9"
+    "title": "Foto / flyer 9",
+    "wall": "material/wall/24_9.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_09.jpg",
-    "title": "Foto / flyer 10"
+    "title": "Foto / flyer 10",
+    "wall": "material/wall/24_10.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_10.jpg",
-    "title": "Foto / flyer 11"
+    "title": "Foto / flyer 11",
+    "wall": "material/wall/24_11.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_11.jpg",
-    "title": "Foto / flyer 12"
+    "title": "Foto / flyer 12",
+    "wall": "material/wall/24_12.jpg",
+    "label": "FOTO"
    },
    {
     "t": "image",
     "src": "material/fotos/24_foto_12.jpg",
-    "title": "Foto / flyer 13"
+    "title": "Foto / flyer 13",
+    "wall": "material/wall/24_13.jpg",
+    "label": "FOTO"
    }
   ]
  }
