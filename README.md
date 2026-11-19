@@ -22,6 +22,12 @@ pasillo recto. Cada salón tiene su mostrador de feria, su banco y cartelería d
 en el vestíbulo el escritorio se cambió por un puesto de inscripción. No se agregaron
 luces ni sombras nuevas: siguen 6 luces y un solo video reproduciéndose a la vez.
 
+Después de recorrerla con un agente se corrigió el ingreso: el puesto de inscripción
+se corrió a un lado y ahora se ve su cartel desde el arranque, con el carril central
+libre. La pantalla de Laguna Blanca y los cuadros de fotos crecieron, las plazitas
+tienen carteles con el nombre de cada corredor y el cartel del HUD ya identifica
+correctamente el paseo y cada salón.
+
 Los salones se incorporaron por etapas para cuidar el rendimiento: primero la
 estructura, carteles y fichas; después los posters con el material. Fuente de los
 corredores: <https://viperplus.github.io/mapacorredsores/> (Wikiparajes).

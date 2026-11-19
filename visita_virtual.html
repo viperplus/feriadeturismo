@@ -6,95 +6,103 @@
 <title>Feria de Turismo - ESRN RURAL Virtual</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{width:100%;height:100%;overflow:hidden;background:#0d1117;font-family:"Segoe UI",Arial,sans-serif;color:#fff;touch-action:none}
+  html,body{width:100%;height:100%;overflow:hidden;background:#2b1b12;font-family:"Segoe UI",Arial,sans-serif;color:#4a2f1c;touch-action:none}
   canvas{display:block}
   button{font-family:inherit}
   #overlay{
     position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;
     align-items:center;justify-content:center;text-align:center;
-    background:radial-gradient(circle at 50% 32%,#20375a 0%,#0d1117 72%);
+    background:radial-gradient(ellipse at 50% 4%,rgba(255,214,150,.3),transparent 55%),
+      linear-gradient(180deg,#3a2418 0%,#6b3f24 48%,#8a5a33 100%);
     padding:24px;transition:opacity .4s;overflow:auto
   }
+  #overlay:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;
+    background:repeating-linear-gradient(135deg,rgba(255,240,210,.2) 0 2px,transparent 2px 18px)}
   #overlay.hide{opacity:0;pointer-events:none}
-  #badge{font-size:11px;letter-spacing:5px;color:#8fffc4;border:1px solid rgba(143,255,196,.4);
-    border-radius:999px;padding:6px 16px;margin-bottom:16px}
-  #overlay h1{font-size:clamp(30px,6vw,58px);letter-spacing:4px;margin-bottom:10px;
-    background:linear-gradient(90deg,#7bdff2,#efef7a,#ff9f6e,#7bdff2);background-size:300% 100%;
-    -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite}
-  @keyframes shine{to{background-position:300% 0}}
-  #overlay .sub{max-width:700px;color:#b9c6d6;line-height:1.55;margin-bottom:18px;font-size:15px}
-  #overlay .keys{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;max-width:800px}
-  #overlay .keys span{background:#182437;border:1px solid #2e4160;border-radius:8px;padding:7px 11px;font-size:12.5px;color:#cfe1f5}
-  .cfg{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-bottom:22px;
-    background:rgba(12,22,38,.72);border:1px solid #2e4160;border-radius:12px;padding:12px 18px}
-  .cfg label{display:flex;align-items:center;gap:8px;font-size:13px;color:#cfe1f5}
-  .cfg select{background:#182437;color:#cfe1f5;border:1px solid #2e4160;border-radius:6px;padding:4px 8px}
-  .cfg input[type=range]{width:110px;accent-color:#6ee7ff}
-  .cfg input[type=checkbox]{accent-color:#6ee7ff}
-  .btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-  #btn{cursor:pointer;border:none;border-radius:999px;padding:16px 46px;font-size:19px;font-weight:700;
-    color:#06121f;background:linear-gradient(90deg,#6ee7ff,#8fffc4);box-shadow:0 8px 30px rgba(110,231,255,.35);
-    letter-spacing:1px;transition:transform .15s}
-  #btn:hover{transform:scale(1.05)}
-  button.sec{cursor:pointer;border:1px solid rgba(110,231,255,.5);border-radius:999px;padding:15px 30px;
-    font-size:16px;font-weight:600;color:#cfe1f5;background:rgba(12,22,38,.75);letter-spacing:1px;
-    transition:transform .15s,background .2s}
-  button.sec:hover{transform:scale(1.04);background:rgba(30,51,82,.9)}
-  #err{display:none;color:#ff8f8f;margin-top:18px;max-width:560px}
+  #overlay>*{position:relative}
+  #card{width:min(760px,96vw);background:#f7ead2;border:1px solid #b98a58;border-radius:22px;
+    padding:0 34px 26px;box-shadow:0 26px 80px rgba(0,0,0,.5),inset 0 0 0 6px rgba(255,255,255,.32);
+    overflow:hidden}
+  #card:before{content:"";display:block;height:74px;margin:0 -34px 22px;
+    border-bottom:1px solid #d3b98f;
+    background:radial-gradient(ellipse at 22% 130%,#5f7f48 0 44%,transparent 45%),
+      radial-gradient(ellipse at 78% 140%,#416636 0 40%,transparent 41%),
+      linear-gradient(180deg,#f3c889 0%,#e79a62 58%,#f6e3c4 100%)}
+  #badge{display:inline-block;font-size:10.5px;letter-spacing:4px;color:#8a4b2a;border:1px solid #c9a273;
+    border-radius:999px;padding:6px 16px;margin-bottom:13px}
+  #overlay h1{font-size:clamp(30px,5.4vw,50px);letter-spacing:3px;margin-bottom:7px;color:#4a2f1c;line-height:1.08}
+  #overlay h1 small{display:block;font-size:clamp(12px,1.9vw,15px);letter-spacing:1.6px;color:#9a612f;margin-top:9px;font-weight:500}
+  #overlay .sub{max-width:640px;color:#6d5238;line-height:1.55;margin-bottom:14px;font-size:15px}
+  #overlay .keys{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
+  #overlay .keys span{background:#efe0c2;border:1px solid #d3b98f;border-radius:8px;padding:5px 10px;font-size:13px;color:#5b4128}
+  .cfg{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;
+    background:#efe0c2;border:1px solid #d3b98f;border-radius:12px;padding:9px 16px}
+  .cfg label{display:flex;align-items:center;gap:8px;font-size:14px;color:#5b4128}
+  .cfg select{background:#fff8ea;color:#4a2f1c;border:1px solid #c9a273;border-radius:6px;padding:4px 8px}
+  .cfg input[type=range]{width:110px;accent-color:#a8532b}
+  .cfg input[type=checkbox]{accent-color:#a8532b}
+  .btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  #btn{cursor:pointer;border:none;border-radius:999px;padding:16px 52px;font-size:21px;font-weight:700;
+    color:#fff8ea;background:linear-gradient(180deg,#bd6737,#8a4b2a);box-shadow:0 8px 24px rgba(90,45,20,.45);
+    letter-spacing:2px;transition:transform .15s,filter .2s}
+  #btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+  button.sec{cursor:pointer;border:1px solid #c9a273;border-radius:999px;padding:13px 26px;
+    font-size:15px;font-weight:600;color:#5b4128;background:#efe0c2;letter-spacing:1px}
+  #err{display:none;color:#a12c1c;margin-top:14px}
   #hud{position:fixed;inset:0;z-index:20;pointer-events:none}
   #vig{position:fixed;inset:0;z-index:10;pointer-events:none;
-    background:radial-gradient(ellipse at 50% 46%,transparent 55%,rgba(6,10,18,.34) 100%)}
+    background:radial-gradient(ellipse at 50% 46%,transparent 55%,rgba(40,22,10,.34) 100%)}
   #cross{position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;
-    background:rgba(255,255,255,.9);box-shadow:0 0 0 2px rgba(0,0,0,.35)}
-  #zone{position:absolute;right:14px;top:12px;background:rgba(6,14,26,.62);border:1px solid rgba(120,170,220,.3);
-    border-radius:10px;padding:9px 14px;font-size:13px;color:#ffd78f;letter-spacing:1px;backdrop-filter:blur(4px)}
+    background:rgba(255,248,234,.92);box-shadow:0 0 0 2px rgba(60,35,18,.4)}
+  #zone{position:absolute;right:14px;top:12px;background:rgba(48,29,17,.78);border:1px solid rgba(210,165,110,.45);
+    border-radius:10px;padding:9px 14px;font-size:13px;color:#f4d9a4;letter-spacing:1px;backdrop-filter:blur(4px)}
   .hbtn{width:38px;height:38px;border-radius:10px;cursor:pointer;pointer-events:auto;
-    background:rgba(6,14,26,.62);border:1px solid rgba(120,170,220,.3);color:#cfe1f5;font-size:16px;
+    background:rgba(48,29,17,.78);border:1px solid rgba(210,165,110,.45);color:#f7ead2;font-size:16px;
     backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center}
-  .hbtn:hover{background:rgba(30,51,82,.85)}
+  .hbtn:hover{background:rgba(122,75,42,.9)}
   .hbtn.off{opacity:.45}
   #snd{position:absolute;right:14px;top:60px}
   #tools{position:absolute;right:14px;top:106px;display:flex;flex-direction:column;gap:8px}
   #prompt{position:absolute;left:50%;top:57%;transform:translateX(-50%);display:none;
-    background:rgba(8,16,30,.88);border:1px solid rgba(143,255,196,.45);color:#8fffc4;
+    background:rgba(48,29,17,.9);border:1px solid rgba(240,200,140,.5);color:#f4d9a4;
     border-radius:10px;padding:7px 14px;font-size:14px;backdrop-filter:blur(6px);white-space:nowrap}
   #prompt.show{display:block}
   #toast{position:absolute;left:50%;top:60px;transform:translateX(-50%);display:flex;flex-direction:column;
     gap:8px;max-width:min(520px,90vw);align-items:center}
-  .tst{background:rgba(8,16,30,.92);border:1px solid rgba(120,180,240,.35);border-left:3px solid #6ee7ff;
-    border-radius:10px;padding:9px 12px;font-size:13px;color:#d6e6f7;animation:pop .22s ease-out;text-align:center}
+  .tst{background:rgba(48,29,17,.92);border:1px solid rgba(210,165,110,.45);border-left:3px solid #e9c46a;
+    border-radius:10px;padding:9px 12px;font-size:13px;color:#f7ead2;animation:pop .22s ease-out;text-align:center}
   .tst.gold{border-left-color:#ffd78f}
   @keyframes pop{from{transform:translateX(-14px);opacity:0}to{transform:none;opacity:1}}
   #modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
-    background:rgba(4,8,16,.62);backdrop-filter:blur(4px);padding:20px}
+    background:rgba(30,17,9,.72);backdrop-filter:blur(4px);padding:20px}
   #modal.show{display:flex}
-  .m\boxed{width:min(580px,94vw);max-height:84vh;overflow:auto;background:linear-gradient(180deg,#121f33,#0b1422);
-    border:1px solid rgba(120,180,240,.4);border-radius:18px;padding:22px 24px;box-shadow:0 22px 70px rgba(0,0,0,.65)}
-  .mbox .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ffd78f}
-  .mbox h2{font-size:22px;color:#8fffc4;margin:6px 0 10px}
-  .mbox p{font-size:14.5px;color:#c9d8ea;line-height:1.6;white-space:pre-line}
+  .mbox{width:min(580px,94vw);max-height:84vh;overflow:auto;background:#f7ead2;color:#4a2f1c;
+    border:1px solid #b98a58;border-radius:18px;padding:22px 24px;box-shadow:0 22px 70px rgba(0,0,0,.65)}
+  .mbox .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9a612f}
+  .mbox h2{font-size:22px;color:#8a4b2a;margin:6px 0 10px}
+  .mbox p{font-size:14.5px;color:#5b4128;line-height:1.6;white-space:pre-line}
   .mbox .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
-  .mbox .close{border:1px solid #2e4160;background:#182437;color:#cfe1f5;border-radius:10px;
+  .mbox .close{border:1px solid #c9a273;background:#efe0c2;color:#5b4128;border-radius:10px;
     padding:8px 16px;cursor:pointer;font-size:13px}
-  .mbox .close:hover{background:#27406a}
+  .mbox .close:hover{background:#e6d2ae}
   .mbox.wide{width:min(920px,94vw)}
   .mbox video{width:100%;max-height:56vh;border-radius:10px;background:#000;display:block}
   .mbox .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
   .mbox .gal img{width:100%;height:110px;object-fit:cover;border-radius:8px;cursor:zoom-in}
   .mbox .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-  .mbox .tabs button{border:1px solid #2e4160;background:#182437;color:#cfe1f5;border-radius:8px;
+  .mbox .tabs button{border:1px solid #c9a273;background:#efe0c2;color:#5b4128;border-radius:8px;
     padding:6px 11px;cursor:pointer;font-size:12px}
-  .mbox .tabs button.on{background:#2a6fb0;border-color:#6ee7ff;color:#fff}
+  .mbox .tabs button.on{background:#a8532b;border-color:#8a4b2a;color:#fff8ea}
   .mbox audio{width:100%;margin-top:10px}
   #info{
     position:absolute;left:50%;bottom:26px;transform:translate(-50%,26px);width:min(560px,92vw);
-    background:rgba(8,16,30,.88);border:1px solid rgba(120,180,240,.35);border-radius:16px;padding:16px 20px;
+    background:rgba(48,29,17,.92);border:1px solid rgba(210,165,110,.45);border-radius:16px;padding:16px 20px;
     opacity:0;transition:.35s;backdrop-filter:blur(8px);box-shadow:0 12px 40px rgba(0,0,0,.5)
   }
   #info.show{opacity:1;transform:translate(-50%,0)}
-  #info h3{font-size:18px;color:#8fffc4;margin-bottom:6px}
-  #info p{font-size:14px;color:#c9d8ea;line-height:1.55;white-space:pre-line}
-  #info .tag{font-size:11px;color:#ffd78f;letter-spacing:2px;text-transform:uppercase}
+  #info h3{font-size:18px;color:#f4d9a4;margin-bottom:6px}
+  #info p{font-size:14px;color:#f7ead2;line-height:1.55;white-space:pre-line}
+  #info .tag{font-size:11px;color:#e9c46a;letter-spacing:2px;text-transform:uppercase}
   #screens{position:fixed;inset:0;z-index:15;pointer-events:none;overflow:hidden}
   body.unlocked #screens{z-index:55}
   .screen{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform;
@@ -107,12 +115,12 @@
   .screen .play.hide{display:none}
   .screen iframe{width:100%;height:100%;border:0;display:block}
   .screen .hint{position:absolute;left:50%;bottom:-30px;transform:translateX(-50%);
-    font-size:12px;color:#ffd78f;background:rgba(6,14,26,.8);padding:3px 10px;border-radius:8px;
+    font-size:12px;color:#f4d9a4;background:rgba(48,29,17,.85);padding:3px 10px;border-radius:8px;
     white-space:nowrap;pointer-events:none}
   #touch{position:absolute;inset:0;display:none;pointer-events:none}
   .tbtn{position:absolute;bottom:22px;width:74px;height:74px;border-radius:50%;pointer-events:auto;
-    background:rgba(255,255,255,.13);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;
-    justify-content:center;font-size:22px;color:#fff;user-select:none;-webkit-user-select:none;touch-action:none}
+    background:rgba(247,234,210,.18);border:2px solid rgba(247,234,210,.5);display:flex;align-items:center;
+    justify-content:center;font-size:22px;color:#fff8ea;user-select:none;-webkit-user-select:none;touch-action:none}
   #bF{left:96px;bottom:106px}#bB{left:96px}#bL{left:14px}#bR{left:178px}
   body.touch #touch{display:block}
 </style>
@@ -122,35 +130,36 @@
 <div id="vig"></div>
 
 <div id="overlay">
-  <div id="badge">ESRN RURAL VIRTUAL</div>
-  <h1>FERIA DE TURISMO</h1>
-  <p class="sub">Entrá a la muestra 3D: seis puestos de trabajos, murales de los cursos y el video
-     de la Feria de Laguna Blanca y las 9 salas de los corredores, con el material de los estudiantes.
-     Recorré el salón y llevate una foto. Si va lenta, elegí Baja en Calidad.</p>
-  <div class="keys">
-    <span><b>W A S D</b> / flechas — caminar</span>
-    <span><b>Mouse</b> — mirar</span>
-    <span><b>Shift</b> — correr</span>
-    <span><b>Espacio</b> — saltar</span>
-    <span><b>E</b> — ficha</span>
-    <span><b>F</b> — foto</span>
-    <span><b>Esc</b> — pausa</span>
+  <div id="card">
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026</div>
+    <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
+    <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
+       los estudiantes prepararon para la Feria de Laguna Blanca. Entrá caminando por el paseo;
+       si el equipo va lento, elegí <b>Calidad baja</b>.</p>
+    <div class="keys">
+      <span><b>W A S D</b> caminar</span>
+      <span><b>Mouse</b> mirar</span>
+      <span><b>Shift</b> correr</span>
+      <span><b>E</b> ficha</span>
+      <span><b>F</b> foto</span>
+      <span><b>Esc</b> pausa</span>
+    </div>
+    <div class="cfg">
+      <label>Calidad
+        <select id="qSel">
+          <option value="2">Alta</option>
+          <option value="1">Media (recomendada)</option>
+          <option value="0">Baja</option>
+        </select>
+      </label>
+      <label>Sensibilidad <input type="range" id="sens" min="5" max="30" value="14"></label>
+      <label><input type="checkbox" id="sndChk" checked> Sonido ambiente</label>
+    </div>
+    <div class="btns">
+      <button id="btn">ENTRAR A LA FERIA</button>
+    </div>
+    <div id="err"></div>
   </div>
-  <div class="cfg">
-    <label>Calidad
-      <select id="qSel">
-        <option value="2">Alta</option>
-        <option value="1">Media (recomendada)</option>
-        <option value="0">Baja</option>
-      </select>
-    </label>
-    <label>Sensibilidad <input type="range" id="sens" min="5" max="30" value="14"></label>
-    <label><input type="checkbox" id="sndChk" checked> Sonido ambiente</label>
-  </div>
-  <div class="btns">
-    <button id="btn">ENTRAR</button>
-  </div>
-  <div id="err"></div>
 </div>
 
 <div id="hud">
@@ -369,7 +378,7 @@ function addCollider(cx,cz,w,d,h){colliders.push({minX:cx-w/2,maxX:cx+w/2,minZ:c
 
 var WALL_H=4,T=0.22;
 var wallMat=new THREE.MeshStandardMaterial({color:0xf2e5cf,roughness:.92,envMapIntensity:.4});
-var wallMat2=new THREE.MeshStandardMaterial({color:0xe8d4b4,roughness:.92,envMapIntensity:.4});
+var wallMat2=new THREE.MeshStandardMaterial({color:0xdfc9a5,roughness:.92,envMapIntensity:.4});
 var trimMat=new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.8});
 
 function wall(x1,z1,x2,z2,mat){
@@ -729,7 +738,7 @@ function floorArrow(x,z,ry){
   m.position.set(x,.02,z);scene.add(m);
 }
 
-stand(0,3.6,Math.PI,'Inscripción','Plano y cronograma',100,null,
+stand(4.2,3.4,0,'Inscripción','Plano y cronograma',100,null,
   ['Puestos por corredor','Material y murales de los estudiantes','Videos en la pared']);
 column(-6,2);column(6,2);column(-6,-3.5);column(6,-3.5);
 plant(-7.6,5);plant(7.6,5);plant(-2.4,-5);plant(2.4,-5);
@@ -739,6 +748,7 @@ plaque(0,1.75,5.84,Math.PI,'Inscripcion','Plano y cronograma');
 // ambiente: luz cálida y flechas del recorrido
 lamp(0,0);lamp(-13,0);lamp(13,0);lamp(0,-12);lamp(0,-21);lamp(0,-26);
 floorArrow(0,2.5,0);floorArrow(0,-1.5,0);floorArrow(-6.5,0,Math.PI/2);floorArrow(6.5,0,-Math.PI/2);
+garland(0,3.3,-9,5.2,0);garland(0,3.3,-15,5.2,0);
 floorArrow(0,-8,0);floorArrow(0,-12.5,0);floorArrow(0,-16.5,0);floorArrow(0,-19.5,0);floorArrow(0,-25,0);
 floorArrow(-10,-31.5,0);floorArrow(-9.2,-27.6,-Math.PI/2);
 
@@ -917,8 +927,8 @@ function surfboard(x,z,ry){
 signpost(6.9,4.1,Math.PI,['Bariloche','Viedma','El Bolsón','Sierra Grande']);
 globe(-6.9,4.1);
 luggage(-3.6,4.7,.35);
-luggage(3.6,4.7,-.4);
-brochures(-2.7,3.6,.3);
+luggage(7.2,2.4,-.4);
+brochures(-6.0,3.6,.3);
 surfboard(-15.4,2.2,Math.PI/2);
 surfboard(15.4,2.2,-Math.PI/2);
 
@@ -1037,8 +1047,8 @@ poster(15.85,2.2,-2,-Math.PI/2,15,P5,1,'Tejidos mapuche','Tradicion de la comuni
 poster(12,2.2,-2.85,0,16,P1,1,'Artesanias del sur','Madera, lana y ceramica');
 poster(-2.85,2.15,-9,Math.PI/2,17,P4,1,'Circuito Chico','Bariloche · 62 km');
 poster(2.85,2.15,-9,-Math.PI/2,18,P2,1,'Cerro Catedral','Esqui y trekking');
-poster(-2.85,2.15,-13.5,Math.PI/2,19,P3,1,'Viedma y el rio','Balnearios y faro');
-poster(2.85,2.15,-13.5,-Math.PI/2,20,P5,1,'Valle del Rio Negro','Frutas y cosecha');
+poster(-2.85,2.15,-13.5,Math.PI/2,19,P3,1.25,'Viedma y el rio','Balnearios y faro');
+poster(2.85,2.15,-13.5,-Math.PI/2,20,P5,1.25,'Valle del Rio Negro','Frutas y cosecha');
 poster(-6,2.4,-29.85,0,21,P1,1.7,'Nahuel Huapi','Lagos y bosques andinos');
 poster(6,2.4,-29.85,0,22,P3,1.7,'Ruta 40','De la meseta a la cordillera');
 poster(-11.85,2.4,-24,Math.PI/2,23,P2,1.5,'El Bolson','Feria artesanal y cervecerias');
@@ -1257,10 +1267,15 @@ banner(-10,3.2,-30.16,Math.PI,7.2,'PASEO DE LOS CORREDORES','ESRN Rural Virtual 
 SALAS.forEach(function(S){
   arch(-12,S.zc); arch(-8,S.zc);
   garland(-10,3.42,S.zc,3.7,0);
+  plaque(-11.72,2.55,S.zc,Math.PI/2,'CORREDOR '+S.c.n,S.c.nombre.toUpperCase());
+  plaque(-8.28,2.55,S.zc,-Math.PI/2,'CORREDOR '+S.c.n,S.c.nombre.toUpperCase());
 });
 [-38,-46,-54,-62].forEach(function(z){
   plant(-11.5,z); plant(-8.5,z);
   box(3.9,.14,.2,-10,WALL_H-.12,z,woodMat,false);
+  var lado=z<=-54?'Corredores 6 a 9':'Corredores 1 a 5';
+  banner(-11.72,2.65,z,Math.PI/2,3.0,'PASEO DE LOS CORREDORES',lado);
+  banner(-8.28,2.65,z,-Math.PI/2,3.0,'PASEO DE LOS CORREDORES',lado);
 });
 floorArrow(-10,-43,0);floorArrow(-10,-59,0);
 
@@ -1268,7 +1283,7 @@ floorArrow(-10,-43,0);floorArrow(-10,-59,0);
 for(si=0;si<SALAS.length;si++){
   sl=SALAS[si]; cr=sl.c;
   var centroX=(sl.x1+sl.x2)/2;
-  rug(centroX,sl.zc,8.2,5.2,cr.color,'#f0d38a');
+  rug(centroX,sl.zc,8.2,5.2,'#d9c7a6',cr.color);
   warmLamp(centroX,sl.zc);
   garland(centroX,2.98,sl.zN-.2,5.5,0);
   counter(centroX,sl.zN-1.4,0);
@@ -1321,7 +1336,7 @@ for(si=0;si<SALAS.length;si++){
     /* fotos y fichas: cuadros grandes, con la proporcion real de cada imagen */
     var gal=fotos.concat(textos), rows=gal.length>9?2:1;
     var cols=Math.ceil(gal.length/rows), gapG=0.18, zGal=sl.zS+.22;
-    var hG=rows>1?1.05:1.35;
+    var hG=rows>1?1.05:1.7;
     for(var row=0;row<rows;row++){
       var linea=gal.slice(row*cols,(row+1)*cols);
       var anchos=linea.map(function(g){
@@ -1329,7 +1344,7 @@ for(si=0;si<SALAS.length;si++){
       });
       var tot=anchos.reduce(function(a,b){return a+b;},0)+gapG*(linea.length-1);
       var sc=Math.min(1,13.2/tot), hh=hG*sc, x=centroX-tot*sc/2;
-      var y=rows>1?2.0-row*(hh+0.30):1.35;
+      var y=rows>1?2.0-row*(hh+0.30):1.15;
       linea.forEach(function(g,j){
         var base={file:'',id:'',cx:x+anchos[j]*sc/2,cy:y,cz:zGal,ry:0,
           w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
@@ -1358,7 +1373,7 @@ for(si=0;si<SALAS.length;si++){
 }
 /* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
 var SCREENS=[
- {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:0, cy:2.4, cz:-29.79, ry:0, w:1.5, h:2.65, label:'Feria de Laguna Blanca'}
+ {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:0, cy:2.15, cz:-29.79, ry:0, w:1.98, h:3.5, label:'Feria de Laguna Blanca'}
 ].concat(EXPO_SLOTS);
 var screensWrap=document.getElementById('screens');
 function cornersOf(s){
@@ -1716,7 +1731,7 @@ var POI=[
  {x:-11,z:-20,tag:'Afiche',t:'Leyendas mapuche',d:'Historias y tradiciones del lago Nahuel Huapi.'},
  {x:11,z:-20,tag:'Afiche',t:'Pesca deportiva',d:'Rios Limay y Negro: trucha y salmon.'},
  {x:2.6,z:-28.8,tag:'Sede',t:'Sede Laguna Blanca',d:'El video de al lado muestra la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual.'},
- {x:0,z:-27,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apunta la mirada a la pantalla y haz clic para reproducirlo con sonido.'}
+ {x:0,z:-28.2,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apunta la mirada a la pantalla y haz clic para reproducirlo con sonido.'}
 ];
 
 POI=POI.concat(POI_EXTRA);
@@ -1902,10 +1917,18 @@ sndBtn.addEventListener('click',function(e){
 function zoneName(x,z){
   if(z>-6.5)return (x<-9.2||x>9.2)?(x<0?'PUESTO GASTRONOMIA':'PUESTO ARTESANIAS'):'INFORMACION';
   if(z>-17.5)return 'PASILLO DE PROYECTOS';
-  return 'SALON PRINCIPAL';
+  if(z<-30){
+    if(x>-12&&x<-8)return 'PASEO DE LOS CORREDORES';
+    for(var i=0;i<SALAS.length;i++){
+      var s=SALAS[i];
+      if(x>=s.x1&&x<=s.x2&&z<=s.zN&&z>=s.zS)
+        return 'CORREDOR '+s.c.n+' · '+s.c.nombre.toUpperCase();
+    }
+  }
+  return 'GALERIA PRINCIPAL · LAGUNA BLANCA';
 }
 function nearPOI(){
-  var best=null,bd=2.6;
+  var best=null,bd=1.8;
   for(var i=0;i<POI.length;i++){
     var d=Math.hypot(POI[i].x-PX,POI[i].z-PZ);
     if(d<bd){bd=d;best=POI[i];}
