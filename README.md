@@ -1,8 +1,14 @@
 # Feria de Turismo 3D — ESRN RURAL Virtual
 
-Muestra virtual en 3D: seis puestos de trabajos, murales de los cursos y el
-video de la Feria de Laguna Blanca. Se recorre en primera persona, con ficha de cada
-puesto y foto para descargar.
+Muestra virtual en 3D: seis puestos de trabajos, murales de los cursos, el
+video de la Feria de Laguna Blanca y un paseo con 9 salones de corredores turísticos,
+cada uno con las sedes que lo integran. Se recorre en primera persona, con ficha de
+cada puesto y foto para descargar.
+
+Los salones de corredores se fueron incorporando por etapas para cuidar el
+rendimiento: primero la estructura, carteles y fichas; después se agregan los
+espacios preparados para el video/foto de cada expo. Fuente de los corredores:
+<https://viperplus.github.io/mapacorredsores/> (Wikiparajes).
 
 ---
 
