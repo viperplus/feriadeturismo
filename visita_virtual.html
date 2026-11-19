@@ -1246,6 +1246,7 @@ for(si=0;si<SALAS.length;si++){
       if(g.item){
         base.poster=g.img;
         base.label='SEDE '+g.sd.num+' · '+g.item.label;
+        if(g.item.t==='video')base.kindVideo=true;
       }else{
         base.ficha={t:'SEDE '+g.sd.num+' · '+g.mm.sede,s:'PROYECTO',
                     lines:wrapLines(g.mm.texto,30).slice(0,4)};
@@ -1365,8 +1366,8 @@ var screenObjs=SCREENS.map(function(s){
     var grp=new THREE.Group();
     grp.position.set(s.cx,s.cy,s.cz); grp.rotation.y=s.ry;
     var mesh;
-    if(!vid){
-      /* poster liviano: 2 mallas, sin videos ni sombras */
+    if(!vid&&!s.kindVideo){
+      /* cuadro liviano para fotos, audios y fichas */
       var marco=new THREE.Mesh(new THREE.BoxGeometry(s.w+.18,s.h+.18,.06),
         new THREE.MeshStandardMaterial({color:0x6b4423,roughness:.55,metalness:.12}));
       marco.position.z=-.06;grp.add(marco);
@@ -1416,22 +1417,26 @@ var screenObjs=SCREENS.map(function(s){
       lip(s.w+LT*2,LT,0,-(s.h/2+LT/2));
       lip(LT,s.h,-(s.w/2+LT/2),0);
       lip(LT,s.h, (s.w/2+LT/2),0);
+      if(s.kindVideo)grp.traverse(function(m){m.castShadow=false;m.receiveShadow=false;});
     }
     scene.add(grp); o.mesh=grp; o.plane=mesh;
-    if(vid){
+    if(vid||s.kindVideo){
       var ph=Math.sin(s.ry), pc=Math.cos(s.ry);
-      var plqH=1.05/2.844;
-      var frameBot=s.cy-(s.h/2+0.25);
-      var plq=new THREE.Mesh(new THREE.PlaneGeometry(1.05,plqH),
+      var plqW=Math.min(1.05,s.w*1.05), plqH=plqW/(s.kindVideo?3.6:2.844);
+      var frameBot=s.cy-(s.h/2+(s.kindVideo?0.02:0.25));
+      var plq=new THREE.Mesh(new THREE.PlaneGeometry(plqW,plqH),
         new THREE.MeshBasicMaterial({map:signTex(s.label,'Clic para reproducir')}));
-      plq.position.set(s.cx+ph*0.03, frameBot-0.05-plqH/2, s.cz+pc*0.03);
+      plq.position.set(s.cx+ph*0.03, frameBot-0.03-plqH/2, s.cz+pc*0.03);
       plq.rotation.y=s.ry; scene.add(plq); o.plaque=plq;
-      var icon=new THREE.Mesh(new THREE.PlaneGeometry(.5,.5),
+      var icS=Math.min(.5,s.w*.55);
+      var icon=new THREE.Mesh(new THREE.PlaneGeometry(icS,icS),
         new THREE.MeshBasicMaterial({map:playIconTex(),transparent:true,depthWrite:false}));
       icon.position.set(s.cx+ph*(-0.015), s.cy, s.cz+pc*(-0.015));
       icon.rotation.y=s.ry; icon.visible=true; scene.add(icon); o.icon=icon;
-      vid.addEventListener('play',function(){icon.visible=false;});
-      vid.addEventListener('pause',function(){icon.visible=true;});
+      if(vid){
+        vid.addEventListener('play',function(){icon.visible=false;});
+        vid.addEventListener('pause',function(){icon.visible=true;});
+      }
     }
   }else{
     var el=document.createElement('div');
@@ -1561,7 +1566,7 @@ function updateScreens(){
     if(use3D){
       o.mesh.visible=vis;
       if(o.plaque)o.plaque.visible=vis;
-      if(o.icon)o.icon.visible=vis&&o.vid.paused;
+      if(o.icon)o.icon.visible=vis&&(!o.vid||o.vid.paused);
     }else{
       o.el.style.display=vis?'block':'none';
     }
