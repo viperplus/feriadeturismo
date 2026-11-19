@@ -1,12 +1,8 @@
 # Feria de Turismo 3D — ESRN RURAL Virtual
 
-Muestra virtual en 3D: seis puestos de trabajos, murales de los cursos, el
-video de la Feria de Laguna Blanca y un **Paseo de los Corredores** con 9 salones,
-uno por corredor turístico de Río Negro, con las sedes que lo integran y un espacio
-preparado para el video/foto de cada expo. Se recorre en primera persona, con ficha
-de cada salón y foto para descargar.
-
-Fuente de los corredores y sedes: <https://viperplus.github.io/mapacorredsores/> (Wikiparajes).
+Muestra virtual en 3D: seis puestos de trabajos, murales de los cursos y el
+video de la Feria de Laguna Blanca. Se recorre en primera persona, con ficha de cada
+puesto y foto para descargar.
 
 ---
 
@@ -32,7 +28,7 @@ y después abrir <http://127.0.0.1:8766/visita_virtual.html>
 | Mouse | mirar (clic para capturar el puntero) |
 | `Shift` | correr |
 | `Espacio` | saltar |
-| `E` | ficha del puesto o del corredor |
+| `E` | ficha del puesto |
 | `F` | guardar foto en PNG |
 | `Esc` | pausa |
 
@@ -46,44 +42,8 @@ En celular o tablet aparecen botones táctiles para caminar y mirar con el dedo.
 |---|---|
 | `index.html` | dirección raíz: redirige a la feria |
 | `visita_virtual.html` | la feria entera (escena, estilos y lógica) |
-| `video_galeria.mp4` | video de la pared del salón (Laguna Blanca) |
+| `video_galeria.mp4` | video de la pared del salón |
 | `three.min.js` | motor 3D (Three.js r128) |
-
----
-
-## Los 9 corredores y sus sedes
-
-Al fondo del salón principal hay un vano que lleva al **Paseo de los Corredores**.
-Cada salón tiene el cartel del corredor, las placas con sus sedes, un resumen y,
-apretando `E`, la ficha completa (patrimonio, fiestas, identidad, flora, fauna,
-emprendimientos y opciones sustentable/sostenible).
-
-| # | Corredor | Sedes |
-|---|---|---|
-| 1 | Lago Pellegrini | Lago Pellegrini |
-| 2 | Valle Verde y Peñas Blancas | Valle Verde, Peñas Blancas |
-| 3 | Meseta Norte y Transición | Cerro Policía, Aguada Guzmán, Naupahuen, Mencué, Laguna Blanca, Blancura Centro, Colan Conhué |
-| 4 | Precordillera y Cuenca del Limay | Corralito, Villa Llanquín, El Manso |
-| 5 | Suroeste (La Trochita) | Río Chico, Mamuel Choique |
-| 6 | Somuncura Centro-Oeste y Línea Sur | El Caín, Aguada de Guerra, Comicó, Yaminué, Rincón Treneta |
-| 7 | Chelforó (Valle Medio Oriental) | Chelforó |
-| 8 | Vertiente Oriental, Los Berros y Costa Marítima | Cona Niyeu, Arroyo Los Berros, Sierra Paileman, Aguada Cecilio |
-| 9 | Litoral Atlántico (Nodo Único) | El Cóndor |
-
-### Cómo agregar el video/foto de cada expo
-
-Cada salón ya tiene su marco en la pared con el cartel *"Espacio preparado"*.
-Cuando lleguen los archivos:
-
-1. Copiar el video (o la foto) a esta carpeta, al lado de `visita_virtual.html`.
-2. En `visita_virtual.html`, buscar `EXPO_SLOTS` (dentro del bloque
-   `ALA DE CORREDORES TURÍSTICOS`). Hay 9 entradas, una por corredor, con
-   `file:''` e `id:''`.
-3. Completar `file:'nombre-del-archivo.mp4'` en la del corredor correspondiente.
-   El cartel de "próximamente" se reemplaza solo por el reproductor, igual que
-   el video de Laguna Blanca. Si es una foto, convertirla a mp4 (o avisar para
-   adaptar el marco a imagen).
-4. Subir los archivos con `git add . && git commit -m " videos de expo " && git push`.
 
 Si `three.min.js` faltara, el código cae solo a una copia desde un CDN, así que la
 feria también anda con solo conexión a internet.
