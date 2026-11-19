@@ -1232,41 +1232,52 @@ for(si=0;si<SALAS.length;si++){
       });
       textos.push({sd:sd,mm:mm});
     });
-    /* videos: se ven y se reproducen en la propia pared */
+    /* videos: mismo marco, pero con la proporcion real de la grabacion */
     if(vids.length){
-      var vw=Math.min(1.85,7.5/vids.length-0.16), vh=vw*0.62;
-      var xV=paredEx+(sl.west?.25:-.25);
+      var hV=1.45, gapV=0.18;
+      var wsV=vids.map(function(g){return Math.min(2.6,hV*(g.it.videoAspect||g.it.aspect||1.6));});
+      var totV=wsV.reduce(function(a,b){return a+b;},0)+gapV*(vids.length-1);
+      var scV=Math.min(1,7.4/totV), xV=paredEx+(sl.west?.25:-.25);
+      var cursorV=sl.zc-totV*scV/2;
       vids.forEach(function(g,j){
-        var zv=sl.zc+((j-(vids.length-1)/2)*(vw+0.16));
-        EXPO_SLOTS.push({file:'',id:'',cx:xV,cy:1.35,cz:zv,ry:rySal,w:vw,h:vh,
-          poster:g.it.wall||g.mm.poster,videoSrc:g.it.src,kindVideo:true,
+        var wj=wsV[j]*scV;
+        EXPO_SLOTS.push({file:'',id:'',cx:xV,cy:1.18,cz:cursorV+wj/2,
+          ry:rySal,w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
+          videoSrc:g.it.src,kindVideo:true,
           label:'SEDE '+g.sd.num+' · '+g.it.title.slice(0,32),
           media:g.mm.items,itemIndex:g.idx,full:g.mm.texto,sede:g.mm.sede,
           proyecto:g.mm.proyecto,cor:cr.n});
+        cursorV+=wj+gapV*scV;
       });
     }
-    /* fotos y fichas: cuadros grandes en la pared del fondo */
-    var gal=fotos.concat(textos), cols=Math.min(9,gal.length), rows=Math.ceil(gal.length/cols);
-    var pw=rows>1?Math.min(1.28,13/cols-0.16):Math.min(2.1,13/gal.length-0.15);
-    var ph=rows>1?0.86:pw*0.625;
-    var gapX=pw+0.16, gapY=ph+0.34, yTop=rows>1?1.72:1.35, zGal=sl.zS+.22;
-    gal.forEach(function(g,j){
-      var row=Math.floor(j/cols), col=j%cols;
-      var inRow=Math.min(cols,gal.length-row*cols);
-      var x=centroX+((col-(inRow-1)/2)*gapX), y=yTop-row*gapY;
-      var base={file:'',id:'',cx:x,cy:y,cz:zGal,ry:0,w:pw,h:ph,
-        media:g.mm.items,itemIndex:g.idx,full:g.mm.texto,sede:g.mm.sede,
-        proyecto:g.mm.proyecto,cor:cr.n};
-      if(g.it){
-        base.poster=g.it.wall||g.mm.poster;
-        base.label='SEDE '+g.sd.num+' · '+g.it.label;
-      }else{
-        base.ficha={t:'SEDE '+g.sd.num+' · '+g.mm.sede,s:'PROYECTO',
-                    lines:wrapLines(g.mm.texto,30).slice(0,4)};
-        base.label='SEDE '+g.sd.num+' · Ficha';
-      }
-      EXPO_SLOTS.push(base);
-    });
+    /* fotos y fichas: cuadros grandes, con la proporcion real de cada imagen */
+    var gal=fotos.concat(textos), rows=gal.length>9?2:1;
+    var cols=Math.ceil(gal.length/rows), gapG=0.18, zGal=sl.zS+.22;
+    var hG=rows>1?1.05:1.35;
+    for(var row=0;row<rows;row++){
+      var linea=gal.slice(row*cols,(row+1)*cols);
+      var anchos=linea.map(function(g){
+        return Math.min(2.6,hG*((g.it&&(g.it.aspect||g.it.videoAspect))||1.6));
+      });
+      var tot=anchos.reduce(function(a,b){return a+b;},0)+gapG*(linea.length-1);
+      var sc=Math.min(1,13.2/tot), hh=hG*sc, x=centroX-tot*sc/2;
+      var y=rows>1?2.0-row*(hh+0.30):1.35;
+      linea.forEach(function(g,j){
+        var base={file:'',id:'',cx:x+anchos[j]*sc/2,cy:y,cz:zGal,ry:0,
+          w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
+          full:g.mm.texto,sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
+        if(g.it){
+          base.poster=g.it.wall||g.mm.poster;
+          base.label='SEDE '+g.sd.num+' · '+g.it.label;
+        }else{
+          base.ficha={t:'SEDE '+g.sd.num+' · '+g.mm.sede,s:'PROYECTO',
+                      lines:wrapLines(g.mm.texto,30).slice(0,4)};
+          base.label='SEDE '+g.sd.num+' · Ficha';
+        }
+        EXPO_SLOTS.push(base);
+        x+=anchos[j]*sc+gapG*sc;
+      });
+    }
     POI_EXTRA.push({x:paredEx+(sl.west?1.15:-1.15),z:sl.zc,
       tag:'EXPO · CORREDOR '+cr.n,t:'Material de los estudiantes',
       d:conMat.length+' sedes · videos en la pared, fotos y fichas',
