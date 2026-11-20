@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v7</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v8</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -184,7 +184,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote3-20261120';
+window.BUILD='plaza-lote4a-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -367,6 +367,24 @@ function floorTex(){
   var t=new THREE.CanvasTexture(small);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(10,17);
   t.encoding=THREE.sRGBEncoding;t.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);return t;
 }
+function wallTex(seed,base,shade){
+  var c=document.createElement('canvas');c.width=c.height=256;var x=c.getContext('2d');
+  var R=rnd32(seed),i,j;
+  var g=x.createLinearGradient(0,0,0,256);
+  g.addColorStop(0,base);g.addColorStop(1,shade);x.fillStyle=g;x.fillRect(0,0,256,256);
+  for(i=0;i<900;i++){
+    x.fillStyle='rgba('+(90+Math.floor(R()*70))+','+(70+Math.floor(R()*60))+','+
+      (48+Math.floor(R()*50))+','+(0.02+R()*0.05)+')';
+    x.fillRect(R()*256,R()*256,1+R()*3,1+R()*3);
+  }
+  for(i=0;i<26;i++){
+    x.strokeStyle='rgba(120,92,62,'+(0.02+R()*0.04)+')';x.lineWidth=.6+R()*1.6;
+    var y=R()*256;x.beginPath();x.moveTo(0,y);x.lineTo(256,y+(R()-.5)*12);x.stroke();
+  }
+  var t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(2,1);
+  t.encoding=THREE.sRGBEncoding;t.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);return t;
+}
+var wallTexA=wallTex(23,'#f6ead6','#e9d6b6'),wallTexB=wallTex(29,'#e9d4ae','#d3b78c');
 function woodTex(){
   var c=document.createElement('canvas');c.width=c.height=512;var x=c.getContext('2d');
   var R=rnd32(11),i;
@@ -429,8 +447,8 @@ var colliders=[];
 function addCollider(cx,cz,w,d,h){colliders.push({minX:cx-w/2,maxX:cx+w/2,minZ:cz-d/2,maxZ:cz+d/2,h:(h===undefined?4:h)});}
 
 var WALL_H=4,T=0.22;
-var wallMat=new THREE.MeshStandardMaterial({color:0xf2e5cf,roughness:.92,envMapIntensity:.4});
-var wallMat2=new THREE.MeshStandardMaterial({color:0xdfc9a5,roughness:.92,envMapIntensity:.4});
+var wallMat=new THREE.MeshStandardMaterial({map:wallTexA,roughness:.92,envMapIntensity:.4});
+var wallMat2=new THREE.MeshStandardMaterial({map:wallTexB,roughness:.92,envMapIntensity:.4});
 var trimMat=new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.8});
 
 function wall(x1,z1,x2,z2,mat){
@@ -458,7 +476,7 @@ function lintel(x1,z1,x2,z2,y0){
 var fTex=floorTex();
 var floor=new THREE.Mesh(new THREE.PlaneGeometry(58,96),
   new THREE.MeshStandardMaterial({map:fTex,roughness:.88,metalness:0,
-    bumpMap:fTex,bumpScale:.012,envMapIntensity:.7}));
+    bumpMap:fTex,bumpScale:.02,envMapIntensity:.7}));
 floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-28);floor.receiveShadow=true;scene.add(floor);
 
 var grass=new THREE.Mesh(new THREE.PlaneGeometry(400,400),
@@ -1168,6 +1186,9 @@ function counter(x,z,ry){
   var cloth=new THREE.Mesh(new THREE.BoxGeometry(2.46,.06,.84),
     new THREE.MeshStandardMaterial({color:0xc0653a,roughness:.9}));
   cloth.position.y=.85;g.add(cloth);
+  var dobladillo=new THREE.Mesh(new THREE.BoxGeometry(2.5,.10,.88),
+    new THREE.MeshStandardMaterial({color:0x9c4f2c,roughness:.92}));
+  dobladillo.position.y=.78;g.add(dobladillo);
   [-.9,.9].forEach(function(o){
     var b=new THREE.Mesh(new THREE.CylinderGeometry(.22,.28,.2,10),
       new THREE.MeshStandardMaterial({color:0xb99156,roughness:1}));
@@ -1236,6 +1257,15 @@ for(var si=0;si<SALAS.length;si++){
   warmLamp(ctr.x,ctr.z);
   garland(qf.x,2.98,qf.z,5.5,sl.ang);
   counter(q.x,q.z,rot(sl,0));
+  var mp=pt(sl,.62,D/2-2.2);
+  var maceta=new THREE.Group();
+  var tiesto=new THREE.Mesh(new THREE.CylinderGeometry(.17,.13,.24,10),
+    new THREE.MeshStandardMaterial({color:0xa9603c,roughness:.95}));
+  tiesto.position.y=.99;tiesto.castShadow=true;maceta.add(tiesto);
+  var hojas=new THREE.Mesh(new THREE.IcosahedronGeometry(.2,0),
+    new THREE.MeshStandardMaterial({color:0x6f8f4f,roughness:.9,flatShading:true}));
+  hojas.position.y=1.22;hojas.scale.set(1,.85,1);maceta.add(hojas);
+  maceta.position.set(mp.x,0,mp.z);scene.add(maceta);
   q=pt(sl,W/2-1.2,2.2); bench(q.x,q.z,rot(sl,0));
   q=pt(sl,-W/2+.16,0);
   banner(q.x,3.25,q.z,rot(sl,Math.PI/2),3.6,'CORREDOR '+cr.n,cr.nombre.toUpperCase());
@@ -1398,7 +1428,7 @@ function slotTex(s){
   x.fillStyle='#e9c46a';x.font='bold 32px Segoe UI,Arial';
   x.fillText((s.sede||s.label||'').slice(0,34),480,310);
   x.fillStyle='#f6e8cf';x.font='24px Segoe UI,Arial';
-  x.fillText('Clic para ver el material',480,390);
+  x.fillText('Clic: ampliar',480,390);
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
 }
 var use3D=(location.protocol==='http:'||location.protocol==='https:');
@@ -1426,6 +1456,7 @@ var screenObjs=SCREENS.map(function(s){
       if(s.poster){
         new THREE.TextureLoader().load(av(s.poster),function(t){
           t.encoding=THREE.sRGBEncoding;
+          t.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);
           var old=o.posterTex;o.posterTex=t;
           if(mesh&&(!vid||vid.paused)&&mesh.material.map===old){mesh.material.map=t;mesh.material.needsUpdate=true;}
           if(old&&old!==t)old.dispose();
@@ -1495,7 +1526,7 @@ var screenObjs=SCREENS.map(function(s){
       var plqW=Math.min(1.05,s.w*1.05), plqH=plqW/(s.kindVideo?3.6:2.844);
       var frameBot=s.cy-(s.h/2+(s.kindVideo?0.02:0.25));
       var plq=new THREE.Mesh(new THREE.PlaneGeometry(plqW,plqH),
-        new THREE.MeshBasicMaterial({map:signTex(s.label,s.kindVideo?'Clic: sonido':'Clic para reproducir')}));
+        new THREE.MeshBasicMaterial({map:signTex(s.label,s.kindVideo?'Clic: sonido':'Clic: ampliar')}));
       plq.position.set(s.cx+ph*0.03, frameBot-0.03-plqH/2, s.cz+pc*0.03);
       plq.rotation.y=s.ry; scene.add(plq); o.plaque=plq;
       var icS=Math.min(.5,s.w*.55);
@@ -1521,7 +1552,7 @@ var screenObjs=SCREENS.map(function(s){
       var play=document.createElement('div');
       play.className='play'; play.textContent='▶'; el.appendChild(play);
       var hint=document.createElement('div');
-      hint.className='hint'; hint.textContent=s.kindVideo?'Clic: sonido':'Clic: reproducir con sonido';
+      hint.className='hint'; hint.textContent=s.kindVideo?'Clic: sonido':'Clic: ampliar';
       el.appendChild(hint);
       vid.addEventListener('play',function(){play.classList.add('hide');});
       vid.addEventListener('pause',function(){play.classList.remove('hide');});
@@ -1530,7 +1561,7 @@ var screenObjs=SCREENS.map(function(s){
     }else{
       el.style.cssText+=';display:flex;align-items:center;justify-content:center;padding:18px;'+
         'background:#3a2418;color:#e9c46a;font:16px Segoe UI,Arial;text-align:center';
-      el.textContent=(s.label||(s.ficha&&s.ficha.t)||'Material de la sede')+' · clic para ver';
+      el.textContent=(s.label||(s.ficha&&s.ficha.t)||'Material de la sede')+' · clic: ampliar';
       if(s.poster)el.style.backgroundImage="url('"+s.poster+"')";
       el.style.backgroundSize='cover';el.style.backgroundPosition='center';
     }

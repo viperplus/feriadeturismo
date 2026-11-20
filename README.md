@@ -19,7 +19,7 @@ con la imagen original en alta resolución (las infografías se leen desde la pa
 al hacer clic en una foto o en una ficha sí se abre su reproductor.
 
 La muestra se reorganizó como una **feria rural cálida**: paredes crema y adobe,
-madera y guirnaldas de colores. Se eliminaron por completo la antesala y el recorrido
+madera y guirnaldas de colores. Los muros tienen una textura cálida crema→adobe, los mostradores un mantel con dobladillo y una maceta ligera, y las fotos se piden con mayor nitidez. Se eliminaron por completo la antesala y el recorrido
 recto tipo pasillo de clínica, junto con los puestos, murales y afiches inventados
 (inscripción, gastronomía, artesanías, trekking, "Mapa de Rio Negro", "Fiesta de la
 Manzana", etc.) y sus 25 puntos de interés falsos. Tampoco quedan azules fríos ni
