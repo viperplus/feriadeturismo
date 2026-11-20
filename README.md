@@ -49,6 +49,14 @@ Los originales entregados por los estudiantes no se modificaron: en `material/`
 hay copias convertidas y comprimidas (MP4 H.264, JPG) para que se vean en cualquier
 navegador y en móviles.
 
+La versión de la escena queda marcada en `BUILD`, `version.txt` y el badge visible.
+Todos los assets locales se piden con `?v=BUILD` para evitar mezclas por caché. Si el
+autoplay es rechazado (por ejemplo en iOS), se reintenta solo: los videos arrancan
+siempre silenciados y con un clic se activa el sonido. Hay aviso y recuperación si se
+pierde el contexto WebGL, se liberan los decodificadores y las texturas al cerrar
+ventanas y se valida la configuración guardada. Para diagnosticar, agregá `?debug=1`
+al final de la URL de la escena.
+
 ---
 
 ## Cómo verla
