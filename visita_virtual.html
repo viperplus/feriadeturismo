@@ -77,25 +77,38 @@
   .tst.gold{border-left-color:#ffd78f}
   @keyframes pop{from{transform:translateX(-14px);opacity:0}to{transform:none;opacity:1}}
   #modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
-    background:rgba(30,17,9,.72);backdrop-filter:blur(4px);padding:20px}
+    background:rgba(30,17,9,.72);backdrop-filter:blur(4px);padding:14px}
   #modal.show{display:flex}
-  .mbox{width:min(580px,94vw);max-height:84vh;overflow:auto;background:#f7ead2;color:#4a2f1c;
-    border:1px solid #b98a58;border-radius:18px;padding:22px 24px;box-shadow:0 22px 70px rgba(0,0,0,.65)}
+  .mbox{width:min(640px,94vw);max-height:92vh;overflow:hidden;background:#f7ead2;color:#4a2f1c;
+    border:1px solid #b98a58;border-radius:18px;box-shadow:0 22px 70px rgba(0,0,0,.65);
+    display:flex;flex-direction:column}
+  .mbox.wide{width:min(980px,96vw)}
+  .mbox .mhead{position:relative;flex:none;padding:16px 62px 14px 24px;border-bottom:1px solid #d9bd92}
+  .mbox .mhead .close{position:absolute;right:16px;top:16px}
   .mbox .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9a612f}
-  .mbox h2{font-size:22px;color:#8a4b2a;margin:6px 0 10px}
-  .mbox p{font-size:14.5px;color:#5b4128;line-height:1.6;white-space:pre-line}
-  .mbox .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+  .mbox h2{font-size:23px;color:#8a4b2a;margin:5px 0 0;line-height:1.25}
+  .mbox .mtabs{flex:none;display:flex;flex-wrap:wrap;gap:8px;padding:10px 24px;
+    border-bottom:1px solid #e2c79f;background:#f1e0c2}
+  .mbox .mtabs button{border:1px solid #c9a273;background:#fff7e8;color:#5b4128;border-radius:9px;
+    padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600}
+  .mbox .mtabs button:hover{background:#efdcb8}
+  .mbox .mtabs button.on{background:#a8532b;border-color:#8a4b2a;color:#fff8ea}
+  .mbox .mstage{flex:1 1 auto;min-height:0;overflow:auto;padding:18px 24px 22px}
+  .mbox .mfoot{flex:none;padding:10px 24px;border-top:1px solid #d9bd92;background:#f7ead2;
+    font-size:12px;color:#8a6a49}
+  .mbox p{font-size:15.5px;color:#5b4128;line-height:1.7;white-space:pre-wrap;margin:0;max-width:78ch}
+  .mbox pre{font:13px/1.6 Segoe UI,Arial;color:#6d5238;white-space:pre-wrap;word-break:break-word;
+    background:#f1e0c2;border-radius:10px;padding:12px 14px;margin:14px 0 0}
   .mbox .close{border:1px solid #c9a273;background:#efe0c2;color:#5b4128;border-radius:10px;
-    padding:8px 16px;cursor:pointer;font-size:13px}
+    padding:8px 14px;cursor:pointer;font-size:13px}
   .mbox .close:hover{background:#e6d2ae}
-  .mbox.wide{width:min(920px,94vw)}
+  .mbox .big{display:block;max-width:100%;max-height:62vh;width:auto;height:auto;object-fit:contain;
+    margin:0 auto;border-radius:10px;box-shadow:0 8px 24px rgba(70,40,20,.22)}
+  .mbox .gal{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+  .mbox .gal img{width:78px;height:58px;object-fit:cover;border-radius:7px;cursor:pointer;
+    opacity:.55;border:2px solid transparent}
+  .mbox .gal img.on{opacity:1;border-color:#a8532b}
   .mbox video{width:100%;max-height:56vh;border-radius:10px;background:#000;display:block}
-  .mbox .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:10px}
-  .mbox .gal img{width:100%;height:110px;object-fit:cover;border-radius:8px;cursor:zoom-in}
-  .mbox .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-  .mbox .tabs button{border:1px solid #c9a273;background:#efe0c2;color:#5b4128;border-radius:8px;
-    padding:6px 11px;cursor:pointer;font-size:12px}
-  .mbox .tabs button.on{background:#a8532b;border-color:#8a4b2a;color:#fff8ea}
   .mbox audio{width:100%;margin-top:10px}
   #info{
     position:absolute;left:50%;bottom:26px;transform:translate(-50%,26px);width:min(560px,92vw);
@@ -134,7 +147,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v13</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v14</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -184,7 +197,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote7-20261120';
+window.BUILD='plaza-lote8-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -1622,6 +1635,7 @@ function hitScreen(px,py){
 }
 document.addEventListener('mousedown',function(e){
   if(!started)return;
+  if(document.getElementById('modal').classList.contains('show'))return;
   if(e.target&&e.target.closest&&e.target.closest('#overlay'))return;
   if(locked)hitScreen(innerWidth/2,innerHeight/2);
   else if(use3D)hitScreen(e.clientX,e.clientY);
@@ -1782,6 +1796,7 @@ document.addEventListener('pointerlockchange',function(){
   if(started){ overlay.classList.toggle('hide',locked); if(!locked)btn.textContent='REANUDAR';}
 });
 document.addEventListener('mousedown',function(e){
+  if(document.getElementById('modal').classList.contains('show'))return;
   if(freeLook&&!locked){dragging=true;dragX=e.clientX;dragY=e.clientY;}
 });
 document.addEventListener('mouseup',function(){dragging=false;});
@@ -1797,6 +1812,7 @@ document.addEventListener('mousemove',function(e){
   PITCH=Math.max(-1.35,Math.min(1.35,PITCH));
 });
 renderer.domElement.addEventListener('click',function(){
+  if(document.getElementById('modal').classList.contains('show'))return;
   if(started&&!locked&&!isTouch&&renderer.domElement.requestPointerLock){
     try{var p=renderer.domElement.requestPointerLock();if(p&&p.catch)p.catch(function(){});}catch(e){}
   }
@@ -1951,44 +1967,53 @@ function closeModal(){
 }
 function openMediaModal(s){
   var allItems=s.media||[], origIndex=(typeof s.itemIndex==='number')?s.itemIndex:0;
-  var items=[], mapa=[];
+  var items=[],mapa=[];
   for(var k=0;k<allItems.length;k++){
     if(allItems[k].t!=='video'){items.push(allItems[k]);mapa.push(k);}
   }
   var start=mapa.indexOf(origIndex);if(start<0)start=0;
-  var h='<div class="tag">EXPO · Corredor '+s.cor+' · '+s.sede+'</div>'+
-        '<h2>'+s.proyecto+'</h2><div class="tabs" id="mTabs"></div><div id="mStage"></div>'+
-        '<div class="row"><button class="close" id="mC">Cerrar</button></div>';
+  var h='<div class="mhead"><div class="tag">EXPO · Corredor '+s.cor+' · '+s.sede+'</div>'+
+        '<h2>'+esc(s.proyecto||'')+'</h2>'+
+        '<button class="close" id="mC" type="button">✕ Cerrar</button></div>'+
+        '<div class="mtabs" id="mTabs"></div><div class="mstage" id="mStage"></div>'+
+        '<div class="mfoot">Elegí una pestaña para ver cada foto o la ficha completa. '+
+        'Tocá una miniatura para ampliarla.</div>';
   openModal(h);mbox.classList.add('wide');
   var tabs=document.getElementById('mTabs'),stage=document.getElementById('mStage');
   var labels=items.map(function(it,i){
-    return (it.t==='video'?'Video ':(it.t==='image'?'Imagen ':'Audio '))+(i+1);
+    return (it.t==='audio'?'Audio ':'Imagen ')+(i+1);
   }).concat(['Ficha']);
   var btns=labels.map(function(lbl,i){
-    var b=document.createElement('button');b.textContent=lbl;
+    var b=document.createElement('button');b.type='button';b.textContent=lbl;
     b.addEventListener('click',function(){show(i);});tabs.appendChild(b);return b;
   });
   function show(i){
     btns.forEach(function(b,j){b.classList.toggle('on',i===j);});
-    stopMedia(stage);stage.innerHTML='';
+    stopMedia(stage);stage.innerHTML='';stage.scrollTop=0;
     if(i===items.length){
-      stage.innerHTML='<p style="white-space:pre-wrap;line-height:1.55">'+
-        fmtFull(s.full||'')+'</p>'+
-        (s.fuente?'<details style="margin-top:16px"><summary style="cursor:pointer;color:#8a4b2a">'+
-        'Ver texto original del expediente</summary><pre style="white-space:pre-wrap;'+
-        'font:13px Segoe UI,Arial;color:#6d5238">'+esc(s.fuente)+'</pre></details>':'');
-      return;
+      var c=document.createElement('div');
+      c.innerHTML='<p>'+fmtFull(s.full||'')+'</p>'+
+        (s.fuente?'<details style="margin-top:18px"><summary style="cursor:pointer;color:#8a4b2a;font-weight:600">'+
+        'Ver texto original del expediente</summary><pre>'+esc(s.fuente)+'</pre></details>':'');
+      stage.appendChild(c);return;
     }
     var it=items[i],el;
-    if(it.t==='video'){
-      el=document.createElement('video');el.src=it.src;el.controls=true;
-      el.playsInline=true;el.preload='metadata';el.setAttribute('playsinline','');
-    }else if(it.t==='audio'){
+    if(it.t==='audio'){
       el=document.createElement('audio');el.src=it.src;el.controls=true;el.preload='metadata';
     }else{
-      var wrap=document.createElement('div');wrap.className='gal';
-      el=document.createElement('img');el.src=it.src;el.alt=it.title||'';
-      wrap.appendChild(el);el=wrap;
+      var wrap=document.createElement('div');
+      var big=document.createElement('img');big.className='big';big.src=it.src;big.alt=it.title||'';
+      wrap.appendChild(big);
+      if(items.length>1){
+        var strip=document.createElement('div');strip.className='gal';
+        items.forEach(function(im,j){
+          var th=document.createElement('img');th.src=im.src;th.alt=im.title||'';
+          if(j===i)th.className='on';
+          th.addEventListener('click',function(){show(j);});strip.appendChild(th);
+        });
+        wrap.appendChild(strip);
+      }
+      el=wrap;
     }
     stage.appendChild(el);
   }
@@ -2012,15 +2037,19 @@ function nearStand(){
   return best;
 }
 function openStandModal(s){
-  var h='<div class="tag">Puesto '+s.n+' · Feria de Turismo</div><h2>'+s.t+'</h2><ul style="margin:4px 0 0 18px">';
-  s.lines.forEach(function(l){h+='<li style="margin:7px 0;color:#6d5238;font-size:14.5px;line-height:1.45">'+l+'</li>';});
-  h+='</ul><div class="row"><button class="close" id="mC">Cerrar</button></div>';
+  var h='<div class="mhead"><div class="tag">Puesto '+s.n+' · Feria de Turismo</div><h2>'+esc(s.t)+'</h2>'+
+        '<button class="close" id="mC" type="button">✕ Cerrar</button></div>'+
+        '<div class="mstage"><ul style="margin:0 0 0 20px">';
+  s.lines.forEach(function(l){h+='<li style="margin:7px 0;line-height:1.6">'+esc(l)+'</li>';});
+  h+='</ul></div><div class="mfoot">Recorré la plaza para ver los otros trabajos.</div>';
   openModal(h);
   document.getElementById('mC').addEventListener('click',closeModal);
 }
 function openFichaModal(p){
-  var h='<div class="tag">'+p.tag+'</div><h2>'+p.t+'</h2><p>'+p.d+'</p>'+
-    '<div class="row"><button class="close" id="mC">Cerrar</button></div>';
+  var h='<div class="mhead"><div class="tag">'+esc(p.tag)+'</div><h2>'+esc(p.t)+'</h2>'+
+        '<button class="close" id="mC" type="button">✕ Cerrar</button></div>'+
+        '<div class="mstage"><p>'+esc(p.d)+'</p></div>'+
+        '<div class="mfoot">Esc para cerrar.</div>';
   openModal(h);
   document.getElementById('mC').addEventListener('click',closeModal);
 }

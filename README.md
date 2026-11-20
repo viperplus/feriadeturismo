@@ -5,7 +5,7 @@
 La FERIA DE TURISMO de la ESRN RURAL Virtual muestra el trabajo de los estudiantes de la escuela rural de Río Negro. Se recorre en primera persona una plaza central abierta con nueve pabellones, uno por corredor turístico, y un gazebo con el cartel FERIA DE TURISMO / ESRN Rural Virtual. El video de la Feria de Laguna Blanca y el cartel SEDE LAGUNA BLANCA / ESRN Rural Virtual están en el pabellón del corredor 3 (Meseta Norte y Transición), junto a esa sede.
 
 Cada salón expone solo material real: videos, fotos, flyers, audios y fichas de texto, enmarcados en la pared con su etiqueta de sede y de proyecto. Los videos se reproducen dentro del marco, arrancan silenciados al acercarse y recuperan sonido con un clic. Las fichas se arman con los textos de `materiales.js`: usan el color del corredor,
-no tienen viñetas y muestran el resumen completo sin cortes. Los resúmenes son los de la sesión «Resúmenes Feria de Turismo 2026» ("Para explicarlo en la feria"), sin reescribir. Al abrirlas se lee la data organizada de los 14 proyectos —con los títulos y los
+no tienen viñetas y muestran el resumen completo sin cortes. Los resúmenes son los de la sesión «Resúmenes Feria de Turismo 2026» ("Para explicarlo en la feria"), sin reescribir. Al abrirlas se abre un visor con pestañas, la imagen completa y texto con scroll donde se lee la data organizada de los 14 proyectos —con los títulos y los
 nombres de los estudiantes tal como se entregó— y el texto original del expediente
 queda en un desplegable. El inventario cubre 14 sedes, de Aguada Guzmán a Villa Llanquín, y respeta los corredores del mapa de Wikiparajes: no hay sedes ni proyectos inventados.
 
