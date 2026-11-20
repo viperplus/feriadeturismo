@@ -5,7 +5,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Bajo el cielo de Aguada Guzmán · astroturismo",
     "poster": "material/posters/10.jpg",
-    "texto": "Aguada Guzmán: astroturismo\ncon Daiana Zapata. 2 a 2,5 h\ndesde el salón por la Ruta 74:\natardecer, estrellas, cuidado.",
+    "texto": "es una propuesta que combina naturaleza, ciencia sencilla y cuidado ambiental, mostrando el cielo de la zona como un atractivo turístico.",
     "items": [
       {
         "t": "image",
@@ -40,7 +40,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Fiesta tradicional de Naupa Huen",
     "poster": "material/posters/13.jpg",
-    "texto": "Naupa Huen: fiesta tradicional\nen fotos, videos, folletos\ny entrevistas. Morena y\nTiziana, 3.º año.",
+    "texto": "las fiestas tradicionales como expresión de identidad y encuentro, mostrando la cultura viva de Naupa Huen.",
     "items": [
       {
         "t": "video",
@@ -89,7 +89,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Caminata Saludable · Cielo de Mencué",
     "poster": "material/posters/11.jpg",
-    "texto": "Mencué: caminata de 8 km,\nlibro digital, video y el\ncielo de Mencué. 3.º, 4.º y\n5.º año.",
+    "texto": "Mencué ofrece experiencias para conectar con el paisaje: caminarlo, conocerlo y contemplar uno de sus grandes tesoros, su cielo nocturno.",
     "items": [
       {
         "t": "video",
@@ -113,7 +113,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Sabores Lagunenses · recetas y degustación",
     "poster": "material/posters/20.jpg",
-    "texto": "Sabores Lagunenses: recetas\ny comidas locales. Degustación\ny encuentro con la comunidad.\n3.º año.",
+    "texto": "una forma rica y cercana de conocer Laguna Blanca a través de sus comidas típicas y el encuentro con su gente.",
     "items": [
       {
         "t": "video",
@@ -175,7 +175,7 @@ var MATERIALES={
     "corredor": 5,
     "proyecto": "Expo Rural Río Chico",
     "poster": "material/posters/14.jpg",
-    "texto": "Expo Rural Río Chico:\nganadería, agricultura,\nartesanías y ferroviarios.\n3.º y 4.º año.",
+    "texto": "Río Chico se presenta como una comunidad con historia y producción diversa, donde sus oficios y su gente son parte del atractivo para visitar.",
     "items": [
       {
         "t": "image",
@@ -234,7 +234,7 @@ var MATERIALES={
     "corredor": 5,
     "proyecto": "Expo Rural Río Chico y Manuel Choique",
     "poster": "material/posters/15.jpg",
-    "texto": "Mamuel Choique: ganadería,\nagricultura y artesanías.\nFolleto y video para conocer\nsu comunidad. 3.º año.",
+    "texto": "Mamuel Choique se da a conocer a través de su gente, su trabajo y sus tradiciones, en una muestra comunitaria.",
     "items": [
       {
         "t": "video",
@@ -270,7 +270,7 @@ var MATERIALES={
     "corredor": 6,
     "proyecto": "Sabores de Comicó",
     "poster": "material/posters/6.jpg",
-    "texto": "Cómicó: sabores y costumbres\nde la comunidad. Comidas,\nbebidas y degustación para\nconocer su identidad. 3.º año.",
+    "texto": "la comida como forma de conocer la cultura y las tradiciones de Cómicó, invitando al público a participar.",
     "items": [
       {
         "t": "image",
@@ -293,7 +293,7 @@ var MATERIALES={
     "corredor": 9,
     "proyecto": "Recorrido histórico, cultural y de avistaje",
     "poster": "material/posters/28.jpg",
-    "texto": "El Cóndor: historia (Facundo\nÑanco), flora y fauna (Sofía\nGarcía) y loros barranqueros\n(Tomás Romero). 3.º y 5.º año.",
+    "texto": "El Cóndor se presenta desde múltiples miradas: su historia, su biodiversidad (flora, fauna y loros barranqueros) y su identidad visual ligada al mar y los acantilados.",
     "items": [
       {
         "t": "video",
@@ -329,7 +329,7 @@ var MATERIALES={
     "corredor": 4,
     "proyecto": "Recorrido de astroturismo · El Domo",
     "poster": "material/posters/27.jpg",
-    "texto": "El Domo, El Manso: camping\nTierraAventura; senderos,\nfauna, flora y telescopio.\nSol Ulloa, 5.º año.",
+    "texto": "un circuito que integra aventura, descanso en la naturaleza y astroturismo, aprovechando el entorno de montaña y el cielo de El Manso.",
     "items": [],
     "textoDetalle": "El Manso\nRecorrido de astroturismo “El Domo”\nAstroturismo y naturaleza | Presenta: Sol Ulloa (5.º año)\n\nUna propuesta de turismo en la naturaleza que combina caminata, descanso, alojamiento en domo y observación del cielo nocturno en El Manso.\n\n¿Qué vas a vivir?\n\nPunto de encuentro: Camping TierraAventura, con bienvenida, presentación del lugar y almuerzo.\nTarde en la naturaleza: tiempo de descanso junto al río y, más tarde, caminata por senderos de montaña.\nAprendizaje en el recorrido: charlas e intercambio sobre la fauna, la flora, datos curiosos e historias del lugar.\nNoche en el domo: cena y, alrededor de las 22:00 h, sesión de observación de estrellas y luna con telescopios y cámaras, acompañada de charlas.\nCierre: desayuno en el domo y regreso al punto de encuentro.\nLo que hace especial a este proyecto: integra aventura, tranquilidad y asombro, invitando a disfrutar del entorno de montaña y de un cielo ideal para la observación astronómica.",
     "textoFuente": "Circuito desde el camping Tierra Aventura: almuerzo, sendero de montaña, charlas de fauna y flora, noche en el domo y observación con telescopio. Sol Ulloa, 5° año.\n\nMaterial del expediente:\nclase 13- Sol Ulloa- El Manso .mp4\nRecorrido de astroturismo “ El Domo”- El Manso- Sol Ulloa- 5° año\nMi circuito estaría dirigido a un grupo de personas de mas o menos de edad 35 a 50\naños con una buena resistencia para caminatas y demás, este grupo vendría de Bariloche el cual contrataría una trafic como trasporte para llegar a El Manso, donde\nse realizaría este circuito, el punto de encuentro es el camping TierraAventura donde nos conoceríamos, se haría una charla de bienvenida, presentando el lugar y entre otras cosas, luego nos reuniríamos para el almuerzo que nos ofrecería el camping, donde tendrían de menú, carnes con ensaladas  o  un menú vegetariano pero alto en proteínas. Luego del almuerzo  nos quedaríamos a bajar la comida, a reposar, ahi pueden aprovechar a disfrutar de un momento de oseo en las playitas de el río, hasta mas o menos las 17:00 hrs, donde ahí arrancaríamos camino hacia el sendero de la montaña para seguir con el recorrido, daríamos una charla sobre lo que es la fauna y la flora de El Manso, datos curiosos del lugar, historias e ir intercambiando temas de conversación, luego de 3hrs se llegaría a lo que es el domo, donde ahí se pasaría la noche, se nos est"
@@ -339,7 +339,7 @@ var MATERIALES={
     "corredor": 4,
     "proyecto": "Cabalgatas por Corralito",
     "poster": "material/posters/12.jpg",
-    "texto": "Paraje Corralito a caballo:\nnaturaleza y aire puro.\nFaustino Vergara, 5.º año,\ninvita a recorrerlo.",
+    "texto": "una invitación a recorrer el paraje de forma tranquila, valorando el paisaje, el aire libre y la vida rural.",
     "items": [
       {
         "t": "image",
@@ -374,7 +374,7 @@ var MATERIALES={
     "corredor": 8,
     "proyecto": "Conocer Cona Niyeu a caballo",
     "poster": "material/posters/21.jpg",
-    "texto": "Cona Niyeu a caballo:\nnaturaleza, cultura y\ntradiciones. Milena Ludmila\nYanca Pasos, 5.º año.",
+    "texto": "el caballo como medio para descubrir el paisaje, la cultura y la identidad del lugar de una manera auténtica.",
     "items": [
       {
         "t": "image",
@@ -397,7 +397,7 @@ var MATERIALES={
     "corredor": 2,
     "proyecto": "Dulce cosecha · Esencia Peñas Blancas",
     "poster": "material/posters/19.jpg",
-    "texto": "Peñas Blancas: dulces de\nmembrillo y durazno, origen,\ndegustación y Esencia Peñas\nBlancas. 3.º año.",
+    "texto": "Peñas Blancas se muestra a través de sus frutos y su producción artesanal: sabores caseros y objetos que reflejan la identidad del lugar.",
     "items": [
       {
         "t": "video",
@@ -446,7 +446,7 @@ var MATERIALES={
     "corredor": 1,
     "proyecto": "Conoce Lago Pellegrini · Alto Valle Activo",
     "poster": "material/posters/23.jpg",
-    "texto": "Lago Pellegrini: tradiciones,\npaisajes, chacra y río.\nMapas, folletos y entrevistas\nde 3.º y 5.º año.",
+    "texto": "Lago Pellegrini se presenta como un destino con identidad propia, tradiciones, artesanías, producción del Alto Valle y paisajes para descubrir.",
     "items": [
       {
         "t": "video",
@@ -518,7 +518,7 @@ var MATERIALES={
     "corredor": 4,
     "proyecto": "Taller de Joyería Antigua",
     "poster": "material/posters/24.jpg",
-    "texto": "Taller de Joyería Antigua en\nVilla Llanquín: Benjamín\nPaillalef y Thiago; aritos\nchaway mapuche. 5.º y 1.º.",
+    "texto": "un proyecto que une oficio, tradición mapuche y transmisión de conocimientos entre estudiantes, mostrando cómo la cultura también se expresa en lo artesanal.",
     "items": [
       {
         "t": "video",

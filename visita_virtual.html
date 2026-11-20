@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v12</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v13</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -184,7 +184,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote6-20261120';
+window.BUILD='plaza-lote7-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -1350,7 +1350,7 @@ for(var si=0;si<SALAS.length;si++){
             base.label='SEDE '+g.sd.num+' · '+g.it.label;
           }else{
             base.ficha={t:'SEDE '+g.sd.num+' · '+g.mm.sede,s:'PROYECTO',
-                        lines:wrapLines(g.mm.texto,30).slice(0,4)};
+                        lines:wrapLines(g.mm.texto,36).slice(0,5)};
             base.label='SEDE '+g.sd.num+' · Ficha';
           }
           EXPO_SLOTS.push(base);
