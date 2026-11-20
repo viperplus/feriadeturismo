@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v25</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v26</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote19-20261120';
+window.BUILD='plaza-lote20-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -1077,7 +1077,7 @@ function updateNPCs(dt,time){
           else { n.acts.idleA.enabled=true; n.acts.idleA.play(); }
         }
         if(moving){
-          n.acts.walkA.setEffectiveWeight(1); n.acts.walkA.setEffectiveTimeScale(Math.max(0.7,spd/2.0));
+          n.acts.walkA.setEffectiveWeight(1); n.acts.walkA.setEffectiveTimeScale(Math.max(0.8,spd/1.5));
           n.acts.idleA.setEffectiveWeight(0);
         }else{
           n.acts.idleA.setEffectiveWeight(1); n.acts.idleA.setEffectiveTimeScale(1);
