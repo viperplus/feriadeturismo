@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v18</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v19</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote12-20261120';
+window.BUILD='plaza-lote13-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -224,6 +224,7 @@ window.av0=function(u){return u+(u.indexOf('?')>=0?'&':'?')+'t='+Date.now();};
 </script>
 <script>document.write('<script src="'+av('three.min.js')+'"><\/script>');</script>
 <script>if(typeof THREE==='undefined')document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');</script>
+<script>document.write('<script src="'+av('GLTFLoader.js')+'"><\/script>');</script>
 <script>document.write('<script src="'+av('materiales.js')+'"><\/script>');</script>
 <script>
 (function(){
@@ -993,67 +994,46 @@ function makeNPC(def){
     ph:Math.random()*6.28,arms:[armL,armR],legs:[legL,legR]});
 }
 function makeSheepFollower(){
+  // ovejita 3D (modelo GLB "Sheep" por Poly by Google, CC-BY 3.0, poly.pizza/m/dXBMV4AY2DL)
   var g=new THREE.Group();
-  var woolM=new THREE.MeshStandardMaterial({color:0xf4f1e8,roughness:1});
-  var woolM2=new THREE.MeshStandardMaterial({color:0xeae6d8,roughness:1});
-  var darkM=new THREE.MeshStandardMaterial({color:0x3a342e,roughness:.85});
-  var eyeM=new THREE.MeshStandardMaterial({color:0x1a1a1a,roughness:.6});
-  var hoofM=new THREE.MeshStandardMaterial({color:0x2a2520,roughness:.9});
-  var noseM=new THREE.MeshStandardMaterial({color:0x4a3a36,roughness:.8});
-  // cuerpo lanudo (más volumen y textura)
-  var body=new THREE.Mesh(new THREE.SphereGeometry(.4,14,12),woolM);
-  body.scale.set(1.08,.92,1.28);body.position.y=.58;body.castShadow=true;g.add(body);
-  var bumps=[[0,.22,.1,.24],[.24,.14,.18,.2],[-.24,.14,.18,.2],[0,.16,-.22,.22],
-             [.2,.02,.28,.19],[-.2,.02,.28,.19],[.26,0,0,.18],[-.26,0,0,.18],
-             [0,-.02,-.34,.19],[.14,-.06,.36,.16],[-.14,-.06,.36,.16],[0,.24,-.05,.17],
-             [.12,.2,-.24,.16],[-.12,.2,-.24,.16],[.1,-.08,-.18,.16],[-.1,-.08,-.18,.16]];
-  for(var i=0;i<bumps.length;i++){
-    var b=bumps[i],bm=new THREE.Mesh(new THREE.SphereGeometry(b[3],8,6),i%3===0?woolM2:woolM);
-    bm.position.set(b[0],.58+b[1],b[2]);bm.castShadow=true;g.add(bm);
-  }
-  // mechón de lana en la cabeza
-  var tuft=new THREE.Mesh(new THREE.SphereGeometry(.13,8,6),woolM);
-  tuft.scale.set(1.1,.9,1);tuft.position.set(0,.84,.5);g.add(tuft);
-  // cabeza
-  var head=new THREE.Mesh(new THREE.SphereGeometry(.175,12,10),darkM);
-  head.scale.set(.88,.95,1.12);head.position.set(0,.7,.64);head.castShadow=true;g.add(head);
-  var snout=new THREE.Mesh(new THREE.SphereGeometry(.095,10,8),darkM);
-  snout.scale.set(1,.75,1.15);snout.position.set(0,.62,.78);g.add(snout);
-  var nose=new THREE.Mesh(new THREE.SphereGeometry(.045,8,6),noseM);
-  nose.scale.set(1.2,.7,1);nose.position.set(0,.6,.86);g.add(nose);
-  // orejas caídas
-  function ear(sx){
-    var e=new THREE.Mesh(new THREE.SphereGeometry(.085,8,6),darkM);
-    e.scale.set(1.7,.5,.7);e.position.set(sx*.22,.71,.54);
-    e.rotation.z=sx*.95;e.rotation.x=.15;e.rotation.y=sx*.25;g.add(e);
-  }
-  ear(1);ear(-1);
-  // ojos
-  function eye(sx){
-    var ew=new THREE.Mesh(new THREE.SphereGeometry(.034,8,6),new THREE.MeshStandardMaterial({color:0xf7f3ea,roughness:.4}));
-    ew.position.set(sx*.075,.735,.785);g.add(ew);
-    var ep=new THREE.Mesh(new THREE.SphereGeometry(.017,8,6),eyeM);
-    ep.position.set(sx*.078,.732,.812);g.add(ep);
-  }
-  eye(1);eye(-1);
-  // patas con pezuñas
-  var legs=[];
-  function leg(px,pz){
-    var lg=new THREE.Group();
-    var m=new THREE.Mesh(new THREE.CylinderGeometry(.048,.042,.32,7),darkM);
-    m.position.y=-.16;m.castShadow=true;lg.add(m);
-    var hoof=new THREE.Mesh(new THREE.CylinderGeometry(.05,.055,.05,7),hoofM);
-    hoof.position.y=-.345;hoof.castShadow=true;lg.add(hoof);
-    lg.position.set(px,.36,pz);g.add(lg);legs.push(lg);return lg;
-  }
-  leg(.17,.23);leg(-.17,.23);leg(.17,-.24);leg(-.17,-.24);
-  // cola
-  var tail=new THREE.Mesh(new THREE.SphereGeometry(.075,8,6),woolM);
-  tail.position.set(0,.66,-.5);g.add(tail);
-  // posición inicial: cerca del jugador, apenas detrás
   g.position.set(PX-1.2,0,PZ+1.8);
   scene.add(g);
-  npcs.push({g:g,type:'sheep',yaw:Math.atan2(-1.2,1.8),ph:Math.random()*6.28,legs:legs});
+  var npc={g:g,type:'sheep',yaw:Math.atan2(-1.2,1.8),ph:Math.random()*6.28,legs:[],mixer:null};
+  npcs.push(npc);
+  if(typeof THREE.GLTFLoader!=='function'){
+    // fallback simple si el loader no está disponible
+    var body=new THREE.Mesh(new THREE.SphereGeometry(.4,12,10),
+      new THREE.MeshStandardMaterial({color:0xf4f1e8,roughness:1}));
+    body.scale.set(1.05,.9,1.25);body.position.y=.58;body.castShadow=true;g.add(body);
+    return;
+  }
+  var loader=new THREE.GLTFLoader();
+  loader.load(av('material/modelos/sheep.glb'),function(gltf){
+    if(!g.children||!npcs.some(function(n){return n===npc;}))return;
+    var model=gltf.scene;
+    // escalar a tamaño de oveja (~0.9 m de alto) y apoyar en el suelo
+    var box=new THREE.Box3().setFromObject(model);
+    var size=new THREE.Vector3(); box.getSize(size);
+    var h=size.y||1;
+    var s=0.9/h;
+    model.scale.setScalar(s);
+    box.setFromObject(model);
+    var center=new THREE.Vector3(); box.getCenter(center);
+    model.position.x-=center.x;
+    model.position.z-=center.z;
+    model.position.y-=box.min.y;
+    // orientar: el modelo de Poly queda de espaldas al frente (+Z), rotar para que mire hacia +Z
+    model.rotation.y=Math.PI;
+    model.traverse(function(o){
+      if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}
+    });
+    g.add(model);
+    // animaciones embebidas si las hubiera
+    if(gltf.animations&&gltf.animations.length){
+      npc.mixer=new THREE.AnimationMixer(model);
+      gltf.animations.forEach(function(clip){npc.mixer.clipAction(clip).play();});
+    }
+  },undefined,function(){ /* falla de carga: se mantiene el contenedor vacío */ });
 }
 function applyNPCs(){
   clearNPCs();
@@ -1081,9 +1061,12 @@ function updateNPCs(dt,time){
       n.g.rotation.y=n.yaw;
       var bob=moving?Math.abs(Math.sin(time*7+n.ph))*.045:Math.sin(time*1.6+n.ph)*.012;
       n.g.position.y=bob;
-      var sw=moving?Math.sin(time*8+n.ph)*.5:Math.sin(time*1.4+n.ph)*.08;
-      n.legs[0].rotation.x=sw;n.legs[3].rotation.x=sw;
-      n.legs[1].rotation.x=-sw;n.legs[2].rotation.x=-sw;
+      if(n.mixer)n.mixer.update(dt);
+      if(n.legs&&n.legs.length===4){
+        var sw=moving?Math.sin(time*8+n.ph)*.5:Math.sin(time*1.4+n.ph)*.08;
+        n.legs[0].rotation.x=sw;n.legs[3].rotation.x=sw;
+        n.legs[1].rotation.x=-sw;n.legs[2].rotation.x=-sw;
+      }
       // leve cabeceo natural
       n.g.rotation.x=moving?Math.sin(time*7+n.ph)*.03:Math.sin(time*1.2+n.ph)*.015;
       continue;
