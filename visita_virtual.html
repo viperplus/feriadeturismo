@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v3</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v4</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -1201,7 +1201,7 @@ for(var si=0;si<SALAS.length;si++){
       vids.forEach(function(g,j){
         var wj=wsV[j]*scV;
         q=pt(sl,-W/2+.25,cursorV+wj/2);
-        EXPO_SLOTS.push({file:'',id:'',cx:q.x,cy:1.18,cz:q.z,
+        EXPO_SLOTS.push({file:'',id:'',cx:q.x,cy:1.8,cz:q.z,
           ry:rot(sl,Math.PI/2),w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
           videoSrc:g.it.src,kindVideo:true,
           label:'SEDE '+g.sd.num+' · '+g.it.title.slice(0,32),
@@ -1221,7 +1221,7 @@ for(var si=0;si<SALAS.length;si++){
       });
       var tot=anchos.reduce(function(a,b){return a+b;},0)+gapG*(linea.length-1);
       var sc=Math.min(1,(W-.6)/tot), hh=hG*sc, x=-tot*sc/2;
-      var y=rows>1?2.0-row*(hh+0.30):1.15;
+      var y=rows>1?2.55-row*(hh+0.25):1.85;
       linea.forEach(function(g,j){
         q=pt(sl,x+anchos[j]*sc/2,zGal);
         var base={file:'',id:'',cx:q.x,cy:y,cz:q.z,ry:rot(sl,0),

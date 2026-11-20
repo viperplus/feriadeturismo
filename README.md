@@ -10,7 +10,9 @@ cuadro enmarcado por cada video, cada foto y cada texto**, con su etiqueta de se
 Los videos se ven y se reproducen **directamente en la pared**, con el mismo marco de
 madera, cartelito y lupa de play que la pantalla de Laguna Blanca. El marco adopta la
 proporción real de cada grabación: los 10 videos verticales son altos y angostos y los
-2 horizontales son anchos, sin deformaciones. Se encienden en silencio al acercarse
+2 horizontales son anchos, sin deformaciones. Videos, fotos y fichas están a la
+altura de los ojos (centros entre 1,7 y 2,6 m), para no mirar hacia abajo.
+Se encienden en silencio al acercarse
 (solo el más cercano a la vez) y con un clic se les da sonido: no abre ninguna ventana.
 Las fotos están en cuadros más grandes en la pared del fondo, completas y sin recortes,
 con la imagen original en alta resolución (las infografías se leen desde la pared);
