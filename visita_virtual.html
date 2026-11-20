@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v16</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v17</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote10-20261120';
+window.BUILD='plaza-lote11-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -780,13 +780,12 @@ function floorArrow(x,z,ry){
   m.position.set(x,.02,z);scene.add(m);
 }
 
-var _pennantTex=null;
+
 
 // ambiente: luz cálida y flechas del recorrido
-var garlandsAnim=[];
+
 var bulbsAnim=[];
 lamp(0,-50);lamp(0,-62);
-garland(0,3.42,-38,18,0);garland(0,3.42,-62,18,0);
 
 /* decorado: alfombras, banderines y señalética */
 function rug(x,z,w,d,c1,c2,ry){
@@ -993,14 +992,91 @@ function makeNPC(def){
   npcs.push({g:g,path:pts,seg:0,t:Math.random(),sp:.06+Math.random()*.05,
     ph:Math.random()*6.28,arms:[armL,armR],legs:[legL,legR]});
 }
+function makeSheepFollower(){
+  var g=new THREE.Group();
+  var woolM=new THREE.MeshStandardMaterial({color:0xf4f1e8,roughness:1});
+  var woolM2=new THREE.MeshStandardMaterial({color:0xeae6d8,roughness:1});
+  var darkM=new THREE.MeshStandardMaterial({color:0x3a342e,roughness:.85});
+  var eyeM=new THREE.MeshStandardMaterial({color:0x1a1a1a,roughness:.6});
+  // cuerpo lanudo
+  var body=new THREE.Mesh(new THREE.SphereGeometry(.38,12,10),woolM);
+  body.scale.set(1.05,.9,1.25);body.position.y=.58;body.castShadow=true;g.add(body);
+  var bumps=[[0,.18,.15,.22],[.22,.1,.2,.18],[-.22,.1,.2,.18],[0,.12,-.25,.2],
+             [.18,-.02,0,.18],[-.18,-.02,0,.18],[0,-.04,.28,.17],[0,-.04,-.3,.17]];
+  for(var i=0;i<bumps.length;i++){
+    var b=bumps[i],bm=new THREE.Mesh(new THREE.SphereGeometry(b[3],8,6),i%2?woolM2:woolM);
+    bm.position.set(b[0],.58+b[1],b[2]);bm.castShadow=true;g.add(bm);
+  }
+  // cabeza
+  var head=new THREE.Mesh(new THREE.SphereGeometry(.17,10,8),darkM);
+  head.scale.set(.9,.95,1.05);head.position.set(0,.68,.62);head.castShadow=true;g.add(head);
+  var snout=new THREE.Mesh(new THREE.SphereGeometry(.1,8,6),darkM);
+  snout.scale.set(.95,.7,1);snout.position.set(0,.6,.74);g.add(snout);
+  // orejas
+  function ear(sx){
+    var e=new THREE.Mesh(new THREE.SphereGeometry(.075,8,6),darkM);
+    e.scale.set(1.6,.55,.6);e.position.set(sx*.2,.74,.52);e.rotation.z=sx*.7;e.rotation.y=sx*.2;g.add(e);
+  }
+  ear(1);ear(-1);
+  // ojos
+  function eye(sx){
+    var ew=new THREE.Mesh(new THREE.SphereGeometry(.028,6,6),woolM);
+    ew.position.set(sx*.07,.72,.76);g.add(ew);
+    var ep=new THREE.Mesh(new THREE.SphereGeometry(.014,6,6),eyeM);
+    ep.position.set(sx*.07,.72,.785);g.add(ep);
+  }
+  eye(1);eye(-1);
+  // patas
+  var legs=[];
+  function leg(px,pz){
+    var lg=new THREE.Group();
+    var m=new THREE.Mesh(new THREE.CylinderGeometry(.045,.04,.36,6),darkM);
+    m.position.y=-.18;m.castShadow=true;lg.add(m);
+    lg.position.set(px,.36,pz);g.add(lg);legs.push(lg);return lg;
+  }
+  leg(.16,.22);leg(-.16,.22);leg(.16,-.22);leg(-.16,-.22);
+  // cola
+  var tail=new THREE.Mesh(new THREE.SphereGeometry(.07,6,6),woolM);
+  tail.position.set(0,.62,-.48);g.add(tail);
+  // posición inicial: cerca del jugador, apenas detrás
+  g.position.set(PX-1.2,0,PZ+1.8);
+  scene.add(g);
+  npcs.push({g:g,type:'sheep',yaw:Math.atan2(-1.2,1.8),ph:Math.random()*6.28,legs:legs});
+}
 function applyNPCs(){
   clearNPCs();
-  var n=0;
-  for(var i=0;i<n;i++)makeNPC(NPC_POOL[i%NPC_POOL.length]);
+  makeSheepFollower();
 }
 function updateNPCs(dt,time){
   for(var i=0;i<npcs.length;i++){
-    var n=npcs[i],a=n.path[n.seg],b=n.path[(n.seg+1)%n.path.length];
+    var n=npcs[i];
+    if(n.type==='sheep'){
+      // acompaña al jugador: se mantiene cerca, sin bloquear colisiones
+      var dx=PX-n.g.position.x, dz=PZ-n.g.position.z, d=Math.sqrt(dx*dx+dz*dz);
+      var moving=false, spd=0;
+      if(d>2.4){
+        spd=d>7?5.2:d>4.2?4.0:3.1;
+        var step=Math.min(spd*dt,d-2.0);
+        if(d>0.001){n.g.position.x+=dx/d*step;n.g.position.z+=dz/d*step;}
+        var ty=Math.atan2(dx,dz), dy=ty-n.yaw;
+        while(dy>Math.PI)dy-=Math.PI*2; while(dy<-Math.PI)dy+=Math.PI*2;
+        n.yaw+=dy*Math.min(1,dt*5.5);
+        moving=true;
+      }else if(d<1.5&&d>0.001){
+        // si el jugador se le encima, se aparta apenas
+        n.g.position.x-=dx/d*dt*0.6; n.g.position.z-=dz/d*dt*0.6;
+      }
+      n.g.rotation.y=n.yaw;
+      var bob=moving?Math.abs(Math.sin(time*7+n.ph))*.045:Math.sin(time*1.6+n.ph)*.012;
+      n.g.position.y=bob;
+      var sw=moving?Math.sin(time*8+n.ph)*.5:Math.sin(time*1.4+n.ph)*.08;
+      n.legs[0].rotation.x=sw;n.legs[3].rotation.x=sw;
+      n.legs[1].rotation.x=-sw;n.legs[2].rotation.x=-sw;
+      // leve cabeceo natural
+      n.g.rotation.x=moving?Math.sin(time*7+n.ph)*.03:Math.sin(time*1.2+n.ph)*.015;
+      continue;
+    }
+    var a=n.path[n.seg],b=n.path[(n.seg+1)%n.path.length];
     n.t+=dt*n.sp;
     if(n.t>=1){n.t=0;n.seg=(n.seg+1)%n.path.length;a=n.path[n.seg];b=n.path[(n.seg+1)%n.path.length];}
     var x=a.x+(b.x-a.x)*n.t, z=a.z+(b.z-a.z)*n.t;
@@ -1165,23 +1241,7 @@ function wrapLines(txt,max){
 }
 /* --- adornos de feria: guirnaldas, arcos, mostradores. Sin luces nuevas. --- */
 var _archTagTex=null;
-function pennantTex(){
-  if(_pennantTex)return _pennantTex;
-  var c=document.createElement('canvas');c.width=1024;c.height=160;var q=c.getContext('2d');
-  q.strokeStyle='#5a3a20';q.lineWidth=6;q.beginPath();q.moveTo(0,18);q.lineTo(1024,18);q.stroke();
-  var cols=['#b4552f','#d98b3a','#e9c46a','#6f8f4f','#a8532b','#c9773f','#8a5a33'],i;
-  for(i=0;i<12;i++){
-    q.fillStyle=cols[i%cols.length];var px=20+i*84;
-    q.beginPath();q.moveTo(px,20);q.lineTo(px+70,20);q.lineTo(px+35,112);q.closePath();q.fill();
-  }
-  var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;_pennantTex=t;return t;
-}
-function garland(x,y,z,w,ry){
-  var m=new THREE.Mesh(new THREE.PlaneGeometry(w,w*160/1024),
-    new THREE.MeshBasicMaterial({map:pennantTex(),transparent:true,side:THREE.DoubleSide}));
-  m.position.set(x,y,z);m.rotation.y=ry||0;scene.add(m);
-  garlandsAnim.push({m:m,baseY:y,ph:x*0.7+z*0.31,w:w});
-}
+
 function arch(x,z){
   var s=x<-10?1:-1, px=x+s*.15; /* sobresale hacia el paseo para que se vea */
   var mat=new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.75});
@@ -1269,7 +1329,7 @@ for(var ci=0;ci<CORREDORES.length;ci++){
 var techo=new THREE.Mesh(new THREE.BoxGeometry(6,.18,6),
   new THREE.MeshStandardMaterial({color:0xb76838,roughness:.8}));
 techo.position.set(0,3.85,-50);scene.add(techo);
-garland(0,3.82,-47.3,3.2,0); garland(0,3.4,-52.7,5.6,0);
+
 banner(-2.45,2.35,-47.1,0,2.2,'FERIA DE TURISMO','ESRN Rural Virtual');
 
 // contenido de cada pabellón
@@ -1279,7 +1339,6 @@ for(var si=0;si<SALAS.length;si++){
   var q=pt(sl,0,D/2-2.2), qb=pt(sl,0,-D/2+.14), qf=pt(sl,0,D/2-.2);
   rug(ctr.x,ctr.z,W-1,D-1,'#d9c7a6',ACENTOS[cr.n-1],sl.ang);
   warmLamp(ctr.x,ctr.z);
-  garland(qf.x,2.98,qf.z,5.5,sl.ang);
   counter(q.x,q.z,rot(sl,0));
   var mp=pt(sl,.62,D/2-2.2);
   var maceta=new THREE.Group();
@@ -2164,8 +2223,7 @@ function animate(){
   if(CFG.quality>0){
     dust.material.opacity=0.26+Math.sin(time*1.4)*0.08;
     sun.intensity=1.15+Math.sin(time*0.19)*0.03;
-    for(var gi=0;gi<garlandsAnim.length;gi++){var ga=garlandsAnim[gi];
-      ga.m.position.y=ga.baseY+Math.sin(time*0.9+ga.ph*0.7)*0.01;}
+
     for(var bi=0;bi<bulbsAnim.length;bi++){var ba=bulbsAnim[bi];
       var p=0.82+Math.sin(time*2.2+ba.ph)*0.12+Math.sin(time*5.3+ba.ph*1.3)*0.04;
       ba.m.material.color.setRGB(1,0.86*p,0.55*p);}
