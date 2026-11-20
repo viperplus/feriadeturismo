@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v21</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v22</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote15-20261120';
+window.BUILD='plaza-lote16-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -1077,7 +1077,12 @@ function updateNPCs(dt,time){
           if(to!==from){to.reset();to.play();to.crossFadeFrom(from,0.25,true);} 
         }
         // animación controla el cuerpo; sin bob/rotación procedural extra
-        n.g.position.y=0; n.g.rotation.x=0; n.g.rotation.z=0;
+        n.g.rotation.x=0; n.g.rotation.z=0;
+        // mantener patas apoyadas: la animación esquelética puede desplazar los pies en Y
+        n.g.position.y=0;
+        n.g.updateMatrixWorld(true);
+        var sbox=new THREE.Box3().setFromObject(n.g);
+        if(isFinite(sbox.min.y)) n.g.position.y -= sbox.min.y;
       }else{
         var bob=moving?Math.abs(Math.sin(time*7+n.ph))*.045:Math.sin(time*1.6+n.ph)*.012;
         n.g.position.y=bob;
@@ -1394,7 +1399,7 @@ techo.position.set(0,3.85,-50);scene.add(techo);
 bunting(-2.6,3.5,-52.6, 2.6,3.5,-52.6, 0.4, 7);
 bunting(-2.6,3.5,-47.4, 2.6,3.5,-47.4, 0.4, 7);
 
-banner(-2.45,2.35,-47.1,0,2.2,'FERIA DE TURISMO','ESRN Rural Virtual');
+banner(-2.45,2.35,-47.1,Math.PI,2.2,'FERIA DE TURISMO','ESRN Rural Virtual');
 // banderines grandes de la plaza, con postes de soporte
 buntingPost(-10,-38,3.55); buntingPost(10,-38,3.55);
 bunting(-10,3.45,-38, 10,3.45,-38, 0.7, 22);
@@ -1405,7 +1410,7 @@ bunting(-10,3.45,-62, 10,3.45,-62, 0.7, 22);
 for(var si=0;si<SALAS.length;si++){
   var sl=SALAS[si], cr=sl.c;
   var ctr=pt(sl,0,0), W=sl.W, D=sl.D;
-  var q=pt(sl,0,D/2-2.2), qb=pt(sl,0,-D/2+.14), qf=pt(sl,0,D/2-.2);
+  var q=pt(sl,0,D/2-2.2), qb=pt(sl,0,-D/2+.28), qf=pt(sl,0,D/2-.2);
   rug(ctr.x,ctr.z,W-1,D-1,'#d9c7a6',ACENTOS[cr.n-1],sl.ang);
   warmLamp(ctr.x,ctr.z);
   var b1=pt(sl,-W/2+0.08,D/2), b2=pt(sl,W/2-0.08,D/2);
@@ -1421,10 +1426,10 @@ for(var si=0;si<SALAS.length;si++){
   hojas.position.y=1.22;hojas.scale.set(1,.85,1);maceta.add(hojas);
   maceta.position.set(mp.x,0,mp.z);scene.add(maceta);
   q=pt(sl,W/2-1.2,2.2); bench(q.x,q.z,rot(sl,0));
-  q=pt(sl,-W/2+.16,0);
+  q=pt(sl,-W/2+.28,0);
   banner(q.x,3.25,q.z,rot(sl,Math.PI/2),3.6,'CORREDOR '+cr.n,cr.nombre.toUpperCase());
   if(cr.n===3){
-    var qLB=pt(sl,W/2-.16,0);
+    var qLB=pt(sl,W/2-.28,0);
     banner(qLB.x,3.5,qLB.z,rot(sl,-Math.PI/2),2.2,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
     var qStand=pt(sl,2.7,.8);
     var pie=new THREE.Mesh(new THREE.CylinderGeometry(.06,.09,1,8),
@@ -1467,7 +1472,7 @@ for(var si=0;si<SALAS.length;si++){
         var scV=Math.min(1,(D-.6)/totV), cursorV=-totV*scV/2;
         parte.forEach(function(g,j){
           var wj=wsV[j]*scV;
-          q=pt(sl,pi?W/2-.25:-W/2+.25,cursorV+wj/2);
+          q=pt(sl,pi?W/2-.3:-W/2+.3,cursorV+wj/2);
           EXPO_SLOTS.push({file:'',id:'',cx:q.x,cy:1.95,cz:q.z,
             ry:rot(sl,pi?-Math.PI/2:Math.PI/2),w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
             videoSrc:g.it.src,kindVideo:true,
@@ -1493,7 +1498,7 @@ for(var si=0;si<SALAS.length;si++){
         var sc=Math.min(1,span/tot), hh=hG*sc, x=-tot*sc/2;
         var y=filas>1?2.50-row*1.00:1.85;
         linea.forEach(function(g,j){
-          q=lado==='fondo'?pt(sl,x+anchos[j]*sc/2,-D/2+.22):pt(sl,lx,x+anchos[j]*sc/2);
+          q=lado==='fondo'?pt(sl,x+anchos[j]*sc/2,-D/2+.28):pt(sl,W/2-.3,x+anchos[j]*sc/2);
           var base={file:'',id:'',cx:q.x,cy:y,cz:q.z,ry:ry,
             w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
             full:(g.mm.textoDetalle||g.mm.texto),fuente:(g.mm.textoFuente||''),
