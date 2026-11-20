@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v10</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v11</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -184,7 +184,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote4c-20261120';
+window.BUILD='plaza-lote5-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -656,33 +656,32 @@ function wrapText(x,text,maxW){
   if(line)lines.push(line.trim());
   return lines;
 }
-function fichaTex(title,sub,lines,num){
+function tone(hex,f){
+  var n=parseInt(String(hex||'#8a4b2a').replace('#',''),16);
+  return 'rgb('+Math.round(((n>>16)&255)*f)+','+Math.round(((n>>8)&255)*f)+','+Math.round((n&255)*f)+')';
+}
+function fichaTex(title,sub,lines,num,color){
+  var ac=color||'#8a4b2a', osc=tone(ac,.72);
   var c=document.createElement('canvas');c.width=640;c.height=460;var x=c.getContext('2d');
   x.fillStyle='#f7ead2';x.fillRect(0,0,640,460);
-  x.fillStyle='#8a4b2a';x.fillRect(0,0,640,92);
+  x.fillStyle=osc;x.fillRect(0,0,640,92);
   if(num){
-    x.fillStyle='#f2b134';x.fillRect(0,0,92,92);
-    x.fillStyle='#12233a';x.textAlign='center';
-    x.font='bold 30px Segoe UI,Arial';x.fillText('PUESTO',46,40);
+    x.fillStyle=ac;x.fillRect(0,0,92,92);
+    x.fillStyle='#fff';x.textAlign='center';
+    x.font='bold 26px Segoe UI,Arial';x.fillText('SEDE',46,40);
     x.font='bold 34px Segoe UI,Arial';x.fillText(num,46,78);
   }
   x.textAlign='center';
   var fs=42;
   x.font='bold '+fs+'px Segoe UI,Arial';
   while(x.measureText(title).width>(num?520:600)&&fs>17){fs-=2;x.font='bold '+fs+'px Segoe UI,Arial';}
-  x.fillStyle='#fff';x.fillText(title,num?366:320,60);
-  x.font='20px Segoe UI,Arial';x.fillStyle='#e9c46a';x.fillText(sub,num?366:320,84);
-  x.textAlign='left';
-  x.fillStyle='#a8532b';x.fillRect(40,118,560,4);
-  var y=162,i;
-  for(i=0;i<lines.length;i++){
-    x.fillStyle='#a8532b';x.beginPath();x.arc(56,y-6,8,0,6.3);x.fill();
-    x.fillStyle='#4a2f1c';x.font='23px Segoe UI,Arial';
-    var ls=wrapText(x,lines[i],524);
-    for(var j=0;j<ls.length;j++){x.fillText(ls[j],78,y+j*30);}
-    y+=ls.length*30+24;
-  }
+  x.fillStyle='#fff';x.fillText(title,num?366:320,58);
+  x.font='20px Segoe UI,Arial';x.fillStyle='#f7dfa8';x.fillText(sub,num?366:320,84);
+  x.fillStyle=ac;x.fillRect(40,116,560,5);
+  x.textAlign='left';x.fillStyle='#4a2f1c';x.font='25px Segoe UI,Arial';
+  for(var i=0;i<Math.min(lines.length,5);i++)x.fillText(lines[i],56,158+i*38);
   x.fillStyle='#efe0c2';x.fillRect(0,404,640,56);
+  x.fillStyle=ac;x.fillRect(0,404,640,5);
   x.fillStyle='#6d5238';x.textAlign='center';x.font='18px Segoe UI,Arial';
   x.fillText('ESRN RURAL Virtual · Feria de Turismo',320,438);
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
@@ -1248,7 +1247,7 @@ var techo=new THREE.Mesh(new THREE.BoxGeometry(6,.18,6),
   new THREE.MeshStandardMaterial({color:0xb76838,roughness:.8}));
 techo.position.set(0,3.85,-50);scene.add(techo);
 garland(0,3.82,-47.3,3.2,0); garland(0,3.4,-52.7,5.6,0);
-banner(-2.45,2.35,-47.1,0,2.2,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
+banner(-2.45,2.35,-47.1,0,2.2,'FERIA DE TURISMO','ESRN Rural Virtual');
 
 // contenido de cada pabellón
 for(var si=0;si<SALAS.length;si++){
@@ -1271,6 +1270,14 @@ for(var si=0;si<SALAS.length;si++){
   q=pt(sl,W/2-1.2,2.2); bench(q.x,q.z,rot(sl,0));
   q=pt(sl,-W/2+.16,0);
   banner(q.x,3.25,q.z,rot(sl,Math.PI/2),3.6,'CORREDOR '+cr.n,cr.nombre.toUpperCase());
+  if(cr.n===3){
+    var qLB=pt(sl,W/2-.16,0);
+    banner(qLB.x,3.5,qLB.z,rot(sl,-Math.PI/2),2.2,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
+    var qStand=pt(sl,2.7,.8);
+    var pie=new THREE.Mesh(new THREE.CylinderGeometry(.06,.09,1,8),
+      new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.8}));
+    pie.position.set(qStand.x,.5,qStand.z);scene.add(pie);
+  }
   var nombresSede=cr.sedes.map(function(sd){return sd.nombre;}), lineasSede=[];
   for(var jSede=0;jSede<nombresSede.length;jSede+=3){
     lineasSede.push(nombresSede.slice(jSede,jSede+3).join(' · '));
@@ -1312,7 +1319,8 @@ for(var si=0;si<SALAS.length;si++){
             ry:rot(sl,pi?-Math.PI/2:Math.PI/2),w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
             videoSrc:g.it.src,kindVideo:true,
             label:'SEDE '+g.sd.num+' · '+g.it.title.slice(0,32),
-            media:g.mm.items,itemIndex:g.idx,full:(g.mm.textoDetalle||g.mm.texto),sede:g.mm.sede,
+            media:g.mm.items,itemIndex:g.idx,full:(g.mm.textoDetalle||g.mm.texto),
+            fuente:(g.mm.textoFuente||''),sede:g.mm.sede,
             proyecto:g.mm.proyecto,cor:cr.n});
           cursorV+=wj+gapV*scV;
         });
@@ -1335,7 +1343,8 @@ for(var si=0;si<SALAS.length;si++){
           q=lado==='fondo'?pt(sl,x+anchos[j]*sc/2,-D/2+.22):pt(sl,lx,x+anchos[j]*sc/2);
           var base={file:'',id:'',cx:q.x,cy:y,cz:q.z,ry:ry,
             w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
-            full:(g.mm.textoDetalle||g.mm.texto),sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
+            full:(g.mm.textoDetalle||g.mm.texto),fuente:(g.mm.textoFuente||''),
+            sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
           if(g.it){
             base.poster=g.it.wall||g.mm.poster;
             base.label='SEDE '+g.sd.num+' · '+g.it.label;
@@ -1363,7 +1372,7 @@ for(var si=0;si<SALAS.length;si++){
 }
 /* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
 var SCREENS=[
- {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:0, cy:2.10, cz:-47.35, ry:0, w:1.575, h:2.8, label:'Feria de Laguna Blanca'}
+ {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:11.7, cy:1.95, cz:-69.2, ry:0, w:1.35, h:2.4, label:'Feria de Laguna Blanca'}
 ].concat(EXPO_SLOTS);
 var screensWrap=document.getElementById('screens');
 function cornersOf(s){
@@ -1450,7 +1459,7 @@ var screenObjs=SCREENS.map(function(s){
   }
   if(use3D){
     var mesh, posterTex;
-    if(s.ficha) posterTex=fichaTex(s.ficha.t,s.ficha.s,s.ficha.lines);
+    if(s.ficha) posterTex=fichaTex(s.ficha.t,s.ficha.s,s.ficha.lines,null,ACENTOS[(s.cor||1)-1]);
     else{
       var tiny=document.createElement('canvas');tiny.width=2;tiny.height=2;
       var tx=tiny.getContext('2d');tx.fillStyle='#f3ead6';tx.fillRect(0,0,2,2);
@@ -1714,7 +1723,7 @@ function updateScreens(){
 /* ---------------- puntos de interés ---------------- */
 var POI=[
   {x:0,z:-42,tag:'Plaza',t:'Plaza de la feria',d:'Elegí a qué pabellón acercarte: los 9 corredores están alrededor de la plaza.'},
-  {x:0,z:-44.5,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apuntá la mirada a la pantalla y hacé clic para reproducirlo con sonido.'},
+  {x:11.7,z:-69.2,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apuntá la mirada a la pantalla y hacé clic para reproducirlo con sonido.'},
   {x:-2.45,z:-46.5,tag:'Sede',t:'Sede Laguna Blanca',d:'Una de las sedes de la ESRN Rural Virtual: el cartel del gazebo y el video muestran la Feria de Laguna Blanca.'}
 ];
 
@@ -1925,6 +1934,8 @@ function stopMedia(root){
   var ms=root.querySelectorAll('video,audio'),i;
   for(i=0;i<ms.length;i++){try{ms[i].pause();}catch(e){}}
 }
+function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function openModal(html){
   stopMedia(mbox);
   mbox.className='mbox';
@@ -1958,7 +1969,11 @@ function openMediaModal(s){
     btns.forEach(function(b,j){b.classList.toggle('on',i===j);});
     stopMedia(stage);stage.innerHTML='';
     if(i===items.length){
-      stage.innerHTML='<p>'+(s.full||'')+'</p>';return;
+      stage.innerHTML='<p>'+esc(s.full||'')+'</p>'+
+        (s.fuente?'<details style="margin-top:16px"><summary style="cursor:pointer;color:#8a4b2a">'+
+        'Ver texto original del expediente</summary><pre style="white-space:pre-wrap;'+
+        'font:13px Segoe UI,Arial;color:#6d5238">'+esc(s.fuente)+'</pre></details>':'');
+      return;
     }
     var it=items[i],el;
     if(it.t==='video'){
