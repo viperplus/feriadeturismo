@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v17</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v18</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote11-20261120';
+window.BUILD='plaza-lote12-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -998,46 +998,58 @@ function makeSheepFollower(){
   var woolM2=new THREE.MeshStandardMaterial({color:0xeae6d8,roughness:1});
   var darkM=new THREE.MeshStandardMaterial({color:0x3a342e,roughness:.85});
   var eyeM=new THREE.MeshStandardMaterial({color:0x1a1a1a,roughness:.6});
-  // cuerpo lanudo
-  var body=new THREE.Mesh(new THREE.SphereGeometry(.38,12,10),woolM);
-  body.scale.set(1.05,.9,1.25);body.position.y=.58;body.castShadow=true;g.add(body);
-  var bumps=[[0,.18,.15,.22],[.22,.1,.2,.18],[-.22,.1,.2,.18],[0,.12,-.25,.2],
-             [.18,-.02,0,.18],[-.18,-.02,0,.18],[0,-.04,.28,.17],[0,-.04,-.3,.17]];
+  var hoofM=new THREE.MeshStandardMaterial({color:0x2a2520,roughness:.9});
+  var noseM=new THREE.MeshStandardMaterial({color:0x4a3a36,roughness:.8});
+  // cuerpo lanudo (más volumen y textura)
+  var body=new THREE.Mesh(new THREE.SphereGeometry(.4,14,12),woolM);
+  body.scale.set(1.08,.92,1.28);body.position.y=.58;body.castShadow=true;g.add(body);
+  var bumps=[[0,.22,.1,.24],[.24,.14,.18,.2],[-.24,.14,.18,.2],[0,.16,-.22,.22],
+             [.2,.02,.28,.19],[-.2,.02,.28,.19],[.26,0,0,.18],[-.26,0,0,.18],
+             [0,-.02,-.34,.19],[.14,-.06,.36,.16],[-.14,-.06,.36,.16],[0,.24,-.05,.17],
+             [.12,.2,-.24,.16],[-.12,.2,-.24,.16],[.1,-.08,-.18,.16],[-.1,-.08,-.18,.16]];
   for(var i=0;i<bumps.length;i++){
-    var b=bumps[i],bm=new THREE.Mesh(new THREE.SphereGeometry(b[3],8,6),i%2?woolM2:woolM);
+    var b=bumps[i],bm=new THREE.Mesh(new THREE.SphereGeometry(b[3],8,6),i%3===0?woolM2:woolM);
     bm.position.set(b[0],.58+b[1],b[2]);bm.castShadow=true;g.add(bm);
   }
+  // mechón de lana en la cabeza
+  var tuft=new THREE.Mesh(new THREE.SphereGeometry(.13,8,6),woolM);
+  tuft.scale.set(1.1,.9,1);tuft.position.set(0,.84,.5);g.add(tuft);
   // cabeza
-  var head=new THREE.Mesh(new THREE.SphereGeometry(.17,10,8),darkM);
-  head.scale.set(.9,.95,1.05);head.position.set(0,.68,.62);head.castShadow=true;g.add(head);
-  var snout=new THREE.Mesh(new THREE.SphereGeometry(.1,8,6),darkM);
-  snout.scale.set(.95,.7,1);snout.position.set(0,.6,.74);g.add(snout);
-  // orejas
+  var head=new THREE.Mesh(new THREE.SphereGeometry(.175,12,10),darkM);
+  head.scale.set(.88,.95,1.12);head.position.set(0,.7,.64);head.castShadow=true;g.add(head);
+  var snout=new THREE.Mesh(new THREE.SphereGeometry(.095,10,8),darkM);
+  snout.scale.set(1,.75,1.15);snout.position.set(0,.62,.78);g.add(snout);
+  var nose=new THREE.Mesh(new THREE.SphereGeometry(.045,8,6),noseM);
+  nose.scale.set(1.2,.7,1);nose.position.set(0,.6,.86);g.add(nose);
+  // orejas caídas
   function ear(sx){
-    var e=new THREE.Mesh(new THREE.SphereGeometry(.075,8,6),darkM);
-    e.scale.set(1.6,.55,.6);e.position.set(sx*.2,.74,.52);e.rotation.z=sx*.7;e.rotation.y=sx*.2;g.add(e);
+    var e=new THREE.Mesh(new THREE.SphereGeometry(.085,8,6),darkM);
+    e.scale.set(1.7,.5,.7);e.position.set(sx*.22,.71,.54);
+    e.rotation.z=sx*.95;e.rotation.x=.15;e.rotation.y=sx*.25;g.add(e);
   }
   ear(1);ear(-1);
   // ojos
   function eye(sx){
-    var ew=new THREE.Mesh(new THREE.SphereGeometry(.028,6,6),woolM);
-    ew.position.set(sx*.07,.72,.76);g.add(ew);
-    var ep=new THREE.Mesh(new THREE.SphereGeometry(.014,6,6),eyeM);
-    ep.position.set(sx*.07,.72,.785);g.add(ep);
+    var ew=new THREE.Mesh(new THREE.SphereGeometry(.034,8,6),new THREE.MeshStandardMaterial({color:0xf7f3ea,roughness:.4}));
+    ew.position.set(sx*.075,.735,.785);g.add(ew);
+    var ep=new THREE.Mesh(new THREE.SphereGeometry(.017,8,6),eyeM);
+    ep.position.set(sx*.078,.732,.812);g.add(ep);
   }
   eye(1);eye(-1);
-  // patas
+  // patas con pezuñas
   var legs=[];
   function leg(px,pz){
     var lg=new THREE.Group();
-    var m=new THREE.Mesh(new THREE.CylinderGeometry(.045,.04,.36,6),darkM);
-    m.position.y=-.18;m.castShadow=true;lg.add(m);
+    var m=new THREE.Mesh(new THREE.CylinderGeometry(.048,.042,.32,7),darkM);
+    m.position.y=-.16;m.castShadow=true;lg.add(m);
+    var hoof=new THREE.Mesh(new THREE.CylinderGeometry(.05,.055,.05,7),hoofM);
+    hoof.position.y=-.345;hoof.castShadow=true;lg.add(hoof);
     lg.position.set(px,.36,pz);g.add(lg);legs.push(lg);return lg;
   }
-  leg(.16,.22);leg(-.16,.22);leg(.16,-.22);leg(-.16,-.22);
+  leg(.17,.23);leg(-.17,.23);leg(.17,-.24);leg(-.17,-.24);
   // cola
-  var tail=new THREE.Mesh(new THREE.SphereGeometry(.07,6,6),woolM);
-  tail.position.set(0,.62,-.48);g.add(tail);
+  var tail=new THREE.Mesh(new THREE.SphereGeometry(.075,8,6),woolM);
+  tail.position.set(0,.66,-.5);g.add(tail);
   // posición inicial: cerca del jugador, apenas detrás
   g.position.set(PX-1.2,0,PZ+1.8);
   scene.add(g);
@@ -1239,8 +1251,51 @@ function wrapLines(txt,max){
   if(cur)lines.push(cur);
   return lines.slice(0,7);
 }
-/* --- adornos de feria: guirnaldas, arcos, mostradores. Sin luces nuevas. --- */
+/* --- adornos de feria: banderines, arcos, mostradores. Sin luces nuevas. --- */
 var _archTagTex=null;
+function buntingPost(x,z,h){
+  var g=new THREE.Group();
+  var pole=new THREE.Mesh(new THREE.CylinderGeometry(.045,.055,h||3.5,8),
+    new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.78}));
+  pole.position.y=(h||3.5)/2;pole.castShadow=true;g.add(pole);
+  var cap=new THREE.Mesh(new THREE.SphereGeometry(.07,8,6),
+    new THREE.MeshStandardMaterial({color:0xa8532b,roughness:.7}));
+  cap.position.y=(h||3.5);g.add(cap);
+  g.position.set(x,0,z);scene.add(g);
+  addCollider(x,z,.12,.12,h||3.5);
+}
+function bunting(ax,ay,az,bx,by,bz,sag,count){
+  var cols=['#b4552f','#d98b3a','#e9c46a','#6f8f4f','#a8532b','#c9773f','#8a5a33','#d45b45','#4a8bbf','#f0c45a'];
+  var A=new THREE.Vector3(ax,ay,az), B=new THREE.Vector3(bx,by,bz);
+  var mid=A.clone().add(B).multiplyScalar(.5); mid.y-= (sag==null?0.55:sag);
+  var curve=new THREE.QuadraticBezierCurve3(A,mid,B);
+  var ropeMat=new THREE.MeshStandardMaterial({color:0x5a3a20,roughness:.9});
+  var tube=new THREE.Mesh(new THREE.TubeGeometry(curve,28,0.016,5,false),ropeMat);
+  tube.castShadow=true;scene.add(tube);
+  // anclajes visibles en los extremos
+  [A,B].forEach(function(p){
+    var k=new THREE.Mesh(new THREE.SphereGeometry(.04,6,6),ropeMat);
+    k.position.copy(p);scene.add(k);
+  });
+  var n=count||Math.max(6,Math.floor(A.distanceTo(B)*1.6));
+  var tri=new THREE.BufferGeometry();
+  var verts=new Float32Array([-0.09,0,0, 0.09,0,0, 0,-0.22,0]);
+  tri.setAttribute('position',new THREE.BufferAttribute(verts,3));
+  tri.computeVertexNormals();
+  for(var i=0;i<n;i++){
+    var t=(i+1)/(n+1);
+    var p=curve.getPointAt(t);
+    var tang=curve.getTangentAt(t).normalize();
+    var flag=new THREE.Mesh(tri,new THREE.MeshStandardMaterial({color:cols[i%cols.length],roughness:.85,side:THREE.DoubleSide}));
+    flag.position.copy(p);
+    flag.position.y-=0.01;
+    // orientar bandera a lo largo de la cuerda con leve variación
+    flag.rotation.y=Math.atan2(tang.x,tang.z);
+    flag.rotation.x=Math.sin(i*1.7)*0.12;
+    flag.rotation.z=Math.sin(i*2.3)*0.18;
+    flag.castShadow=true;scene.add(flag);
+  }
+}
 
 function arch(x,z){
   var s=x<-10?1:-1, px=x+s*.15; /* sobresale hacia el paseo para que se vea */
@@ -1329,8 +1384,16 @@ for(var ci=0;ci<CORREDORES.length;ci++){
 var techo=new THREE.Mesh(new THREE.BoxGeometry(6,.18,6),
   new THREE.MeshStandardMaterial({color:0xb76838,roughness:.8}));
 techo.position.set(0,3.85,-50);scene.add(techo);
+// banderines del gazebo, anclados a los postes
+bunting(-2.6,3.5,-52.6, 2.6,3.5,-52.6, 0.4, 7);
+bunting(-2.6,3.5,-47.4, 2.6,3.5,-47.4, 0.4, 7);
 
 banner(-2.45,2.35,-47.1,0,2.2,'FERIA DE TURISMO','ESRN Rural Virtual');
+// banderines grandes de la plaza, con postes de soporte
+buntingPost(-10,-38,3.55); buntingPost(10,-38,3.55);
+bunting(-10,3.45,-38, 10,3.45,-38, 0.7, 22);
+buntingPost(-10,-62,3.55); buntingPost(10,-62,3.55);
+bunting(-10,3.45,-62, 10,3.45,-62, 0.7, 22);
 
 // contenido de cada pabellón
 for(var si=0;si<SALAS.length;si++){
@@ -1339,6 +1402,8 @@ for(var si=0;si<SALAS.length;si++){
   var q=pt(sl,0,D/2-2.2), qb=pt(sl,0,-D/2+.14), qf=pt(sl,0,D/2-.2);
   rug(ctr.x,ctr.z,W-1,D-1,'#d9c7a6',ACENTOS[cr.n-1],sl.ang);
   warmLamp(ctr.x,ctr.z);
+  var b1=pt(sl,-W/2+0.08,D/2), b2=pt(sl,W/2-0.08,D/2);
+  bunting(b1.x,3.2,b1.z, b2.x,3.2,b2.z, 0.45, 9);
   counter(q.x,q.z,rot(sl,0));
   var mp=pt(sl,.62,D/2-2.2);
   var maceta=new THREE.Group();
