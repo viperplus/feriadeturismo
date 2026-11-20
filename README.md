@@ -22,9 +22,14 @@ La muestra se reorganizó como una **feria rural cálida**: paredes crema y adob
 madera y guirnaldas de colores. Se eliminaron por completo la antesala y el recorrido
 recto tipo pasillo de clínica, junto con los puestos, murales y afiches inventados
 (inscripción, gastronomía, artesanías, trekking, "Mapa de Rio Negro", "Fiesta de la
-Manzana", etc.) y sus 25 puntos de interés falsos. El arranque está directamente en
+Manzana", etc.) y sus 25 puntos de interés falsos. Tampoco quedan azules fríos ni
+neones: la paleta es crema, adobe, madera y terracota, con un acento apagado distinto
+por corredor. El arranque está directamente en
 la plaza: los 9 pabellones tienen el frente abierto y miran al centro, con mostrador,
 banco, cartelería de madera y **solo el material real** de `materiales.js`.
+Los huecos entre pabellones están cerrados para que no parezcan callejones. Los
+videos se reparten hasta 3 por pared y las fotos y fichas van de a 5 por fila, con
+el excedente en la pared derecha: ningún cuadro queda apretado ni chico.
 
 No se agregaron luces ni sombras nuevas: la iluminación es solo hemisférica y solar
 (2 luces, sin luces puntuales) y un solo video se reproduce a la vez. La plaza es a

@@ -110,7 +110,7 @@
   body.unlocked #screens{z-index:55}
   .screen{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform;
     background:#000;pointer-events:none;
-    box-shadow:0 0 0 6px #1b2432,0 0 34px rgba(0,0,0,.75),0 0 70px rgba(90,160,255,.25)}
+    box-shadow:0 0 0 6px #1b2432,0 0 34px rgba(0,0,0,.75),0 0 70px rgba(168,83,43,.25)}
   body.unlocked .screen{pointer-events:auto}
   .screen video{width:100%;height:100%;object-fit:contain;display:block;background:#000}
   .screen .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v5</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v6</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -312,7 +312,7 @@ function floorTex(){
   }
   var small=document.createElement('canvas');small.width=small.height=256;
   small.getContext('2d').drawImage(c,0,0,256,256);
-  var t=new THREE.CanvasTexture(small);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(14,14);
+  var t=new THREE.CanvasTexture(small);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(10,17);
   t.encoding=THREE.sRGBEncoding;t.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);return t;
 }
 function woodTex(){
@@ -405,7 +405,7 @@ function lintel(x1,z1,x2,z2,y0){
 /* ---------------- suelo / techo / exterior ---------------- */
 var fTex=floorTex();
 var floor=new THREE.Mesh(new THREE.PlaneGeometry(58,96),
-  new THREE.MeshStandardMaterial({map:fTex,roughness:.42,metalness:.06,
+  new THREE.MeshStandardMaterial({map:fTex,roughness:.88,metalness:0,
     bumpMap:fTex,bumpScale:.012,envMapIntensity:.7}));
 floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-28);floor.receiveShadow=true;scene.add(floor);
 
@@ -547,13 +547,13 @@ function banner(x,y,z,ry,w,t1,t2){
 function projectTex(title,sub,seed){
   var r=rnd32(seed);
   var c=document.createElement('canvas');c.width=640;c.height=460;var x=c.getContext('2d');
-  x.fillStyle='#f7fbff';x.fillRect(0,0,640,460);
+  x.fillStyle='#f7ead2';x.fillRect(0,0,640,460);
   x.fillStyle='#8a4b2a';x.fillRect(0,0,640,86);
   var fs=40;
   x.font='bold '+fs+'px Segoe UI,Arial';
   while(x.measureText(title).width>600&&fs>18){fs--;x.font='bold '+fs+'px Segoe UI,Arial';}
   x.fillStyle='#fff';x.textAlign='center';x.fillText(title,320,58);
-  x.fillStyle='#2b3d52';x.font='22px Segoe UI,Arial';x.fillText(sub,320,124);
+  x.fillStyle='#4a2f1c';x.font='22px Segoe UI,Arial';x.fillText(sub,320,124);
   var cols=['#f4a261','#2a9d8f','#e9c46a','#e76f51'];
   for(var i=0;i<4;i++){
     var h=60+r()*140;
@@ -570,7 +570,7 @@ function projectTex(title,sub,seed){
     x.fillStyle='#fff';x.beginPath();x.arc(p[0],p[1],3.5,0,6.3);x.fill();
   });
   x.strokeStyle='#c8d4e2';x.lineWidth=2;x.strokeRect(10,96,620,344);
-  x.fillStyle='#6b7a8d';x.font='18px Segoe UI';
+  x.fillStyle='#6d5238';x.font='18px Segoe UI';
   x.fillText('ESRN RURAL Virtual · Feria de Turismo',320,450);
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
 }
@@ -586,7 +586,7 @@ function wrapText(x,text,maxW){
 }
 function fichaTex(title,sub,lines,num){
   var c=document.createElement('canvas');c.width=640;c.height=460;var x=c.getContext('2d');
-  x.fillStyle='#f7fbff';x.fillRect(0,0,640,460);
+  x.fillStyle='#f7ead2';x.fillRect(0,0,640,460);
   x.fillStyle='#8a4b2a';x.fillRect(0,0,640,92);
   if(num){
     x.fillStyle='#f2b134';x.fillRect(0,0,92,92);
@@ -599,21 +599,36 @@ function fichaTex(title,sub,lines,num){
   x.font='bold '+fs+'px Segoe UI,Arial';
   while(x.measureText(title).width>(num?520:600)&&fs>17){fs-=2;x.font='bold '+fs+'px Segoe UI,Arial';}
   x.fillStyle='#fff';x.fillText(title,num?366:320,60);
-  x.font='20px Segoe UI,Arial';x.fillStyle='#a9d7ff';x.fillText(sub,num?366:320,84);
+  x.font='20px Segoe UI,Arial';x.fillStyle='#e9c46a';x.fillText(sub,num?366:320,84);
   x.textAlign='left';
-  x.fillStyle='#c8792f';x.fillRect(40,118,560,4);
+  x.fillStyle='#a8532b';x.fillRect(40,118,560,4);
   var y=162,i;
   for(i=0;i<lines.length;i++){
-    x.fillStyle='#c8792f';x.beginPath();x.arc(56,y-6,8,0,6.3);x.fill();
-    x.fillStyle='#2b3d52';x.font='23px Segoe UI,Arial';
+    x.fillStyle='#a8532b';x.beginPath();x.arc(56,y-6,8,0,6.3);x.fill();
+    x.fillStyle='#4a2f1c';x.font='23px Segoe UI,Arial';
     var ls=wrapText(x,lines[i],524);
     for(var j=0;j<ls.length;j++){x.fillText(ls[j],78,y+j*30);}
     y+=ls.length*30+24;
   }
-  x.fillStyle='#e8eef6';x.fillRect(0,404,640,56);
-  x.fillStyle='#6b7a8d';x.textAlign='center';x.font='18px Segoe UI,Arial';
+  x.fillStyle='#efe0c2';x.fillRect(0,404,640,56);
+  x.fillStyle='#6d5238';x.textAlign='center';x.font='18px Segoe UI,Arial';
   x.fillText('ESRN RURAL Virtual · Feria de Turismo',320,438);
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
+}
+function sedesTex(title,sub,lines){
+  var c=document.createElement('canvas');c.width=960;c.height=280;var x=c.getContext('2d');
+  x.fillStyle='#f7ead2';x.fillRect(0,0,960,280);
+  x.fillStyle='#8a4b2a';x.fillRect(0,0,960,66);
+  x.textAlign='center';x.fillStyle='#fff8ea';x.font='bold 32px Segoe UI,Arial';x.fillText(title,480,42);
+  x.fillStyle='#e9c46a';x.font='19px Segoe UI,Arial';x.fillText(sub,480,108);
+  x.textAlign='left';x.fillStyle='#b98a58';x.fillRect(28,124,904,3);
+  x.font='19px Segoe UI,Arial';x.fillStyle='#4a2f1c';
+  var col=0,y=158;
+  lines.forEach(function(ln){
+    if(col>=3){col=0;y+=30;}
+    x.fillText(ln.length>30?ln.slice(0,29)+'…':ln,28+col*304,y);col++;
+  });
+  var t2=new THREE.CanvasTexture(c);t2.encoding=THREE.sRGBEncoding;return t2;
 }
 function stand(x,z,ry,title,sub,seed,num,lines){
   var g=new THREE.Group();
@@ -699,7 +714,7 @@ function pennants(x,y,z,w,ry){
   var c=document.createElement('canvas');c.width=1024;c.height=160;var q=c.getContext('2d');
   q.clearRect(0,0,1024,160);
   q.strokeStyle='#3b2b1c';q.lineWidth=6;q.beginPath();q.moveTo(0,18);q.lineTo(1024,18);q.stroke();
-  var cols=['#e76f51','#f4a261','#e9c46a','#2a9d8f','#6ee7ff','#ef476f','#8fffc4'],i;
+  var cols=['#b4552f','#d98b3a','#e9c46a','#6f8f4f','#a8532b','#c9773f','#8a5a33'],i;
   for(i=0;i<12;i++){
     q.fillStyle=cols[i%cols.length];
     var px=20+i*84;
@@ -1062,7 +1077,7 @@ function pennantTex(){
   if(_pennantTex)return _pennantTex;
   var c=document.createElement('canvas');c.width=1024;c.height=160;var q=c.getContext('2d');
   q.strokeStyle='#5a3a20';q.lineWidth=6;q.beginPath();q.moveTo(0,18);q.lineTo(1024,18);q.stroke();
-  var cols=['#e76f51','#f4a261','#e9c46a','#2a9d8f','#d96b52','#ef476f','#8fffc4'],i;
+  var cols=['#b4552f','#d98b3a','#e9c46a','#6f8f4f','#a8532b','#c9773f','#8a5a33'],i;
   for(i=0;i<12;i++){
     q.fillStyle=cols[i%cols.length];var px=20+i*84;
     q.beginPath();q.moveTo(px,20);q.lineTo(px+70,20);q.lineTo(px+35,112);q.closePath();q.fill();
@@ -1127,6 +1142,7 @@ function pt(s,lx,lz){
   return {x:s.cx+lx*ca+lz*sa, z:s.cz-lx*sa+lz*ca};
 }
 function rot(s,r){return r+s.ang;}
+var ACENTOS=['#c0732f','#6f8f4f','#9c5b32','#7d6a4f','#8c5a47','#5f7f6a','#b08243','#8a6b52','#4f7c86'];
 var UBIC=[
   {x:-9,z:-70,a:0}, {x:0,z:-70,a:0}, {x:9,z:-70,a:0},
   {x:-9,z:-30,a:Math.PI}, {x:0,z:-30,a:Math.PI},
@@ -1139,9 +1155,13 @@ for(var ci=0;ci<CORREDORES.length;ci++){
   var B=pt({cx:L.x,cz:L.z,ang:L.a}, W/2,-D/2);
   var C=pt({cx:L.x,cz:L.z,ang:L.a},-W/2, D/2);
   var E=pt({cx:L.x,cz:L.z,ang:L.a}, W/2, D/2);
-  wall(A.x,A.z,B.x,B.z); wall(A.x,A.z,C.x,C.z); wall(B.x,B.z,E.x,E.z);
+  wall(A.x,A.z,B.x,B.z,wallMat2); wall(A.x,A.z,C.x,C.z); wall(B.x,B.z,E.x,E.z);
   SALAS.push({c:cr,cx:L.x,cz:L.z,ang:L.a,W:W,D:D});
 }
+/* cerrar los huecos entre pabellones y las salidas laterales al vacío */
+[[-4.5,-73,-4.5,-67],[4.5,-73,4.5,-67],
+ [-4.5,-33,-4.5,-27],[4.5,-33,4.5,-27],
+ [-22,-52,-22,-48],[22,-52,22,-48]].forEach(function(w){wall(w[0],w[1],w[2],w[3]);});
 /* gazebo central con el video oficial y dos luces cálidas */
 [[-2.6,-2.6],[2.6,-2.6],[-2.6,2.6],[2.6,2.6]].forEach(function(p){
   var post=new THREE.Mesh(new THREE.BoxGeometry(.16,3.8,.16),
@@ -1159,21 +1179,21 @@ banner(-2.45,2.35,-47.1,0,2.2,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
 for(var si=0;si<SALAS.length;si++){
   var sl=SALAS[si], cr=sl.c;
   var ctr=pt(sl,0,0), W=sl.W, D=sl.D;
-  var q=pt(sl,0,D/2-1.4), qb=pt(sl,0,-D/2+.14), qf=pt(sl,0,D/2-.2);
-  rug(ctr.x,ctr.z,W-1,D-1,'#d9c7a6',cr.color,sl.ang);
+  var q=pt(sl,0,D/2-2.2), qb=pt(sl,0,-D/2+.14), qf=pt(sl,0,D/2-.2);
+  rug(ctr.x,ctr.z,W-1,D-1,'#d9c7a6',ACENTOS[cr.n-1],sl.ang);
   warmLamp(ctr.x,ctr.z);
   garland(qf.x,2.98,qf.z,5.5,sl.ang);
   counter(q.x,q.z,rot(sl,0));
-  q=pt(sl,W/2-1.2,0); bench(q.x,q.z,rot(sl,0));
+  q=pt(sl,W/2-1.2,2.2); bench(q.x,q.z,rot(sl,0));
   q=pt(sl,-W/2+.16,0);
-  banner(q.x,3.05,q.z,rot(sl,Math.PI/2),5.2,'CORREDOR '+cr.n,cr.nombre.toUpperCase());
+  banner(q.x,3.25,q.z,rot(sl,Math.PI/2),3.6,'CORREDOR '+cr.n,cr.nombre.toUpperCase());
   var nombresSede=cr.sedes.map(function(sd){return sd.nombre;}), lineasSede=[];
   for(var jSede=0;jSede<nombresSede.length;jSede+=3){
     lineasSede.push(nombresSede.slice(jSede,jSede+3).join(' · '));
   }
-  var panelSedes=new THREE.Mesh(new THREE.PlaneGeometry(3.1,1.05),
-    new THREE.MeshStandardMaterial({map:fichaTex('Sedes del corredor','Corredor '+cr.n+' · '+cr.sedes.length+' sedes',lineasSede),roughness:.9}));
-  panelSedes.position.set(qb.x,3.32,qb.z);panelSedes.rotation.y=rot(sl,0);scene.add(panelSedes);
+  var panelSedes=new THREE.Mesh(new THREE.PlaneGeometry(2.9,0.85),
+    new THREE.MeshStandardMaterial({map:sedesTex('Sedes del corredor','Corredor '+cr.n+' · '+cr.sedes.length+' sedes',lineasSede),roughness:.9}));
+  panelSedes.position.set(qb.x,3.45,qb.z);panelSedes.rotation.y=rot(sl,0);scene.add(panelSedes);
   for(jSede=0;jSede<cr.sedes.length;jSede++){
     var sede=cr.sedes[jSede],dxSede=(jSede-(cr.sedes.length-1)/2)*1.48;
     q=pt(sl,dxSede,D/2-.14);
@@ -1195,51 +1215,58 @@ for(var si=0;si<SALAS.length;si++){
     });
     /* videos: mismo marco, pero con la proporcion real de la grabacion */
     if(vids.length){
-      var hV=1.45, gapV=0.18;
-      var wsV=vids.map(function(g){return Math.min(2.6,hV*(g.it.videoAspect||g.it.aspect||1.6));});
-      var totV=wsV.reduce(function(a,b){return a+b;},0)+gapV*(vids.length-1);
-      var scV=Math.min(1,(D-.6)/totV), cursorV=-totV*scV/2;
-      vids.forEach(function(g,j){
-        var wj=wsV[j]*scV;
-        q=pt(sl,-W/2+.25,cursorV+wj/2);
-        EXPO_SLOTS.push({file:'',id:'',cx:q.x,cy:1.8,cz:q.z,
-          ry:rot(sl,Math.PI/2),w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
-          videoSrc:g.it.src,kindVideo:true,
-          label:'SEDE '+g.sd.num+' · '+g.it.title.slice(0,32),
-          media:g.mm.items,itemIndex:g.idx,full:g.mm.texto,sede:g.mm.sede,
-          proyecto:g.mm.proyecto,cor:cr.n});
-        cursorV+=wj+gapV*scV;
+      var hV=2.05, gapV=0.20;
+      [vids.slice(0,3),vids.slice(3,6)].forEach(function(parte,pi){
+        if(!parte.length)return;
+        var wsV=parte.map(function(g){return hV*(g.it.videoAspect||g.it.aspect||1.6);});
+        var totV=wsV.reduce(function(a,b){return a+b;},0)+gapV*(parte.length-1);
+        var scV=Math.min(1,(D-.6)/totV), cursorV=-totV*scV/2;
+        parte.forEach(function(g,j){
+          var wj=wsV[j]*scV;
+          q=pt(sl,pi?W/2-.25:-W/2+.25,cursorV+wj/2);
+          EXPO_SLOTS.push({file:'',id:'',cx:q.x,cy:1.95,cz:q.z,
+            ry:rot(sl,pi?-Math.PI/2:Math.PI/2),w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
+            videoSrc:g.it.src,kindVideo:true,
+            label:'SEDE '+g.sd.num+' · '+g.it.title.slice(0,32),
+            media:g.mm.items,itemIndex:g.idx,full:g.mm.texto,sede:g.mm.sede,
+            proyecto:g.mm.proyecto,cor:cr.n});
+          cursorV+=wj+gapV*scV;
+        });
       });
     }
     /* fotos y fichas: cuadros grandes, con la proporcion real de cada imagen */
-    var gal=fotos.concat(textos), rows=gal.length>9?2:1;
-    var cols=Math.ceil(gal.length/rows), gapG=0.18, zGal=-D/2+.22;
-    var hG=rows>1?1.05:1.7;
-    for(var row=0;row<rows;row++){
-      var linea=gal.slice(row*cols,(row+1)*cols);
-      var anchos=linea.map(function(g){
-        return Math.min(2.6,hG*((g.it&&(g.it.aspect||g.it.videoAspect))||1.6));
-      });
-      var tot=anchos.reduce(function(a,b){return a+b;},0)+gapG*(linea.length-1);
-      var sc=Math.min(1,(W-.6)/tot), hh=hG*sc, x=-tot*sc/2;
-      var y=rows>1?2.55-row*(hh+0.25):1.85;
-      linea.forEach(function(g,j){
-        q=pt(sl,x+anchos[j]*sc/2,zGal);
-        var base={file:'',id:'',cx:q.x,cy:y,cz:q.z,ry:rot(sl,0),
-          w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
-          full:g.mm.texto,sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
-        if(g.it){
-          base.poster=g.it.wall||g.mm.poster;
-          base.label='SEDE '+g.sd.num+' · '+g.it.label;
-        }else{
-          base.ficha={t:'SEDE '+g.sd.num+' · '+g.mm.sede,s:'PROYECTO',
-                      lines:wrapLines(g.mm.texto,30).slice(0,4)};
-          base.label='SEDE '+g.sd.num+' · Ficha';
-        }
-        EXPO_SLOTS.push(base);
-        x+=anchos[j]*sc+gapG*sc;
-      });
+    var gal=fotos.concat(textos), gapG=0.18;
+    function colgar(lista,lx,ry,lado){
+      var filas=Math.ceil(lista.length/5), hG=filas>1?0.90:1.70;
+      var span=(lado==='fondo'?W:D)-.6;
+      for(var row=0;row<filas;row++){
+        var linea=lista.slice(row*5,(row+1)*5);
+        var anchos=linea.map(function(g){
+          return Math.min(2.6,hG*((g.it&&(g.it.aspect||g.it.videoAspect))||1.6));
+        });
+        var tot=anchos.reduce(function(a,b){return a+b;},0)+gapG*(linea.length-1);
+        var sc=Math.min(1,span/tot), hh=hG*sc, x=-tot*sc/2;
+        var y=filas>1?2.50-row*1.00:1.85;
+        linea.forEach(function(g,j){
+          q=lado==='fondo'?pt(sl,x+anchos[j]*sc/2,-D/2+.22):pt(sl,lx,x+anchos[j]*sc/2);
+          var base={file:'',id:'',cx:q.x,cy:y,cz:q.z,ry:ry,
+            w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
+            full:g.mm.texto,sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
+          if(g.it){
+            base.poster=g.it.wall||g.mm.poster;
+            base.label='SEDE '+g.sd.num+' · '+g.it.label;
+          }else{
+            base.ficha={t:'SEDE '+g.sd.num+' · '+g.mm.sede,s:'PROYECTO',
+                        lines:wrapLines(g.mm.texto,30).slice(0,4)};
+            base.label='SEDE '+g.sd.num+' · Ficha';
+          }
+          EXPO_SLOTS.push(base);
+          x+=anchos[j]*sc+gapG*sc;
+        });
+      }
     }
+    colgar(gal.slice(0,10),0,rot(sl,0),'fondo');
+    colgar(gal.slice(10),W/2-.25,rot(sl,-Math.PI/2),'lateral');
     q=pt(sl,-W/2+1.15,0);
     POI_EXTRA.push({x:q.x,z:q.z,
       tag:'EXPO · CORREDOR '+cr.n,t:'Material de los estudiantes',
@@ -1310,15 +1337,15 @@ function playIconTex(){
 function slotTex(s){
   var c=document.createElement('canvas');c.width=960;c.height=600;var x=c.getContext('2d');
   var g=x.createLinearGradient(0,0,960,600);
-  g.addColorStop(0,'#12304f');g.addColorStop(1,'#0a1422');
+  g.addColorStop(0,'#3a2418');g.addColorStop(1,'#241209');
   x.fillStyle=g;x.fillRect(0,0,960,600);
-  x.strokeStyle='rgba(120,180,240,.45)';x.lineWidth=6;x.strokeRect(18,18,924,564);
+  x.strokeStyle='rgba(185,138,88,.45)';x.lineWidth=6;x.strokeRect(18,18,924,564);
   x.textAlign='center';
   x.fillStyle='#ffd78f';x.font='bold 40px Segoe UI,Arial';
   x.fillText('ESRN RURAL VIRTUAL',480,230);
-  x.fillStyle='#8fffc4';x.font='bold 32px Segoe UI,Arial';
+  x.fillStyle='#e9c46a';x.font='bold 32px Segoe UI,Arial';
   x.fillText((s.sede||s.label||'').slice(0,34),480,310);
-  x.fillStyle='#c9d8ea';x.font='24px Segoe UI,Arial';
+  x.fillStyle='#f6e8cf';x.font='24px Segoe UI,Arial';
   x.fillText('Clic para ver el material',480,390);
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;
 }
@@ -1392,7 +1419,7 @@ var screenObjs=SCREENS.map(function(s){
         new THREE.MeshStandardMaterial({color:0xf3ead6,roughness:.95}));
       matBoard.position.z=-0.045;grp.add(matBoard);
       var backBoard=new THREE.Mesh(new THREE.BoxGeometry(s.w+GAP*2,s.h+GAP*2,.03),
-        new THREE.MeshStandardMaterial({color:0x1a1f26,roughness:.9}));
+        new THREE.MeshStandardMaterial({color:0x3a2418,roughness:.9}));
       backBoard.position.z=-0.085;grp.add(backBoard);
       mesh=new THREE.Mesh(new THREE.PlaneGeometry(s.w,s.h),
         new THREE.MeshBasicMaterial({map:posterTex}));
@@ -1448,7 +1475,7 @@ var screenObjs=SCREENS.map(function(s){
       vid.addEventListener('touchend',function(e){e.preventDefault();vidToggle(o);});
     }else{
       el.style.cssText+=';display:flex;align-items:center;justify-content:center;padding:18px;'+
-        'background:#12304f;color:#8fffc4;font:16px Segoe UI,Arial;text-align:center';
+        'background:#3a2418;color:#e9c46a;font:16px Segoe UI,Arial;text-align:center';
       el.textContent=(s.label||(s.ficha&&s.ficha.t)||'Material de la sede')+' · clic para ver';
       if(s.poster)el.style.backgroundImage="url('"+s.poster+"')";
       el.style.backgroundSize='cover';el.style.backgroundPosition='center';
@@ -1860,7 +1887,7 @@ function nearStand(){
 }
 function openStandModal(s){
   var h='<div class="tag">Puesto '+s.n+' · Feria de Turismo</div><h2>'+s.t+'</h2><ul style="margin:4px 0 0 18px">';
-  s.lines.forEach(function(l){h+='<li style="margin:7px 0;color:#c9d8ea;font-size:14.5px;line-height:1.45">'+l+'</li>';});
+  s.lines.forEach(function(l){h+='<li style="margin:7px 0;color:#6d5238;font-size:14.5px;line-height:1.45">'+l+'</li>';});
   h+='</ul><div class="row"><button class="close" id="mC">Cerrar</button></div>';
   openModal(h);
   document.getElementById('mC').addEventListener('click',closeModal);
