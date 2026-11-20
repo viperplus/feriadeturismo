@@ -29,7 +29,9 @@ banco, cartelería de madera y **solo el material real** de `materiales.js`.
 No se agregaron luces ni sombras nuevas: la iluminación es solo hemisférica y solar
 (2 luces, sin luces puntuales) y un solo video se reproduce a la vez. La plaza es a
 cielo abierto: no hay techo, lucernarios ni pinos. Los carteles de sede quedan por
-encima del nivel del paso, para no tapar la entrada a los pabellones. La galería de
+encima del nivel del paso, para no tapar la entrada a los pabellones. En el gazebo,
+la pantalla oficial va de 0,7 a 3,5 m, la guirnalda pasa por encima del video y los
+cuatro postes tienen colisión. La galería de
 fotos/fichas no ofrece pestañas de video: los videos se escuchan y se ven en la
 pared, sin modal. Los videos están dentro de los pabellones y miran al
 visitante; las fotos caben enteras en la pared de 8 m y conservan su proporción real.
