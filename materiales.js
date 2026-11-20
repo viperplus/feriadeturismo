@@ -5,7 +5,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Bajo el cielo de Aguada Guzmán · astroturismo",
     "poster": "material/posters/10.jpg",
-    "texto": "Astroturismo en Aguada Guzmán.\nSalón comunitario y Ruta 74:\natardecer y constelaciones en\ncuatro paradas. Daiana Zapata.",
+    "texto": "Aguada Guzmán: astroturismo\ncon Daiana Zapata. 2 a 2,5 h\ndesde el salón por la Ruta 74:\natardecer, estrellas, cuidado.",
     "items": [
       {
         "t": "image",
@@ -32,7 +32,7 @@ var MATERIALES={
         "aspect": 1.572
       }
     ],
-    "textoDetalle": "La sede Aguada Guzmán presenta «Bajo el cielo de Aguada Guzmán · astroturismo», un circuito a pie de 2 a 2,5 horas que parte del salón comunitario por la Ruta 74. Cuatro paradas permiten observar el atardecer, reconocer constelaciones y jugar a identificar el cielo. Lo firma Daiana Zapata (5° año). La pared muestra dos flyers; el expediente menciona además dos videos con el nombre de la estudiante que no figuran como ítems. Corredor 3, Meseta Norte y Transición.",
+    "textoDetalle": "Aguada Guzmán\n“Bajo el cielo de Aguada Guzmán”\nAstroturismo | Presenta: Daiana Zapata (5.º año)\n\nUna experiencia para descubrir Aguada Guzmán desde una mirada diferente: primero su paisaje al atardecer y, luego, la inmensidad de su cielo nocturno.\n\n¿Qué vas a vivir?\n\nUn recorrido a pie de aproximadamente 2 a 2 horas y media, desde la caída del sol hasta la noche.\nPunto de encuentro: Salón Comunitario, con inicio del circuito por la Ruta 74.\nParadas del recorrido:\nAtardecer: observación del cambio de colores en el cielo y explicación de cómo comienza la noche.\nMirada al paisaje: parada en un lugar abierto, elevado y seguro, alejado de luces.\nCielo estrellado: reconocimiento de estrellas y constelaciones visibles.\nAprender jugando: actividad con preguntas para identificar elementos del cielo.\nCierre: momento de contemplación y reflexión sobre la importancia de cuidar los cielos nocturnos y el ambiente, con regreso al salón y un refrigerio.\nLo que hace especial a este proyecto: el entorno rural y árido de Aguada Guzmán ofrece condiciones ideales para observar las estrellas, en una propuesta que combina naturaleza, aprendizaje y cuidado del lugar.",
     "textoFuente": "Circuito de astroturismo de 2 a 2,5 horas desde el salón comunitario por la Ruta 74. Cuatro paradas para observar el atardecer, reconocer constelaciones y jugar a identificar el cielo. Daiana Zapata, 5° año.\n\nMaterial del expediente:\nComunicación y turismo\nClase 14\nDaiana zapata\nAguada Guzmán\nCreando imágenes del paraje\nDaiana zapata-Comunicac y turismo-clase10-Aguzman.mp4\nvideo_Daiana zapata-clase13-comunicac y turismo-Aguzman.mp4\n¡Bienvenidos a Aguada Guzmán! Mi nombre es Daiana y voy a acompañarlos en este recorrido de astroturismo, donde podremos conocer y disfrutar de nuestro paisaje durante el día y, especialmente, observar el cielo nocturno.\nNuestro circuito se llama “Bajo el cielo de Aguada Guzmán”. Durante el recorrido vamos a conocer distintos lugares de nuestro paraje, aprender sobre las estrellas y constelaciones que podemos observar y compartir historias y conocimientos relacionados con el cielo y las tradiciones de nuestra región. El recorrido será a pie y tendrá una duración aproximada de 2 horas. Realizaremos diferentes paradas para observar el paisaje, sacar fotografías y escuchar relatos sobre las estrellas. Al finalizar, tendremos un momento para contemplar el cielo y reconocer algunas constelaciones. Les pedimos que respetemos el ambiente, que no dejemos residuos y que no dañemos la vegetación ni nos llevemos elementos del lugar. Queremos que este espacio pueda ser disfrutado por todos los v"
   },
   "13": {
@@ -40,7 +40,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Fiesta tradicional de Naupa Huen",
     "poster": "material/posters/13.jpg",
-    "texto": "Fiesta tradicional de Naupa\nHuen: desfile, folletos,\nentrevistas y videos de\ninvitación. Morena y Tiziana.",
+    "texto": "Naupa Huen: fiesta tradicional\nen fotos, videos, folletos\ny entrevistas. Morena y\nTiziana, 3.º año.",
     "items": [
       {
         "t": "video",
@@ -81,7 +81,7 @@ var MATERIALES={
         "aspect": 1.121
       }
     ],
-    "textoDetalle": "La sede Naupa Huen documenta la Fiesta tradicional de Naupa Huen con desfile, folletos, entrevistas y videos de invitación de Morena y Tiziana (3° año). En la pared conviven los videos «More y Tizi Naupa Huen feria 1» y «Morena y Tiziana Naupa Huen feria turismo», además de un flyer. Corredor 3, Meseta Norte y Transición.",
+    "textoDetalle": "Naupa Huen\n“Fiesta tradicional de Naupa Huen”\nTurismo cultural | Presentan: Morena y Tiziana (3.º año)\n\nUn trabajo dedicado a rescatar y compartir una de las celebraciones más representativas de Naupa Huen.\n\n¿Qué vas a descubrir?\n\nUn recorrido por la fiesta tradicional del lugar a través de fotos, videos, folletos y entrevistas.\nImágenes y relatos que muestran cómo se vive esta celebración y qué significa para la comunidad.\nLo que hace especial a este proyecto: pone en valor las tradiciones como parte viva de la identidad local y como una forma de encuentro entre vecinos y visitantes.",
     "textoFuente": "Recopilación del desfile, folletos, entrevistas y videos de invitación de estudiantes de turismo. Morena y Tiziana, 3° año."
   },
   "11": {
@@ -89,7 +89,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Caminata Saludable · Cielo de Mencué",
     "poster": "material/posters/11.jpg",
-    "texto": "Caminata de 8 km: ESRN a La\nAngostura. Cielo de Mencué:\nMirador, Cerro de la Cruz y\ncampos sin luces. Isaias Ñanco",
+    "texto": "Mencué: caminata de 8 km,\nlibro digital, video y el\ncielo de Mencué. 3.º, 4.º y\n5.º año.",
     "items": [
       {
         "t": "video",
@@ -105,7 +105,7 @@ var MATERIALES={
         "videoAspect": 0.45
       }
     ],
-    "textoDetalle": "La sede Mencué propone una caminata de 8 km desde la ESRN hasta La Angostura y el circuito de astroturismo «Cielo de Mencué» por el Mirador, el Cerro de la Cruz y campos abiertos sin contaminación lumínica. Es trabajo de Alan y Julián; el texto incluye un mensaje de bienvenida de Isaias Ñanco (5° año). La pared tiene el video «Alan y Julian Mencue feria turismo 3° año». Corredor 3, Meseta Norte y Transición.",
+    "textoDetalle": "Mencué\nTurismo activo, cultural y astroturismo | Presentan: estudiantes de 3.º, 4.º y 5.º año\n\nMencué propone distintas formas de conocer y disfrutar el lugar: caminándolo, registrando sus historias y contemplando su cielo.\n\nProyectos\n“Caminata Saludable”\nUn recorrido de aproximadamente 8 km desde la ESRN hasta la Esencia La Angostura, pensado para disfrutar el paisaje y promover el movimiento en contacto con la naturaleza.\nLibro digital (en proceso) — Pamela Loncoman\nUna iniciativa para reunir y compartir contenidos sobre Mencué en formato digital.\nVideo de feria — Alan y Julián (3.º año)\nUna producción audiovisual para difundir la localidad y sus propuestas.\n“Cielo de Mencué” — Isaías Ñanco (5.º año)\nUn circuito de astroturismo a pie (aproximadamente 1 hora) que parte desde la Comisión de Fomento y recorre:\nMirador: apreciación del atardecer y del cambio de luz en el paisaje.\nCerro de la Cruz: orientación, puntos cardinales y relatos vinculados a la mirada de los pueblos originarios sobre el cielo.\nZona de observación astronómica: espacio abierto y alejado de luces para reconocer constelaciones, la Vía Láctea y, según la noche, la Luna y algunos planetas.\nLo que hace especial a estos proyectos: combinan actividad, cultura y naturaleza, y aprovechan los cielos despejados de Mencué como uno de sus grandes atractivos.",
     "textoFuente": "Caminata de 8 km desde la ESRN hasta La Angostura y circuito de astroturismo por el Mirador, el Cerro de la Cruz y campos abiertos sin contaminación lumínica. Alan y Julián; Isaias ñanco, 5° año.\n\nMaterial del expediente:\nMensaje de bienvenida:\n“Bienvenidos a Mencué. Mi nombre es Isaias Ñanco y hoy seré su guía. Nuestro circuito se llama “cielo de Mencué”.\nPartiremos desde la Comisión de Fomento y  recorreremos lugares especiales, el Mirador, el Cerro de la Cruz y por ultimo una zona de campos abiertos ideal para observar las estrellas sin interferencia. En cada sitio les contaré por qué el cielo era tan importantes para los pueblos originarios de esta zona. El recorrido es a pie y  dura aproximadamente 1 hora. Les pedimos por favor no dejar basura por el recorrido, cuiden este lugar para que todos lo disfruten. ¡Que disfruten el cielo de Mencué!.\nCircuito de Astroturismo en Mencué\nNombre del circuito: Cielos de Mencué\n• Punto de partida: Comisión de Fomento de Mencué\n• Parada 1: Mirador\n• Parada 2: Cerro de la cruz\n• Parada 3: Zona de observación astronómica (campos abierto, lejos de luces)\nSe eligieron estos espacios porque Mencué cuenta con cielos muy despejados y poca contaminación lumínica, lo que lo convierte en un lugar privilegiado para observar el cielo nocturno. La primera parada, el Mirador, permite apreciar el atardecer y el cambio de luz antes de que salgan las estrellas,con una vista a"
   },
   "20": {
@@ -113,7 +113,7 @@ var MATERIALES={
     "corredor": 3,
     "proyecto": "Sabores Lagunenses · recetas y degustación",
     "poster": "material/posters/20.jpg",
-    "texto": "Recetas y comidas locales de\nLaguna Blanca: degustación e\ninteracción con la comunidad.\nVideos de invitación y expo.",
+    "texto": "Sabores Lagunenses: recetas\ny comidas locales. Degustación\ny encuentro con la comunidad.\n3.º año.",
     "items": [
       {
         "t": "video",
@@ -167,7 +167,7 @@ var MATERIALES={
         "aspect": 0.626
       }
     ],
-    "textoDetalle": "La sede Laguna Blanca presenta «Sabores Lagunenses · recetas y degustación»: recetas y comidas locales, stand de degustación e interacción con la comunidad, además de videos de invitación y un resumen de la expo. Es trabajo de 3° año. La pared muestra tres videos —«Clase5-Turismo-Laguna Blanca», «Feria Laguna Blanca» y «Laguna Blanca feria turismo»— y un flyer. Corredor 3, Meseta Norte y Transición.",
+    "textoDetalle": "Laguna Blanca\n“Sabores Lagunenses”\nTurismo gastronómico y cultural | Presenta: 3.º año\n\nUna propuesta para conocer Laguna Blanca a través de sus recetas, sus sabores y el encuentro con la comunidad.\n\n¿Qué vas a encontrar?\n\nUn stand de degustación con comidas locales.\nUn espacio de intercambio para compartir recetas, costumbres y saberes de la zona.\nMaterial audiovisual que acompaña la presentación del proyecto y la invitación a conocer la localidad.\nLo que hace especial a este proyecto: acerca a los visitantes a la identidad de Laguna Blanca de una forma cálida y participativa, donde la comida se convierte en un puente cultural.",
     "textoFuente": "Recetas y comidas locales, stand de degustación e interacción con la comunidad, además de videos de invitación y resumen de la expo. 3° año."
   },
   "14": {
@@ -175,7 +175,7 @@ var MATERIALES={
     "corredor": 5,
     "proyecto": "Expo Rural Río Chico",
     "poster": "material/posters/14.jpg",
-    "texto": "Río Chico: ganaderos y\nagricultores, artesanas y\nferroviarios; folletos, videos\ny fotos de sus actividades.",
+    "texto": "Expo Rural Río Chico:\nganadería, agricultura,\nartesanías y ferroviarios.\n3.º y 4.º año.",
     "items": [
       {
         "t": "image",
@@ -226,7 +226,7 @@ var MATERIALES={
         "aspect": 1.573
       }
     ],
-    "textoDetalle": "La sede Río Chico presenta «Expo Rural Río Chico», un proyecto turístico junto a ganaderos, agricultores, artesanas y ferroviarios. Reúne folletos, videos y fotos del pueblo y sus actividades, de 3° y 4° año. En la pared se ven cuatro imágenes de flyers del pueblo. Corredor 5, Suroeste (La Trochita).",
+    "textoDetalle": "Río Chico\n“Expo Rural Río Chico”\nTurismo comunitario e identidad local | Presentan: 3.º y 4.º año\n\nUn proyecto que muestra la identidad de Río Chico a partir del trabajo, la historia y la vida cotidiana de su comunidad.\n\n¿Qué vas a descubrir?\n\nUna representación del pueblo junto a distintos sectores locales: ganadería, agricultura, artesanías y ámbito ferroviario.\nUna mirada integral que destaca cómo las actividades y oficios de la comunidad forman parte de su atractivo turístico.\nMaterial fotográfico y audiovisual que acompaña la presentación de la expo.\nLo que hace especial a este proyecto: invita a conocer Río Chico a través de su gente y de las actividades que construyen su identidad día a día.",
     "textoFuente": "Proyecto turístico junto a ganaderos, agricultores, artesanas y ferroviarios: folletos, videos y fotos del pueblo y sus actividades. 3° y 4° año."
   },
   "15": {
@@ -234,7 +234,7 @@ var MATERIALES={
     "corredor": 5,
     "proyecto": "Expo Rural Río Chico y Manuel Choique",
     "poster": "material/posters/15.jpg",
-    "texto": "Mamuel Choique: ganadería,\nagricultura y artesanías;\nferroviarios, folletos, videos\ny fotos, entrevistas. 3° año.",
+    "texto": "Mamuel Choique: ganadería,\nagricultura y artesanías.\nFolleto y video para conocer\nsu comunidad. 3.º año.",
     "items": [
       {
         "t": "video",
@@ -262,7 +262,7 @@ var MATERIALES={
         "aspect": 1.624
       }
     ],
-    "textoDetalle": "La sede Mamuel Choique trabaja con ganadería, agricultura, artesanías y ferroviarios, y reúne folletos, videos, fotos y entrevistas. Lo firma Jonathan Collueque (3° año). La pared tiene el video «Jonathan Collueque-Mamuel Choique feria» y un flyer. Corredor 5, Suroeste (La Trochita). En `materiales.js` el proyecto dice «Manuel Choique», mientras la sede y el mapa de corredores escriben «Mamuel Choique».",
+    "textoDetalle": "Mamuel Choique\n“Expo Rural Río Chico y Mamuel Choique”\nTurismo comunitario e identidad local | Presenta: Jonathan Collueque (3.º año)\n\nUn proyecto que representa a Mamuel Choique y sus principales actividades, destacando el trabajo y la identidad de su gente.\n\n¿Qué vas a descubrir?\n\nUna mirada de la localidad a través de sus actividades y tradiciones, en el marco de una muestra rural compartida.\nMaterial de difusión (folleto y video) pensado para invitar a conocer el pueblo y lo que lo hace único.\nUna propuesta que valora el aporte de distintos sectores de la comunidad a la vida y la identidad local.\nLo que hace especial a este proyecto: muestra a Mamuel Choique desde adentro, poniendo en primer plano a su comunidad y sus raíces.",
     "textoFuente": "Proyecto turístico con ganadería, agricultura, artesanías y ferroviarios; folletos, videos, fotos y entrevistas. Jonathan Collueque, 3° año."
   },
   "6": {
@@ -270,7 +270,7 @@ var MATERIALES={
     "corredor": 6,
     "proyecto": "Sabores de Comicó",
     "poster": "material/posters/6.jpg",
-    "texto": "Sabores de Comicó: comidas,\nbebidas y costumbres de la\ncomunidad. Folletos, videos,\nfotos y entrevistas. 3° año.",
+    "texto": "Cómicó: sabores y costumbres\nde la comunidad. Comidas,\nbebidas y degustación para\nconocer su identidad. 3.º año.",
     "items": [
       {
         "t": "image",
@@ -285,7 +285,7 @@ var MATERIALES={
         "aspect": 0.591
       }
     ],
-    "textoDetalle": "La sede Comicó muestra comidas y bebidas de la vida cotidiana y las costumbres de la comunidad, con folletos, videos, fotos y entrevistas de 3° año. En la pared se ve un flyer. Corredor 6, Somuncura Centro-Oeste y Línea Sur.",
+    "textoDetalle": "Cómicó\n“Sabores de Cómicó”\nTurismo gastronómico y cultural | Presenta: 3.º año\n\nUna invitación a conocer Cómicó a través de sus sabores, sus costumbres y su vida cotidiana.\n\n¿Qué vas a encontrar?\n\nComidas y bebidas que forman parte de la tradición y del día a día de la comunidad.\nUn espacio pensado para compartir, degustar y aprender sobre las costumbres locales.\nParticipación activa de los visitantes, con propuestas para interactuar y descubrir más sobre la cultura del lugar.\nLo que hace especial a este proyecto: muestra que la gastronomía es una forma de conocer la historia, la identidad y el espíritu de una comunidad.",
     "textoFuente": "Comidas y bebidas de la vida cotidiana y las costumbres de la comunidad, con folletos, videos, fotos y entrevistas. 3° año."
   },
   "28": {
@@ -293,7 +293,7 @@ var MATERIALES={
     "corredor": 9,
     "proyecto": "Recorrido histórico, cultural y de avistaje",
     "poster": "material/posters/28.jpg",
-    "texto": "El Cóndor: historia (Facundo\nÑanco), flora y fauna (Sofía\nGarcía) y loros barranqueros\n(Tomás Romero). 3° y 5° año.",
+    "texto": "El Cóndor: historia (Facundo\nÑanco), flora y fauna (Sofía\nGarcía) y loros barranqueros\n(Tomás Romero). 3.º y 5.º año.",
     "items": [
       {
         "t": "video",
@@ -321,7 +321,7 @@ var MATERIALES={
         "aspect": 0.57
       }
     ],
-    "textoDetalle": "La sede El Cóndor reúne tres trabajos: el recorrido histórico y cultural de Facundo Ñanco, el avistaje de flora y fauna de Sofía García y el paseo guiado para ver loros barranqueros de Tomás Romero (3° y 5° año). El expediente incluye además el diseño de un logo inspirado en los paisajes naturales, las curvas del mar, los acantilados y el vuelo del cóndor, firmado por Sofia Delucchi, con azules y beige. La pared tiene un video y un flyer. Corredor 9, Litoral Atlántico (Nodo Único).",
+    "textoDetalle": "El Cóndor\nTurismo histórico, natural y de avistaje | Presentan: estudiantes de 3.º y 5.º año\n\nEl Cóndor se presenta desde distintas miradas que muestran su riqueza cultural, su biodiversidad y su identidad costera.\n\nRecorridos y experiencias\n“Recorrido turístico histórico y cultural por El Cóndor” — Facundo Ñanco\nUn paseo para conocer la historia y la cultura del lugar, descubriendo su valor más allá del paisaje.\n“Recorrido por El Cóndor para avistaje de flora y fauna” — Sofía García\nUna propuesta para observar la naturaleza local y reconocer la diversidad del entorno.\n“Paseo guiado para ver loros barranqueros” — Tomás Romero\nUna experiencia de avistaje centrada en una de las especies más emblemáticas de la zona.\nIdentidad visual\nRediseño de logo de El Cóndor — Sofía DeLuchi (5.º año)\nUna propuesta inspirada en las curvas del mar, los acantilados y el vuelo del cóndor. El diseño utiliza formas del paisaje y conserva los colores azules y beige (mar, cielo y arena), manteniendo al cóndor como símbolo de identidad.\nLo que hace especial a este proyecto: reúne historia, naturaleza y creatividad para mostrar todo lo que El Cóndor tiene para ofrecer.",
     "textoFuente": "Recorrido histórico y cultural (Facundo Ñanco), avistaje de flora y fauna (Sofía García) y paseo guiado para ver loros barranqueros (Tomás Romero). 3° y 5° año.\n\nMaterial del expediente:\nTRABAJO PRACTICO N14                                         COMUNICACIÓN Y TURISMO\nSofia Delucchi\nSede: El condor\nPara realizar el nuevo logo, me inspiré en los paisajes naturales de El Cóndor, en las curvas del mar, la forma de los acantilados y el vuelo del cóndor.\nA diferencia del original, ahora use las formas del paisaje para crear un símbolo diferente. Las olas forman parte del diseño principal y representan el movimiento del agua, mientras que los acantilados representan la costa del lugar.\nMantuve los colores azules y beige porque representan el mar, el cielo y la arena. Tampoco saque la el cóndor porque es un elemento importante en la identidad del mismo."
   },
   "27": {
@@ -329,9 +329,9 @@ var MATERIALES={
     "corredor": 4,
     "proyecto": "Recorrido de astroturismo · El Domo",
     "poster": "material/posters/27.jpg",
-    "texto": "El Domo, El Manso: camping\nTierra Aventura; almuerzo,\nsendero, fauna, flora y\ntelescopio. Sol Ulloa.",
+    "texto": "El Domo, El Manso: camping\nTierraAventura; senderos,\nfauna, flora y telescopio.\nSol Ulloa, 5.º año.",
     "items": [],
-    "textoDetalle": "La sede El Manso propone el circuito «El Domo» desde el camping Tierra Aventura: almuerzo, sendero de montaña, charlas de fauna y flora, noche en el domo y observación con telescopio. Lo presenta Sol Ulloa (5° año). El expediente describe un grupo de 35 a 50 años llegado desde Bariloche, las playitas del río antes de las 17:00 y tres horas de caminata hasta el domo. La sede tiene póster en `material/posters/`, pero no hay ítems cargados en la pared. Corredor 4, Precordillera y Cuenca del Limay.",
+    "textoDetalle": "El Manso\nRecorrido de astroturismo “El Domo”\nAstroturismo y naturaleza | Presenta: Sol Ulloa (5.º año)\n\nUna propuesta de turismo en la naturaleza que combina caminata, descanso, alojamiento en domo y observación del cielo nocturno en El Manso.\n\n¿Qué vas a vivir?\n\nPunto de encuentro: Camping TierraAventura, con bienvenida, presentación del lugar y almuerzo.\nTarde en la naturaleza: tiempo de descanso junto al río y, más tarde, caminata por senderos de montaña.\nAprendizaje en el recorrido: charlas e intercambio sobre la fauna, la flora, datos curiosos e historias del lugar.\nNoche en el domo: cena y, alrededor de las 22:00 h, sesión de observación de estrellas y luna con telescopios y cámaras, acompañada de charlas.\nCierre: desayuno en el domo y regreso al punto de encuentro.\nLo que hace especial a este proyecto: integra aventura, tranquilidad y asombro, invitando a disfrutar del entorno de montaña y de un cielo ideal para la observación astronómica.",
     "textoFuente": "Circuito desde el camping Tierra Aventura: almuerzo, sendero de montaña, charlas de fauna y flora, noche en el domo y observación con telescopio. Sol Ulloa, 5° año.\n\nMaterial del expediente:\nclase 13- Sol Ulloa- El Manso .mp4\nRecorrido de astroturismo “ El Domo”- El Manso- Sol Ulloa- 5° año\nMi circuito estaría dirigido a un grupo de personas de mas o menos de edad 35 a 50\naños con una buena resistencia para caminatas y demás, este grupo vendría de Bariloche el cual contrataría una trafic como trasporte para llegar a El Manso, donde\nse realizaría este circuito, el punto de encuentro es el camping TierraAventura donde nos conoceríamos, se haría una charla de bienvenida, presentando el lugar y entre otras cosas, luego nos reuniríamos para el almuerzo que nos ofrecería el camping, donde tendrían de menú, carnes con ensaladas  o  un menú vegetariano pero alto en proteínas. Luego del almuerzo  nos quedaríamos a bajar la comida, a reposar, ahi pueden aprovechar a disfrutar de un momento de oseo en las playitas de el río, hasta mas o menos las 17:00 hrs, donde ahí arrancaríamos camino hacia el sendero de la montaña para seguir con el recorrido, daríamos una charla sobre lo que es la fauna y la flora de El Manso, datos curiosos del lugar, historias e ir intercambiando temas de conversación, luego de 3hrs se llegaría a lo que es el domo, donde ahí se pasaría la noche, se nos est"
   },
   "12": {
@@ -339,7 +339,7 @@ var MATERIALES={
     "corredor": 4,
     "proyecto": "Cabalgatas por Corralito",
     "poster": "material/posters/12.jpg",
-    "texto": "Cabalgata por Corralito: aire\npuro y naturaleza. Con folleto\ny video. Faustino Vergara.",
+    "texto": "Paraje Corralito a caballo:\nnaturaleza y aire puro.\nFaustino Vergara, 5.º año,\ninvita a recorrerlo.",
     "items": [
       {
         "t": "image",
@@ -366,7 +366,7 @@ var MATERIALES={
         "aspect": 1.328
       }
     ],
-    "textoDetalle": "La sede Corralito presenta una experiencia a caballo por el paraje, con folleto y registro en video, de Faustino Vergara (5° año). El expediente la resume así: «Conocer el Paraje Corralito a caballo es una experiencia diferente, disfrutando de la naturaleza y del aire puro». La pared muestra dos flyers. Corredor 4, Precordillera y Cuenca del Limay.",
+    "textoDetalle": "Paraje Corralito\n“Cabalgatas por Corralito”\nTurismo rural y naturaleza | Presenta: Faustino Vergara (5.º año)\n\nUna experiencia para disfrutar el Paraje Corralito a caballo, recorriendo sus paisajes y conectando con la tranquilidad del entorno.\n\n¿Qué vas a descubrir?\n\nUn paseo que invita a valorar la naturaleza, el aire puro y la vida rural.\nUna manera distinta de conocer el paraje, apreciando su entorno desde una experiencia sencilla y cercana.\n“Conocer el Paraje Corralito a caballo es una experiencia diferente, disfrutando de la naturaleza y del aire puro.”",
     "textoFuente": "Experiencia a caballo por el paraje, con folleto y registro en video. Faustino Vergara, 5° año.\n\nMaterial del expediente:\nFaustino Vergara- Corralito\nlv_0_20261106114857.mp4\n“Conocer el Paraje Corralito a caballo es una experiencia diferente, disfrutando de la naturaleza y del aire puro”\nFaustino Vergara- Corralito"
   },
   "21": {
@@ -374,7 +374,7 @@ var MATERIALES={
     "corredor": 8,
     "proyecto": "Conocer Cona Niyeu a caballo",
     "poster": "material/posters/21.jpg",
-    "texto": "Conocer Cona Niyeu a caballo:\nexperiencia diferente entre\nnaturaleza, cultura y sus\ntradiciones. Milena Yanca, 5°.",
+    "texto": "Cona Niyeu a caballo:\nnaturaleza, cultura y\ntradiciones. Milena Ludmila\nYanca Pasos, 5.º año.",
     "items": [
       {
         "t": "image",
@@ -389,7 +389,7 @@ var MATERIALES={
         "aspect": 1.326
       }
     ],
-    "textoDetalle": "La sede Cona Niyeu propone «Conocer Cona Niyeu a caballo», una experiencia diferente que une naturaleza, cultura y tradiciones. Lo firma Milena Ludmila Yanca (5° año). La pared exhibe un flyer. Corredor 8, Vertiente Oriental, Los Berros y Costa Marítima.",
+    "textoDetalle": "Cona Niyeu\n“Conocer Cona Niyeu a caballo”\nTurismo rural y cabalgatas | Presenta: Milena Ludmila Yanca Pasos (5.º año)\n\nUna propuesta para recorrer Cona Niyeu de una manera auténtica, en contacto directo con la naturaleza y las tradiciones del lugar.\n\n¿Qué vas a descubrir?\n\nLa experiencia de conocer el paisaje a caballo, valorando el entorno natural y cultural de la comunidad.\nUna forma de turismo que rescata costumbres locales y invita a vivir el lugar con calma y respeto.\n“Conocer Cona Niyeu a caballo es vivir una experiencia diferente, disfrutando de la naturaleza, nuestra cultura y nuestras tradiciones.”",
     "textoFuente": "“Conocer Cona Niyeu a caballo es vivir una experiencia diferente, disfrutando de la naturaleza, nuestra cultura y nuestras tradiciones”. Milena Ludmila Yanca, 5° año.\n\nMaterial del expediente:\n“Conocer Cona Niyeu a caballo es vivir una experiencia diferente, disfrutando de la naturaleza, nuestra cultura y nuestras tradiciones.” - MIlena Ludmila Yanca Pasos- Cona Niyeu"
   },
   "19": {
@@ -397,7 +397,7 @@ var MATERIALES={
     "corredor": 2,
     "proyecto": "Dulce cosecha · Esencia Peñas Blancas",
     "poster": "material/posters/19.jpg",
-    "texto": "Dulces de membrillo y durazno:\nvideos, origen, degustación,\nentrevistas y Esencia Peñas\nBlancas. 3° año.",
+    "texto": "Peñas Blancas: dulces de\nmembrillo y durazno, origen,\ndegustación y Esencia Peñas\nBlancas. 3.º año.",
     "items": [
       {
         "t": "video",
@@ -438,7 +438,7 @@ var MATERIALES={
         "aspect": 1.416
       }
     ],
-    "textoDetalle": "La sede Peñas Blancas muestra dulces de membrillo y durazno hechos por los estudiantes, con videos del proceso, el origen de las frutas, degustación y entrevistas. También presenta «Esencia Peñas Blancas» y un audio de Aimar, Aixa y Agostina, de 3° año. La pared tiene dos videos y ese audio, con su etiqueta AUDIO. Corredor 2, Valle Verde y Peñas Blancas.",
+    "textoDetalle": "Peñas Blancas\nTurismo gastronómico y artesanal | Presenta: 3.º año\n\nPeñas Blancas se presenta a través de sus frutos, sus sabores y sus creaciones artesanales.\n\nProyectos\n“Dulce cosecha en la sede” — grupo de estudiantes (entre ellos, Aimar, Aixa y Agostina)\nElaboración de dulces con frutas del lugar, como membrillo y durazno. La propuesta incluye el registro del proceso, el origen de las frutas y una instancia de degustación e intercambio con los visitantes.\n“Proyecto Esencia Peñas Blancas” — Mayra\nCreación de souvenirs rústicos que representan la esencia y la identidad del paraje.\nLo que hace especial a estos proyectos: combinan sabor y creatividad para transmitir lo propio del lugar, desde lo que la tierra produce hasta lo que las manos pueden crear.",
     "textoFuente": "Dulces de membrillo y durazno hechos por los estudiantes: videos del proceso, origen de las frutas, degustación y entrevistas. También “Esencia Peñas Blancas” y un audio de Aimar, Aixa y Agostina. 3° año."
   },
   "23": {
@@ -446,7 +446,7 @@ var MATERIALES={
     "corredor": 1,
     "proyecto": "Conoce Lago Pellegrini · Alto Valle Activo",
     "poster": "material/posters/23.jpg",
-    "texto": "Lago Pellegrini: tradiciones,\npaisajes, mapas, folletos y\nentrevistas (Melisa Muñoz);\nchacra, río; circuito cultural",
+    "texto": "Lago Pellegrini: tradiciones,\npaisajes, chacra y río.\nMapas, folletos y entrevistas\nde 3.º y 5.º año.",
     "items": [
       {
         "t": "video",
@@ -510,7 +510,7 @@ var MATERIALES={
         "aspect": 1.328
       }
     ],
-    "textoDetalle": "La sede Lago Pellegrini reúne tradiciones, paisajes, mapas, folletos y entrevistas de Melisa Muñoz; una chacra y el río como muestra del Alto Valle, de Damaris Amaya; y un circuito cultural e identitario de Gonzalo Marcus. Es trabajo de 3° y 5° año. La pared tiene un video, tres flyers y el folleto de Damaris. Corredor 1, Lago Pellegrini.",
+    "textoDetalle": "Lago Pellegrini\nTurismo cultural, productivo e identitario | Presentan: estudiantes de 3.º y 5.º año\n\nLago Pellegrini se muestra como un destino con paisajes, tradiciones, producción local y una identidad propia para compartir con los visitantes.\n\nProyectos\n“Conoce Lago Pellegrini y sus alrededores - Cinco Saltos” — Melisa Muñoz (3.º año)\nUna muestra de las tradiciones, los lugares y los paisajes más interesantes de la zona, con presencia del trabajo artesanal local.\n“Alto Valle Activo” — Damaris Amaya (3.º año)\nUna propuesta que presenta al Alto Valle de Río Negro y sus producciones locales, con un stand ambientado que recrea una chacra y el río.\n“Circuito turístico cultural, turístico e identitario de Lago Pellegrini” — Gonzalo Marcus\nUn recorrido que pone en valor la cultura y la identidad del lugar a través de materiales como mapas, fotos, folletos, entrevistas y videos.\nVideo “Lago Pellegrini” — Benjamín, Lara, Luzmila y Sahiara (5.º año)\nUna producción audiovisual para mostrar los atractivos y la esencia de la localidad.\nLo que hace especial a estos proyectos: juntos ofrecen una mirada completa de Lago Pellegrini, desde su gente y sus tradiciones hasta sus paisajes y su producción.",
     "textoFuente": "Tradiciones, paisajes, mapas, folletos y entrevistas (Melisa Muñoz); una chacra y el río como muestra del Alto Valle (Damaris Amaya); circuito cultural e identitario (Gonzalo Marcus). 3° y 5° año.\n\nMaterial del expediente:\nLago Pellegrini- 5° año\nBenjamín, Lara, Luzmila y Sahiara\nInShot_20261005_094055731.mp4"
   },
   "24": {
@@ -518,7 +518,7 @@ var MATERIALES={
     "corredor": 4,
     "proyecto": "Taller de Joyería Antigua",
     "poster": "material/posters/24.jpg",
-    "texto": "Taller de Joyería Antigua en\nVilla Llanquín: Benjamín\nPaillalef enseñó herramientas\na Thiago; aros Chaway mapuche.",
+    "texto": "Taller de Joyería Antigua en\nVilla Llanquín: Benjamín\nPaillalef y Thiago; aritos\nchaway mapuche. 5.º y 1.º.",
     "items": [
       {
         "t": "video",
@@ -690,7 +690,7 @@ var MATERIALES={
         "aspect": 1.18
       }
     ],
-    "textoDetalle": "La sede Villa Llanquín presenta el Taller de Joyería Antigua de Benjamín Paillalef (5° año), que enseñó a Thiago el uso de las herramientas y realizó aros colgantes que representan a los Chaway, aros tradicionales mapuche. El expediente cuenta que algunas herramientas fueron prestadas y que la mamá colaboró con los materiales. La pared tiene un video y trece fotos. Corredor 4, Precordillera y Cuenca del Limay.",
+    "textoDetalle": "Villa Llanquín\n“Taller de Joyería Antigua”\nTurismo cultural y artesanal | Presenta: Benjamín Paillalef (5.º año), junto a Thiago (1.º año)\n\nUna experiencia de aprendizaje y transmisión de saberes que pone en valor la joyería artesanal y la tradición cultural.\n\n¿Qué vas a descubrir?\n\nEl trabajo con herramientas y técnicas básicas de joyería antigua.\nLa elaboración de aritos que representan a los chaway (aros colgantes tradicionales mapuche).\nUn encuentro entre estudiantes de distintos años, donde el conocimiento se comparte y se aprende haciendo.\nEl esfuerzo y la colaboración para conseguir materiales y llevar adelante el taller.\nLo que hace especial a este proyecto: une oficio, cultura y enseñanza, mostrando cómo las tradiciones pueden mantenerse vivas a través de las nuevas generaciones.",
     "textoFuente": "Benjamín Paillalef enseñó a Thiago el uso de herramientas y realizó aros colgantes que representan a los Chaway, aros tradicionales mapuche. 5° año.\n\nMaterial del expediente:\nTaller de Joyería Antigua- Benjamin Paillalef- 5° año- Villa Llanquin\nBenja le enseñó a Thiago que está en primer año, las herramientas y los diferentes usos. Como algunas de las herramientas no son de Benja, las tuvo que pedir prestadas y devolverlas por eso solo fue lo básico, estuvieron trabajando con unos aritos que representan a los Chaway (aros colgantes tradicionales mapuche).\nThiago mostró mucho interés, ambos tuvieron un intercambio muy lindo.\nDesde que Benja eligió ese proyecto, se sabía que quizás sería complejo por herramientas y materiales, pero la mamá consiguió y colaboró para que esto suceda.\nTaller joyería-Benja Paillalef-Villa Llanquin"
   }
 };
