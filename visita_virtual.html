@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v2</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v3</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -413,18 +413,7 @@ var grass=new THREE.Mesh(new THREE.PlaneGeometry(400,400),
   new THREE.MeshStandardMaterial({color:0x6f9b52,roughness:1}));
 grass.rotation.x=-Math.PI/2;grass.position.y=-0.05;grass.receiveShadow=true;scene.add(grass);
 
-var ceil=new THREE.Mesh(new THREE.PlaneGeometry(58,96),
-  new THREE.MeshStandardMaterial({color:0xe9dcc3,roughness:1,side:THREE.DoubleSide}));
-ceil.rotation.x=Math.PI/2;ceil.position.set(0,WALL_H,-28);scene.add(ceil);
-
-// lucernarios
-[-42,-50,-58].forEach(function(z){
-  [-8,0,8].forEach(function(x){
-    var sky=new THREE.Mesh(new THREE.PlaneGeometry(4,2.6),
-      new THREE.MeshBasicMaterial({color:0xeaf7ff}));
-    sky.rotation.x=Math.PI/2;sky.position.set(x,WALL_H-0.03,z);scene.add(sky);
-  });
-});
+/* plaza a cielo abierto: sin techo */
 // ventanas (fachadas)
 var winTex=(function(){
   var c=document.createElement('canvas');c.width=8;c.height=128;var x=c.getContext('2d');
@@ -463,27 +452,7 @@ var clouds=[];
     var a=i/16*Math.PI*2+r()*.25, dist=95+r()*45;
     mountain(Math.sin(a)*dist,Math.cos(a)*dist-10,18+r()*32,14+r()*16,i%3?0x6d7f96:0x5d6f88);
   }
-  var trunkM=new THREE.MeshStandardMaterial({color:0x6b4a2a,roughness:1});
-  var leaf1=new THREE.MeshStandardMaterial({color:0x2f6b3a,roughness:1,flatShading:true});
-  var leaf2=new THREE.MeshStandardMaterial({color:0x3d8049,roughness:1,flatShading:true});
-  function tree(x,z,s){
-    var g=new THREE.Group(),k;
-    var t=new THREE.Mesh(new THREE.CylinderGeometry(.16*s,.24*s,1.5*s,6),trunkM);
-    t.position.y=.75*s;g.add(t);
-    for(k=0;k<3;k++){
-      var c=new THREE.Mesh(new THREE.ConeGeometry((1.25-k*.28)*s,1.5*s,7),k%2?leaf1:leaf2);
-      c.position.y=(1.5+k*.75)*s;g.add(c);
-    }
-    g.position.set(x,0,z);g.rotation.y=r()*6.28;scene.add(g);
-  }
-  var n=0,tries=0;
-  while(n<44&&tries<500){
-    tries++;
-    var ang=r()*Math.PI*2, dd=26+r()*52;
-    var x=Math.sin(ang)*dd, z=Math.cos(ang)*dd-8;
-    if(x>-30&&x<30&&z>-74&&z<18)continue;
-    tree(x,z,.9+r()*.9);n++;
-  }
+  /* sin pinos: el entorno queda despejado */
   var cc=document.createElement('canvas');cc.width=256;cc.height=128;var cx=cc.getContext('2d');
   for(i=0;i<7;i++){
     var cxp=50+r()*156,cyp=40+r()*48,rr=24+r()*32;
@@ -706,13 +675,7 @@ function floorArrow(x,z,ry){
   m.position.set(x,.02,z);scene.add(m);
 }
 
-[[-3,-64],[3,-64]].forEach(function(p){
-  var post=new THREE.Mesh(new THREE.BoxGeometry(.18,3.4,.18),
-    new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.75}));
-  post.position.set(p[0],1.7,p[1]);scene.add(post);
-});
 var _pennantTex=null;
-banner(0,3.2,-64,0,6.0,'FERIA DE TURISMO','ESRN Rural Virtual · 9 corredores');
 
 // ambiente: luz cálida y flechas del recorrido
 lamp(0,-50);lamp(0,-62);
@@ -1213,7 +1176,7 @@ for(var si=0;si<SALAS.length;si++){
   for(jSede=0;jSede<cr.sedes.length;jSede++){
     var sede=cr.sedes[jSede],dxSede=(jSede-(cr.sedes.length-1)/2)*1.48;
     q=pt(sl,dxSede,D/2-.14);
-    plaque(q.x,1.45,q.z,rot(sl,0),'SEDE '+sede.num,sede.nombre);
+    plaque(q.x,2.55,q.z,rot(sl,0),'SEDE '+sede.num,sede.nombre);
   }
   POI_EXTRA.push({x:ctr.x,z:ctr.z,tag:'CORREDOR '+cr.n,t:cr.nombre,d:cr.corto,full:textoCorredor(cr)});
 
