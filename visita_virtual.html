@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v15</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v16</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote9-20261120';
+window.BUILD='plaza-lote10-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -1394,9 +1394,7 @@ for(var si=0;si<SALAS.length;si++){
   }
 }
 /* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
-var SCREENS=[
- {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:11.7, cy:1.95, cz:-69.2, ry:0, w:1.35, h:2.4, label:'Feria de Laguna Blanca'}
-].concat(EXPO_SLOTS);
+var SCREENS=EXPO_SLOTS.slice();
 var screensWrap=document.getElementById('screens');
 function cornersOf(s){
   var rx=Math.cos(s.ry), rz=-Math.sin(s.ry), hw=s.w/2, hh=s.h/2;
@@ -1747,8 +1745,7 @@ function updateScreens(){
 /* ---------------- puntos de interés ---------------- */
 var POI=[
   {x:0,z:-42,tag:'Plaza',t:'Plaza de la feria',d:'Elegí a qué pabellón acercarte: los 9 corredores están alrededor de la plaza.'},
-  {x:11.7,z:-69.2,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apuntá la mirada a la pantalla y hacé clic para reproducirlo con sonido.'},
-  {x:-2.45,z:-46.5,tag:'Sede',t:'Sede Laguna Blanca',d:'Una de las sedes de la ESRN Rural Virtual: el cartel del gazebo y el video muestran la Feria de Laguna Blanca.'}
+  {x:-2.45,z:-46.5,tag:'Sede',t:'Sede Laguna Blanca',d:'Laguna Blanca es una de las sedes de la ESRN Rural Virtual. Su material y video están en el Corredor 3.'}
 ];
 
 POI=POI.concat(POI_EXTRA);
@@ -2168,8 +2165,7 @@ function animate(){
     dust.material.opacity=0.26+Math.sin(time*1.4)*0.08;
     sun.intensity=1.15+Math.sin(time*0.19)*0.03;
     for(var gi=0;gi<garlandsAnim.length;gi++){var ga=garlandsAnim[gi];
-      ga.m.rotation.z=Math.sin(time*1.15+ga.ph)*0.022*(0.7+Math.min(ga.w,18)/18*0.5);
-      ga.m.position.y=ga.baseY+Math.sin(time*0.9+ga.ph*0.7)*0.015;}
+      ga.m.position.y=ga.baseY+Math.sin(time*0.9+ga.ph*0.7)*0.01;}
     for(var bi=0;bi<bulbsAnim.length;bi++){var ba=bulbsAnim[bi];
       var p=0.82+Math.sin(time*2.2+ba.ph)*0.12+Math.sin(time*5.3+ba.ph*1.3)*0.04;
       ba.m.material.color.setRGB(1,0.86*p,0.55*p);}
