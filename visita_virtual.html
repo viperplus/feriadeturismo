@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v2</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -235,9 +235,6 @@ sun.shadow.camera.top=40; sun.shadow.camera.bottom=-40;
 sun.shadow.camera.near=2; sun.shadow.camera.far=110;
 sun.shadow.bias=-0.00035; sun.shadow.normalBias=0.025;
 scene.add(sun);
-var fill=new THREE.DirectionalLight(0xbfe0ff,0.3);
-fill.position.set(-22,18,-34);
-scene.add(fill);
 
 /* cielo con gradiente */
 (function(){
@@ -696,8 +693,6 @@ function lamp(x,z){
     new THREE.MeshBasicMaterial({color:0xffe3a0}));
   bulb.position.y=WALL_H-.66;g.add(bulb);
   g.position.set(x,0,z);scene.add(g);
-  var pl=new THREE.PointLight(0xffd3a0,.6,16,2);
-  pl.position.set(x,WALL_H-.8,z);scene.add(pl);
 }
 function floorArrow(x,z,ry){
   var c=document.createElement('canvas');c.width=c.height=128;var q=c.getContext('2d');
@@ -711,6 +706,12 @@ function floorArrow(x,z,ry){
   m.position.set(x,.02,z);scene.add(m);
 }
 
+[[-3,-64],[3,-64]].forEach(function(p){
+  var post=new THREE.Mesh(new THREE.BoxGeometry(.18,3.4,.18),
+    new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.75}));
+  post.position.set(p[0],1.7,p[1]);scene.add(post);
+});
+var _pennantTex=null;
 banner(0,3.2,-64,0,6.0,'FERIA DE TURISMO','ESRN Rural Virtual · 9 corredores');
 
 // ambiente: luz cálida y flechas del recorrido
@@ -1093,7 +1094,7 @@ function wrapLines(txt,max){
   return lines.slice(0,7);
 }
 /* --- adornos de feria: guirnaldas, arcos, mostradores. Sin luces nuevas. --- */
-var _pennantTex=null,_archTagTex=null;
+var _archTagTex=null;
 function pennantTex(){
   if(_pennantTex)return _pennantTex;
   var c=document.createElement('canvas');c.width=1024;c.height=160;var q=c.getContext('2d');
@@ -1376,7 +1377,7 @@ var screenObjs=SCREENS.map(function(s){
     if(s.ficha) posterTex=fichaTex(s.ficha.t,s.ficha.s,s.ficha.lines);
     else{
       var tiny=document.createElement('canvas');tiny.width=2;tiny.height=2;
-      var tx=tiny.getContext('2d');tx.fillStyle='#12304f';tx.fillRect(0,0,2,2);
+      var tx=tiny.getContext('2d');tx.fillStyle='#f3ead6';tx.fillRect(0,0,2,2);
       posterTex=new THREE.CanvasTexture(tiny);posterTex.encoding=THREE.sRGBEncoding;
       if(s.poster){
         new THREE.TextureLoader().load(s.poster,function(t){
@@ -1838,7 +1839,12 @@ function closeModal(){
   var a=mbox.querySelector('audio');if(a){try{a.pause();}catch(e){}}
 }
 function openMediaModal(s){
-  var items=s.media||[], start=(typeof s.itemIndex==='number')?s.itemIndex:0;
+  var allItems=s.media||[], origIndex=(typeof s.itemIndex==='number')?s.itemIndex:0;
+  var items=[], mapa=[];
+  for(var k=0;k<allItems.length;k++){
+    if(allItems[k].t!=='video'){items.push(allItems[k]);mapa.push(k);}
+  }
+  var start=mapa.indexOf(origIndex);if(start<0)start=0;
   var h='<div class="tag">EXPO · Corredor '+s.cor+' · '+s.sede+'</div>'+
         '<h2>'+s.proyecto+'</h2><div class="tabs" id="mTabs"></div><div id="mStage"></div>'+
         '<div class="row"><button class="close" id="mC">Cerrar</button></div>';

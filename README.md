@@ -24,8 +24,10 @@ Manzana", etc.) y sus 25 puntos de interés falsos. El arranque está directamen
 la plaza: los 9 pabellones tienen el frente abierto y miran al centro, con mostrador,
 banco, cartelería de madera y **solo el material real** de `materiales.js`.
 
-No se agregaron luces ni sombras nuevas: hay 2 luces cálidas en la plaza y un solo
-video reproduciéndose a la vez. Los videos están dentro de los pabellones y miran al
+No se agregaron luces ni sombras nuevas: la iluminación es solo hemisférica y solar
+(2 luces, sin luces puntuales) y un solo video se reproduce a la vez. El cartel de
+la plaza está apoyado en postes de madera y la galería de fotos/fichas no ofrece
+pestañas de video: los videos se escuchan y se ven en la pared, sin modal. Los videos están dentro de los pabellones y miran al
 visitante; las fotos caben enteras en la pared de 8 m y conservan su proporción real.
 
 Los salones se incorporaron por etapas para cuidar el rendimiento: primero la
