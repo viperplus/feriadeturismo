@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v20</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v21</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote14-20261120';
+window.BUILD='plaza-lote15-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -994,14 +994,14 @@ function makeNPC(def){
     ph:Math.random()*6.28,arms:[armL,armR],legs:[legL,legR]});
 }
 function makeSheepFollower(){
-  // ovejita 3D (modelo GLB "Sheep" por Poly by Google, CC-BY 3.0, poly.pizza/m/dXBMV4AY2DL)
+  // ovejita 3D riggeada y animada (modelo "Sheep" de Kiln Commons, CC0-1.0)
+  // https://kilnstudio.tools/gallery/sheep/ - animaciones: Idle, Walk, Graze
   var g=new THREE.Group();
   g.position.set(PX-1.2,0,PZ+1.8);
   scene.add(g);
-  var npc={g:g,type:'sheep',yaw:Math.atan2(-1.2,1.8),ph:Math.random()*6.28,legs:[],mixer:null};
+  var npc={g:g,type:'sheep',yaw:Math.atan2(-1.2,1.8),ph:Math.random()*6.28,legs:[],mixer:null,acts:null,moving:false};
   npcs.push(npc);
   if(typeof THREE.GLTFLoader!=='function'){
-    // fallback simple si el loader no está disponible
     var body=new THREE.Mesh(new THREE.SphereGeometry(.4,12,10),
       new THREE.MeshStandardMaterial({color:0xf4f1e8,roughness:1}));
     body.scale.set(1.05,.9,1.25);body.position.y=.58;body.castShadow=true;g.add(body);
@@ -1009,7 +1009,7 @@ function makeSheepFollower(){
   }
   var loader=new THREE.GLTFLoader();
   loader.load(av('material/modelos/sheep.glb'),function(gltf){
-    if(!g.children||!npcs.some(function(n){return n===npc;}))return;
+    if(!npcs.some(function(n){return n===npc;}))return;
     var model=gltf.scene;
     // escalar a tamaño de oveja (~0.9 m de alto) y apoyar en el suelo
     var box=new THREE.Box3().setFromObject(model);
@@ -1022,16 +1022,25 @@ function makeSheepFollower(){
     model.position.x-=center.x;
     model.position.z-=center.z;
     model.position.y-=box.min.y;
-    // orientar el modelo para que mire hacia el frente (+Z)
-    model.rotation.y=0;
+    // Kiln: +X adelante, +Y arriba, +Z derecha -> rotar para que mire a +Z del grupo
+    model.rotation.y=-Math.PI/2;
     model.traverse(function(o){
       if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}
     });
     g.add(model);
-    // animaciones embebidas si las hubiera
     if(gltf.animations&&gltf.animations.length){
       npc.mixer=new THREE.AnimationMixer(model);
-      gltf.animations.forEach(function(clip){npc.mixer.clipAction(clip).play();});
+      var acts={};
+      gltf.animations.forEach(function(clip){
+        var name=(clip.name||'').toLowerCase();
+        acts[name]=npc.mixer.clipAction(clip);
+      });
+      npc.acts=acts;
+      var idle=acts.idle||acts.walk||acts[Object.keys(acts)[0]];
+      var walk=acts.walk||idle;
+      if(idle){idle.play(); idle.setEffectiveWeight(1);}
+      if(walk&&walk!==idle){walk.play(); walk.setEffectiveWeight(0);}
+      npc.acts.idleA=idle; npc.acts.walkA=walk;
     }
   },undefined,function(){ /* falla de carga: se mantiene el contenedor vacío */ });
 }
@@ -1059,21 +1068,30 @@ function updateNPCs(dt,time){
         n.g.position.x-=dx/d*dt*0.6; n.g.position.z-=dz/d*dt*0.6;
       }
       n.g.rotation.y=n.yaw;
-      var bob=moving?Math.abs(Math.sin(time*7+n.ph))*.045:Math.sin(time*1.6+n.ph)*.012;
-      n.g.position.y=bob;
       if(n.mixer)n.mixer.update(dt);
-      if(n.legs&&n.legs.length===4){
-        var sw=moving?Math.sin(time*8+n.ph)*.5:Math.sin(time*1.4+n.ph)*.08;
-        n.legs[0].rotation.x=sw;n.legs[3].rotation.x=sw;
-        n.legs[1].rotation.x=-sw;n.legs[2].rotation.x=-sw;
-      }else if(moving){
-        // modelo estático (sin patas articuladas): simula paso con balanceo
-        n.g.rotation.z=Math.sin(time*8+n.ph)*0.045;
+      if(n.acts&&n.acts.walkA&&n.acts.idleA){
+        // mezclar animaciones riggeadas (caminar/reposo)
+        if(moving!==n.moving){
+          n.moving=moving;
+          var from=moving?n.acts.idleA:n.acts.walkA, to=moving?n.acts.walkA:n.acts.idleA;
+          if(to!==from){to.reset();to.play();to.crossFadeFrom(from,0.25,true);} 
+        }
+        // animación controla el cuerpo; sin bob/rotación procedural extra
+        n.g.position.y=0; n.g.rotation.x=0; n.g.rotation.z=0;
       }else{
-        n.g.rotation.z=Math.sin(time*1.3+n.ph)*0.01;
+        var bob=moving?Math.abs(Math.sin(time*7+n.ph))*.045:Math.sin(time*1.6+n.ph)*.012;
+        n.g.position.y=bob;
+        if(n.legs&&n.legs.length===4){
+          var sw=moving?Math.sin(time*8+n.ph)*.5:Math.sin(time*1.4+n.ph)*.08;
+          n.legs[0].rotation.x=sw;n.legs[3].rotation.x=sw;
+          n.legs[1].rotation.x=-sw;n.legs[2].rotation.x=-sw;
+        }else if(moving){
+          n.g.rotation.z=Math.sin(time*8+n.ph)*0.045;
+        }else{
+          n.g.rotation.z=Math.sin(time*1.3+n.ph)*0.01;
+        }
+        n.g.rotation.x=moving?Math.sin(time*7+n.ph)*.03:Math.sin(time*1.2+n.ph)*.015;
       }
-      // leve cabeceo natural
-      n.g.rotation.x=moving?Math.sin(time*7+n.ph)*.03:Math.sin(time*1.2+n.ph)*.015;
       continue;
     }
     var a=n.path[n.seg],b=n.path[(n.seg+1)%n.path.length];

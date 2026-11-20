@@ -1,5 +1,6 @@
-﻿Sheep 3D model
-- Source: https://poly.pizza/m/dXBMV4AY2DL
-- Direct GLB: https://static.poly.pizza/8726a43f-e694-4d9d-b6d9-8e36e2517470.glb
-- Author: Poly by Google
-- License: Creative Commons Attribution 3.0 (CC-BY 3.0) - https://creativecommons.org/licenses/by/3.0/
+﻿Sheep 3D model (animated, rigged)
+- Source: https://kilnstudio.tools/gallery/sheep/
+- Runtime GLB: https://assets.kilnstudio.tools/packs/farm/r36-local-review/models/sheep.glb
+- Author: Kiln / Kiln Commons (instruktlabs)
+- License: CC0-1.0 (Creative Commons Zero v1.0 Universal) for authored asset content - https://creativecommons.org/publicdomain/zero/1.0/
+- Animations: Idle, Walk, Graze
