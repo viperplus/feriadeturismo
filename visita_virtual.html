@@ -134,7 +134,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v8</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v10</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -184,7 +184,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote4a-20261120';
+window.BUILD='plaza-lote4c-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -282,9 +282,10 @@ var sun=new THREE.DirectionalLight(0xffe9c4,1.15);
 sun.position.set(28,36,18);
 sun.castShadow=true;
 sun.shadow.mapSize.set(1024,1024);
-sun.shadow.camera.left=-34; sun.shadow.camera.right=34;
-sun.shadow.camera.top=40; sun.shadow.camera.bottom=-40;
-sun.shadow.camera.near=2; sun.shadow.camera.far=110;
+sun.shadow.camera.left=-44; sun.shadow.camera.right=44;
+sun.shadow.camera.top=52; sun.shadow.camera.bottom=-52;
+sun.shadow.camera.near=2; sun.shadow.camera.far=130;
+sun.shadow.camera.updateProjectionMatrix();
 sun.shadow.bias=-0.00035; sun.shadow.normalBias=0.025;
 scene.add(sun);
 
@@ -335,6 +336,7 @@ function applyQuality(){
   var sm=q===2?2048:q===1?1024:512;
   sun.shadow.mapSize.set(sm,sm);
   if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null;}
+  renderer.shadowMap.needsUpdate=true;
   if(typeof applyNPCs==='function')applyNPCs();
 }
 
@@ -1310,7 +1312,7 @@ for(var si=0;si<SALAS.length;si++){
             ry:rot(sl,pi?-Math.PI/2:Math.PI/2),w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
             videoSrc:g.it.src,kindVideo:true,
             label:'SEDE '+g.sd.num+' · '+g.it.title.slice(0,32),
-            media:g.mm.items,itemIndex:g.idx,full:g.mm.texto,sede:g.mm.sede,
+            media:g.mm.items,itemIndex:g.idx,full:(g.mm.textoDetalle||g.mm.texto),sede:g.mm.sede,
             proyecto:g.mm.proyecto,cor:cr.n});
           cursorV+=wj+gapV*scV;
         });
@@ -1333,7 +1335,7 @@ for(var si=0;si<SALAS.length;si++){
           q=lado==='fondo'?pt(sl,x+anchos[j]*sc/2,-D/2+.22):pt(sl,lx,x+anchos[j]*sc/2);
           var base={file:'',id:'',cx:q.x,cy:y,cz:q.z,ry:ry,
             w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
-            full:g.mm.texto,sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
+            full:(g.mm.textoDetalle||g.mm.texto),sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
           if(g.it){
             base.poster=g.it.wall||g.mm.poster;
             base.label='SEDE '+g.sd.num+' · '+g.it.label;
@@ -1355,7 +1357,7 @@ for(var si=0;si<SALAS.length;si++){
       d:conMat.length+' sedes · videos en la pared, fotos y fichas',
       full:conMat.map(function(sd){
         var mm=MAT[String(sd.num)];
-        return 'SEDE '+sd.num+' · '+mm.sede+'\n'+mm.proyecto+'\n'+mm.texto;
+        return 'SEDE '+sd.num+' · '+mm.sede+'\n'+mm.proyecto+'\n'+(mm.textoDetalle||mm.texto);
       }).join('\n\n')});
   }
 }
@@ -1629,7 +1631,7 @@ renderer.domElement.addEventListener('touchend',function(){
   if(tapInfo&&!tapInfo.moved&&Date.now()-tapInfo.t<400)hitScreen(tapInfo.x,tapInfo.y);
   tapInfo=null;
 },{passive:true});
-var MAX_VIDEO_DIST=24;
+var MAX_VIDEO_DIST=18;
 /* ¿Hay pared de por medio? Muestrea centro + 4 esquinas: el cuadro se ve
    si asoma por un vano, pero nunca a través de un muro. */
 function screenOccluded(s){
@@ -1646,7 +1648,7 @@ function updateScreens(){
   for(var k=0;k<screenObjs.length;k++){
     var o=screenObjs[k], s=o.s;
     var dist=Math.hypot(camera.position.x-s.cx,camera.position.z-s.cz);
-    if(dist>46){
+    if(dist>40){
       o.visible=false;
       if(use3D){
         o.mesh.visible=false;
@@ -1977,6 +1979,7 @@ function openMediaModal(s){
 modalEl.addEventListener('click',function(e){if(e.target===modalEl)closeModal();});
 function toast(msg,gold){
   var d=document.createElement('div');d.className='tst'+(gold?' gold':'');d.textContent=msg;
+  while(toastBox.children.length>=4)toastBox.removeChild(toastBox.firstChild);
   toastBox.appendChild(d);
   setTimeout(function(){d.style.transition='opacity .4s';d.style.opacity='0';
     setTimeout(function(){if(d.parentNode)toastBox.removeChild(d);},450);},3400);

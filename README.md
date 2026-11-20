@@ -1,5 +1,9 @@
 # Feria de Turismo 3D — ESRN RURAL Virtual
 
+## El proyecto
+
+La FERIA DE TURISMO de la ESRN RURAL Virtual muestra el trabajo de los estudiantes de la escuela rural de Río Negro. Se recorre en primera persona una plaza central abierta con nueve pabellones, uno por corredor turístico, y un gazebo con el video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. El cartel del gazebo dice SEDE LAGUNA BLANCA / ESRN Rural Virtual. Cada salón expone solo material real: videos, fotos, flyers, audios y fichas de texto, enmarcados en la pared con su etiqueta de sede y de proyecto. Los videos se reproducen dentro del marco, arrancan silenciados al acercarse y recuperan sonido con un clic. Las fichas se arman con los textos de `materiales.js`. El inventario cubre 14 sedes, de Aguada Guzmán a Villa Llanquín, y respeta los corredores del mapa de Wikiparajes: no hay sedes ni proyectos inventados. La escena eligió una feria rural cálida: paredes crema y adobe, madera, guirnaldas, iluminación solo hemisférica y solar. Funciona en GitHub Pages y también por HTTP local; tiene controles táctiles, guardado de foto en PNG y diagnóstico con `?debug=1`. Los originales entregados por los estudiantes no se modificaron: en `material/` hay copias convertidas y comprimidas para que se vean en cualquier navegador.
+
 Muestra virtual en 3D: una **plaza central** con 9 pabellones alrededor, uno por
 corredor turístico, con las sedes y el material real de los estudiantes. En el centro
 hay un gazebo con el video de la Feria de Laguna Blanca y el cartel de la sede.
