@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v26</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v27</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote20-20261120';
+window.BUILD='plaza-lote21-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -1044,9 +1044,55 @@ function makeSheepFollower(){
     }
   },undefined,function(){ /* falla de carga: se mantiene el contenedor vacío */ });
 }
+function makeGLBWalker(url,path,opts){
+  opts=opts||{};
+  var pts=path.map(function(q){return {x:q[0],z:q[1]};});
+  var g=new THREE.Group();
+  g.position.set(pts[0].x,0,pts[0].z);
+  scene.add(g);
+  var npc={g:g,path:pts,seg:0,t:Math.random(),sp:opts.sp||(0.045+Math.random()*0.04),
+    ph:Math.random()*6.28,type:'walker',mixer:null,acts:null,moving:true,yaw:0};
+  npcs.push(npc);
+  if(typeof THREE.GLTFLoader!=='function')return;
+  var loader=new THREE.GLTFLoader();
+  loader.load(av(url),function(gltf){
+    if(!npcs.some(function(n){return n===npc;}))return;
+    var model=gltf.scene;
+    var box=new THREE.Box3().setFromObject(model);
+    var size=new THREE.Vector3(); box.getSize(size);
+    var h=size.y||1, target=opts.h||1.7;
+    var s=target/h;
+    model.scale.setScalar(s);
+    box.setFromObject(model);
+    var center=new THREE.Vector3(); box.getCenter(center);
+    model.position.x-=center.x; model.position.z-=center.z; model.position.y-=box.min.y;
+    model.rotation.y=opts.rotY||0;
+    model.traverse(function(o){ if(o.isMesh){o.castShadow=true;o.receiveShadow=true;} });
+    g.add(model);
+    if(gltf.animations&&gltf.animations.length){
+      npc.mixer=new THREE.AnimationMixer(model);
+      var acts={};
+      gltf.animations.forEach(function(clip){ acts[(clip.name||'').toLowerCase()]=npc.mixer.clipAction(clip); });
+      npc.acts=acts;
+      var idle=acts.idle||acts.standing||acts.breathing||acts[Object.keys(acts)[0]];
+      var walk=acts.walk||acts.walking||acts.run||acts.running||idle;
+      if(idle){idle.enabled=true; idle.setEffectiveWeight(1); idle.play();}
+      if(walk&&walk!==idle){walk.enabled=true; walk.setEffectiveWeight(0); walk.play();}
+      npc.acts.idleA=idle; npc.acts.walkA=walk;
+    }
+  });
+}
 function applyNPCs(){
   clearNPCs();
   makeSheepFollower();
+  // visitantes paseando por la plaza (ambientación viva)
+  makeNPC({a:0x2a9d8f,b:0x3d405b,p:[[-7,-58],[-7,-42],[-4,-42],[-4,-58]]});
+  makeNPC({a:0xe76f51,b:0x264653,p:[[4,-42],[4,-58],[7,-58],[7,-42]]});
+  makeNPC({a:0xf4a261,b:0x457b9d,p:[[-6,-36],[6,-36],[6,-39],[-6,-39]]});
+  makeNPC({a:0x8d99ae,b:0x2b2d42,p:[[6,-64],[-6,-64],[-6,-61],[6,-61]]});
+  makeNPC({a:0x6f8f4f,b:0x5c4033,p:[[-5,-44],[-5,-56],[5,-56],[5,-44]]});
+  // visitante animado desde poly.pizza (Casual Character, Quaternius CC0)
+  makeGLBWalker('material/modelos/casual_character.glb',[[-8,-46],[8,-46],[8,-54],[-8,-54]],{h:1.75,sp:0.05,rotY:Math.PI});
 }
 function updateNPCs(dt,time){
   for(var i=0;i<npcs.length;i++){
@@ -1110,6 +1156,26 @@ function updateNPCs(dt,time){
     n.t+=dt*n.sp;
     if(n.t>=1){n.t=0;n.seg=(n.seg+1)%n.path.length;a=n.path[n.seg];b=n.path[(n.seg+1)%n.path.length];}
     var x=a.x+(b.x-a.x)*n.t, z=a.z+(b.z-a.z)*n.t;
+    if(n.type==='walker'){
+      // visitante GLB animado siguiendo recorrido
+      n.g.position.set(x,0,z);
+      n.g.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);
+      if(n.mixer)n.mixer.update(dt);
+      if(n.acts&&n.acts.walkA&&n.acts.idleA){
+        if(n.moving!==true){ n.moving=true; n.acts.walkA.enabled=true; n.acts.walkA.play(); n.acts.idleA.setEffectiveWeight(0); }
+        n.acts.walkA.setEffectiveWeight(1);
+        n.acts.walkA.setEffectiveTimeScale(Math.max(0.6,n.sp/0.05));
+        n.acts.idleA.setEffectiveWeight(0);
+      }
+      n.g.rotation.x=0; n.g.rotation.z=0;
+      n.g.position.y=0;
+      if(n.mixer){
+        n.g.updateMatrixWorld(true);
+        var wbox=new THREE.Box3().setFromObject(n.g);
+        if(isFinite(wbox.min.y)) n.g.position.y -= wbox.min.y;
+      }
+      continue;
+    }
     n.g.position.set(x,Math.abs(Math.sin(time*4+n.ph))*.035,z);
     n.g.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);
     var sw=Math.sin(time*5+n.ph)*.55;
@@ -1535,6 +1601,66 @@ for(var si=0;si<SALAS.length;si++){
       }).join('\n\n')});
   }
 }
+/* ---------------- ambientación viva: vegetación y farolas (poly.pizza/Quaternius CC0) ---------------- */
+function ambientTree(x,z,s,kind){
+  var g=new THREE.Group(), sc=s||1;
+  var trunk=new THREE.Mesh(new THREE.CylinderGeometry(.12*sc,.18*sc,1.5*sc,7),
+    new THREE.MeshStandardMaterial({color:0x7a4f2a,roughness:1}));
+  trunk.position.y=.75*sc; trunk.castShadow=true; g.add(trunk);
+  var cols=[[0x5fa05a,0x4f9448],[0x4f8f4a,0x6aa85f],[0x3f7a3a,0x528a45]];
+  var c=cols[(kind||0)%3];
+  var fol=new THREE.Mesh(new THREE.ConeGeometry(1.0*sc,2.0*sc,7),
+    new THREE.MeshStandardMaterial({color:c[0],roughness:.95,flatShading:true}));
+  fol.position.y=2.1*sc; fol.castShadow=true; g.add(fol);
+  if(kind!==2){
+    var fol2=new THREE.Mesh(new THREE.ConeGeometry(.7*sc,1.3*sc,7),
+      new THREE.MeshStandardMaterial({color:c[1],roughness:.95,flatShading:true}));
+    fol2.position.y=3.0*sc; fol2.castShadow=true; g.add(fol2);
+  }else{
+    var fol2b=new THREE.Mesh(new THREE.SphereGeometry(.55*sc,7,6),
+      new THREE.MeshStandardMaterial({color:c[1],roughness:.95,flatShading:true}));
+    fol2b.position.y=2.7*sc; fol2b.castShadow=true; g.add(fol2b);
+  }
+  g.position.set(x,0,z); scene.add(g);
+}
+function ambientBush(x,z,s){
+  var g=new THREE.Group(), sc=s||1;
+  var m=new THREE.Mesh(new THREE.SphereGeometry(.5*sc,8,7),
+    new THREE.MeshStandardMaterial({color:0x5c8f4a,roughness:1,flatShading:true}));
+  m.scale.set(1.3,.75,1.1); m.position.y=.32*sc; m.castShadow=true; g.add(m);
+  g.position.set(x,0,z); scene.add(g);
+}
+(function placeAmbient(){
+  var trees=[[-27,-78,1.25,0],[27,-78,1.1,1],[-28,-50,1.35,2],[28,-50,1.05,0],
+    [-27,-22,1.15,1],[27,-22,1.2,2],[-15,-79,1.0,1],[15,-79,1.2,0],
+    [0,-81,1.3,2],[-32,-36,1.2,0],[32,-36,1.15,1],[-32,-64,1.05,2],[32,-64,1.2,0],
+    [-12,-19,1.1,1],[12,-19,1.0,0],[0,-17,1.25,2],[-34,-50,1.1,1],[34,-50,1.25,0]];
+  for(var i=0;i<trees.length;i++) ambientTree(trees[i][0],trees[i][1],trees[i][2],trees[i][3]);
+  var bushes=[[-25,-75,.9],[25,-75,1.0],[-25,-25,.85],[25,-25,.95],[-30,-49,1.0],[30,-51,.9],
+    [-13,-77,1.0],[13,-77,.85],[-33,-42,.9],[33,-58,1.0],[0,-15,.95],[-18,-18,.85],[18,-18,.9]];
+  for(i=0;i<bushes.length;i++) ambientBush(bushes[i][0],bushes[i][1],bushes[i][2]);
+  // farolas decorativas (modelo poly.pizza: Street Light de Quaternius, CC0)
+  if(typeof THREE.GLTFLoader==='function'){
+    var lloader=new THREE.GLTFLoader();
+    lloader.load(av('material/modelos/street_light.glb'),function(gltf){
+      var base=gltf.scene;
+      var box=new THREE.Box3().setFromObject(base);
+      var sz=new THREE.Vector3(); box.getSize(sz);
+      var sc=3.2/(sz.y||1);
+      base.scale.setScalar(sc);
+      box.setFromObject(base);
+      base.position.y-=box.min.y;
+      base.traverse(function(o){ if(o.isMesh){o.castShadow=true;o.receiveShadow=true;} });
+      var pos=[[-14,-75],[14,-75],[-14,-25],[14,-25],[-25,-38],[-25,-62],[25,-38],[25,-62]];
+      for(var j=0;j<pos.length;j++){
+        var c=base.clone();
+        c.position.set(pos[j][0],0,pos[j][1]);
+        scene.add(c);
+      }
+    });
+  }
+})();
+
 /* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
 var SCREENS=EXPO_SLOTS.slice();
 var screensWrap=document.getElementById('screens');

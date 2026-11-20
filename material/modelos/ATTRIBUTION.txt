@@ -4,3 +4,15 @@
 - Author: Kiln / Kiln Commons (instruktlabs)
 - License: CC0-1.0 (Creative Commons Zero v1.0 Universal) for authored asset content - https://creativecommons.org/publicdomain/zero/1.0/
 - Animations: Idle, Walk, Graze
+
+Casual Character 3D model (animated)
+- Source: https://poly.pizza/m/kZ3DmIoGip
+- Runtime GLB: https://static.poly.pizza/90a9e2d4-053f-42f1-99a2-8f5e1180ea7f.glb
+- Author: Quaternius (https://quaternius.com/)
+- License: CC0 1.0 Universal (Public Domain) - https://creativecommons.org/publicdomain/zero/1.0/
+
+Street Light 3D model
+- Source: https://poly.pizza/m/nFwrlcLvM5
+- Runtime GLB: https://static.poly.pizza/9a8aac3e-d1ee-4860-b294-edca62ef50be.glb
+- Author: Quaternius (https://quaternius.com/)
+- License: CC0 1.0 Universal (Public Domain) - https://creativecommons.org/publicdomain/zero/1.0/
