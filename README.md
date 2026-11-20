@@ -1,9 +1,9 @@
 # Feria de Turismo 3D — ESRN RURAL Virtual
 
-Muestra virtual en 3D: seis puestos de trabajos, murales de los cursos, el
-video de la Feria de Laguna Blanca y un paseo con 9 salones de corredores turísticos,
-cada uno con las sedes que lo integran. Se recorre en primera persona, con ficha de
-cada puesto y foto para descargar.
+Muestra virtual en 3D: una **plaza central** con 9 pabellones alrededor, uno por
+corredor turístico, con las sedes y el material real de los estudiantes. En el centro
+hay un gazebo con el video de la Feria de Laguna Blanca y el cartel de la sede.
+Se recorre en primera persona y se puede descargar una foto.
 
 En cada salón, el material de los estudiantes se expone como en una galería: **un
 cuadro enmarcado por cada video, cada foto y cada texto**, con su etiqueta de sede.
@@ -17,16 +17,16 @@ con la imagen original en alta resolución (las infografías se leen desde la pa
 al hacer clic en una foto o en una ficha sí se abre su reproductor.
 
 La muestra se reorganizó como una **feria rural cálida**: paredes crema y adobe,
-madera, guirnaldas de colores y un paseo con arcos y plazitas arboladas en lugar del
-pasillo recto. Cada salón tiene su mostrador de feria, su banco y cartelería de madera;
-en el vestíbulo el escritorio se cambió por un puesto de inscripción. No se agregaron
-luces ni sombras nuevas: siguen 6 luces y un solo video reproduciéndose a la vez.
+madera y guirnaldas de colores. Se eliminaron por completo la antesala y el recorrido
+recto tipo pasillo de clínica, junto con los puestos, murales y afiches inventados
+(inscripción, gastronomía, artesanías, trekking, "Mapa de Rio Negro", "Fiesta de la
+Manzana", etc.) y sus 25 puntos de interés falsos. El arranque está directamente en
+la plaza: los 9 pabellones tienen el frente abierto y miran al centro, con mostrador,
+banco, cartelería de madera y **solo el material real** de `materiales.js`.
 
-Después de recorrerla con un agente se corrigió el ingreso: el puesto de inscripción
-se corrió a un lado y ahora se ve su cartel desde el arranque, con el carril central
-libre. La pantalla de Laguna Blanca y los cuadros de fotos crecieron, las plazitas
-tienen carteles con el nombre de cada corredor y el cartel del HUD ya identifica
-correctamente el paseo y cada salón.
+No se agregaron luces ni sombras nuevas: hay 2 luces cálidas en la plaza y un solo
+video reproduciéndose a la vez. Los videos están dentro de los pabellones y miran al
+visitante; las fotos caben enteras en la pared de 8 m y conservan su proporción real.
 
 Los salones se incorporaron por etapas para cuidar el rendimiento: primero la
 estructura, carteles y fichas; después los posters con el material. Fuente de los

@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Feria de Turismo - ESRN RURAL Virtual</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Feria de Turismo - ESRN RURAL Virtual · Plaza 9 pabellones</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:100%;height:100%;overflow:hidden;background:#2b1b12;font-family:"Segoe UI",Arial,sans-serif;color:#4a2f1c;touch-action:none}
@@ -131,11 +134,11 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
-       los estudiantes prepararon para la Feria de Laguna Blanca. Entrá caminando por el paseo;
-       si el equipo va lento, elegí <b>Calidad baja</b>.</p>
+       los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
+       Si el equipo va lento, elegí <b>Calidad baja</b>.</p>
     <div class="keys">
       <span><b>W A S D</b> caminar</span>
       <span><b>Mouse</b> mirar</span>
@@ -164,7 +167,7 @@
 
 <div id="hud">
   <div id="cross"></div>
-  <div id="zone">VESTÍBULO</div>
+  <div id="zone">PLAZA DE LA FERIA</div>
   <button id="snd" class="hbtn" title="Sonido ambiente">🔊</button>
   <div id="tools">
     <button id="btnFoto" class="hbtn" title="Tomar foto (F)">📷</button>
@@ -400,56 +403,30 @@ function lintel(x1,z1,x2,z2,y0){
   m.position.set((x1+x2)/2,(WALL_H+y0)/2,(z1+z2)/2);m.castShadow=true;m.receiveShadow=true;scene.add(m);
 }
 
-/* ---------------- plano: vestíbulo / salas / corredor / galería ---------------- */
-// vestíbulo x -9..9, z -6..6
-wall(-9,6,9,6);                       // sur
-wall(-9,-6,-3,-6); wall(3,-6,9,-6);   // norte (hueco corredor)
-wall(-9,-6,-9,-1); wall(-9,1,-9,6);   // oeste (puerta a sala oeste)
-wall(9,-6,9,-1);  wall(9,1,9,6);      // este (puerta a sala este)
-lintel(-9,-1,-9,1,2.3); lintel(9,-1,9,1,2.3);
-
-// sala oeste x -16..-9, z -3..3
-wall(-16,-3,-9,-3,wallMat2); wall(-16,3,-9,3,wallMat2); wall(-16,-3,-16,3,wallMat2);
-
-// sala este x 9..16, z -3..3
-wall(9,-3,16,-3,wallMat2); wall(9,3,16,3,wallMat2); wall(16,-3,16,3,wallMat2);
-
-// corredor x -3..3, z -18..-6
-wall(-3,-6,-3,-18); wall(3,-6,3,-18);
-
-// galería x -12..12, z -30..-18
-wall(-12,-18,-3,-18); wall(3,-18,12,-18);
-wall(-12,-18,-12,-30); wall(12,-18,12,-30);
-wall(-12,-30,-11.7,-30); wall(-9.3,-30,12,-30);
-lintel(-11.7,-30,-9.3,-30,2.3);
+/* ---------------- sin antesala: la escena empieza en la plaza ---------------- */
 
 /* ---------------- suelo / techo / exterior ---------------- */
 var fTex=floorTex();
-var floor=new THREE.Mesh(new THREE.PlaneGeometry(58,92),
+var floor=new THREE.Mesh(new THREE.PlaneGeometry(58,96),
   new THREE.MeshStandardMaterial({map:fTex,roughness:.42,metalness:.06,
     bumpMap:fTex,bumpScale:.012,envMapIntensity:.7}));
-floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-26);floor.receiveShadow=true;scene.add(floor);
+floor.rotation.x=-Math.PI/2;floor.position.set(0,0,-28);floor.receiveShadow=true;scene.add(floor);
 
 var grass=new THREE.Mesh(new THREE.PlaneGeometry(400,400),
   new THREE.MeshStandardMaterial({color:0x6f9b52,roughness:1}));
 grass.rotation.x=-Math.PI/2;grass.position.y=-0.05;grass.receiveShadow=true;scene.add(grass);
 
-var ceil=new THREE.Mesh(new THREE.PlaneGeometry(58,92),
+var ceil=new THREE.Mesh(new THREE.PlaneGeometry(58,96),
   new THREE.MeshStandardMaterial({color:0xe9dcc3,roughness:1,side:THREE.DoubleSide}));
-ceil.rotation.x=Math.PI/2;ceil.position.set(0,WALL_H,-26);scene.add(ceil);
+ceil.rotation.x=Math.PI/2;ceil.position.set(0,WALL_H,-28);scene.add(ceil);
 
 // lucernarios
-for(var i=-1;i<=1;i++){
-  var sky=new THREE.Mesh(new THREE.PlaneGeometry(6,3),
-    new THREE.MeshBasicMaterial({color:0xeaf7ff}));
-  sky.rotation.x=Math.PI/2;sky.position.set(i*7,WALL_H-0.03,-11);scene.add(sky);
-}
-
-// lucernarios del paseo de corredores
-[-38,-50,-62].forEach(function(z){
-  var sky2=new THREE.Mesh(new THREE.PlaneGeometry(2.4,2.2),
-    new THREE.MeshBasicMaterial({color:0xeaf7ff}));
-  sky2.rotation.x=Math.PI/2;sky2.position.set(-10,WALL_H-0.03,z);scene.add(sky2);
+[-42,-50,-58].forEach(function(z){
+  [-8,0,8].forEach(function(x){
+    var sky=new THREE.Mesh(new THREE.PlaneGeometry(4,2.6),
+      new THREE.MeshBasicMaterial({color:0xeaf7ff}));
+    sky.rotation.x=Math.PI/2;sky.position.set(x,WALL_H-0.03,z);scene.add(sky);
+  });
 });
 // ventanas (fachadas)
 var winTex=(function(){
@@ -471,11 +448,7 @@ function window_(x,y,z,ry,w,h){
   g.add(frame,pane,barV,barH);
   g.position.set(x,y,z);g.rotation.y=ry;scene.add(g);
 }
-for(i=0;i<3;i++){ window_(-6+i*6,2.1,5.86,Math.PI,3.4,1.7); }
-window_(-7,2.1,-29.86,0,3.6,1.7);
-window_(7,2.1,-29.86,0,3.6,1.7);
-window_(-15.86,2.1,0,Math.PI/2,3,1.7);
-window_(15.86,2.1,0,-Math.PI/2,3,1.7);
+
 
 /* ---------------- exterior: montañas, bosque, nubes ---------------- */
 var clouds=[];
@@ -738,22 +711,14 @@ function floorArrow(x,z,ry){
   m.position.set(x,.02,z);scene.add(m);
 }
 
-stand(4.2,3.4,0,'Inscripción','Plano y cronograma',100,null,
-  ['Puestos por corredor','Material y murales de los estudiantes','Videos en la pared']);
-column(-6,2);column(6,2);column(-6,-3.5);column(6,-3.5);
-plant(-7.6,5);plant(7.6,5);plant(-2.4,-5);plant(2.4,-5);
-banner(0,3.15,5.84,Math.PI,4.6,'FERIA DE TURISMO','ESRN RURAL Virtual');
-plaque(0,1.75,5.84,Math.PI,'Inscripcion','Plano y cronograma');
+banner(0,3.2,-64,0,6.0,'FERIA DE TURISMO','ESRN Rural Virtual · 9 corredores');
 
 // ambiente: luz cálida y flechas del recorrido
-lamp(0,0);lamp(-13,0);lamp(13,0);lamp(0,-12);lamp(0,-21);lamp(0,-26);
-floorArrow(0,2.5,0);floorArrow(0,-1.5,0);floorArrow(-6.5,0,Math.PI/2);floorArrow(6.5,0,-Math.PI/2);
-garland(0,3.3,-9,5.2,0);garland(0,3.3,-15,5.2,0);
-floorArrow(0,-8,0);floorArrow(0,-12.5,0);floorArrow(0,-16.5,0);floorArrow(0,-19.5,0);floorArrow(0,-25,0);
-floorArrow(-10,-31.5,0);floorArrow(-9.2,-27.6,-Math.PI/2);
+lamp(0,-50);lamp(0,-62);
+garland(0,3.42,-38,18,0);garland(0,3.42,-62,18,0);
 
 /* decorado: alfombras, banderines y señalética */
-function rug(x,z,w,d,c1,c2){
+function rug(x,z,w,d,c1,c2,ry){
   var c=document.createElement('canvas');c.width=c.height=256;var q=c.getContext('2d');
   q.fillStyle=c1;q.fillRect(0,0,256,256);
   q.strokeStyle=c2;q.lineWidth=14;q.strokeRect(12,12,232,232);
@@ -762,7 +727,9 @@ function rug(x,z,w,d,c1,c2){
   var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;
   var m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),
     new THREE.MeshStandardMaterial({map:t,roughness:1}));
-  m.rotation.x=-Math.PI/2;m.position.set(x,.015,z);m.receiveShadow=true;scene.add(m);
+  m.rotation.x=-Math.PI/2;m.receiveShadow=true;
+  var g=new THREE.Group();g.position.set(x,.015,z);g.rotation.y=ry||0;
+  g.add(m);scene.add(g);
 }
 function pennants(x,y,z,w,ry){
   var c=document.createElement('canvas');c.width=1024;c.height=160;var q=c.getContext('2d');
@@ -779,12 +746,7 @@ function pennants(x,y,z,w,ry){
     new THREE.MeshBasicMaterial({map:t,transparent:true,side:THREE.DoubleSide}));
   m.position.set(x,y,z);m.rotation.y=ry||0;scene.add(m);
 }
-rug(0,0,11,7.5,'#8a4b2a','#e9c46a');
-rug(0,-24,16,9,'#a8592f','#f0d38a');
-
-banner(0,3.15,-5.86,0,4.6,'BIENVENIDOS','Puestos, murales y video');
-pennants(0,3.45,4.2,15,0);
-pennants(0,3.45,-19.5,18,0);
+rug(0,-50,22,22,'#d9c7a6','#a8532b');
 
 /* ---------------- ambientación de turismo ---------------- */
 var spinners=[];
@@ -924,27 +886,12 @@ function surfboard(x,z,ry){
   addCollider(x,z,.6,.4,2.4);
 }
 
-signpost(6.9,4.1,Math.PI,['Bariloche','Viedma','El Bolsón','Sierra Grande']);
-globe(-6.9,4.1);
-luggage(-3.6,4.7,.35);
-luggage(7.2,2.4,-.4);
-brochures(-6.0,3.6,.3);
-surfboard(-15.4,2.2,Math.PI/2);
-surfboard(15.4,2.2,-Math.PI/2);
+
 
 
 /* ---------------- visitantes (NPCs) ---------------- */
 var npcs=[];
-var NPC_POOL=[
-  {p:[[0,5],[7,4.5],[7,-4.5],[0,-4.8],[-7,-4.5],[-7,4.5]],a:0xe76f51,b:0x2f3a4d},
-  {p:[[2,4.6],[6.5,3],[6.5,-2],[-2,-4.6],[-6.5,-2],[-6.5,3]],a:0x2a9d8f,b:0x3a2f26},
-  {p:[[-10.3,-2.4],[-10.3,2.4],[-11.3,2.4],[-11.3,-2.4]],a:0xe9c46a,b:0x37465c},
-  {p:[[10.3,-2.4],[10.3,2.4],[11.3,2.4],[11.3,-2.4]],a:0x9b5de5,b:0x2f3a4d},
-  {p:[[0,-19.2],[9,-19.5],[9,-28.8],[0,-28.5],[-9,-28.8],[-9,-19.5]],a:0xf4a261,b:0x3a2f26},
-  {p:[[2.2,-19.5],[8.5,-22],[8.5,-27],[2.2,-28],[0,-24],[0,-20]],a:0x06d6a0,b:0x37465c},
-  {p:[[-2.2,-19.5],[-8.5,-22],[-8.5,-27],[-2.2,-28],[0,-24.6],[0,-20.6]],a:0xef476f,b:0x2f3a4d},
-  {p:[[0,-7],[2,-7],[2,-17],[0,-17]],a:0x6ee7ff,b:0x3a2f26}
-];
+var NPC_POOL=[];
 function clearNPCs(){
   for(var i=0;i<npcs.length;i++)scene.remove(npcs[i].g);
   npcs=[];
@@ -977,7 +924,7 @@ function makeNPC(def){
 }
 function applyNPCs(){
   clearNPCs();
-  var n=CFG.quality===2?8:CFG.quality===1?5:0;
+  var n=0;
   for(var i=0;i<n;i++)makeNPC(NPC_POOL[i%NPC_POOL.length]);
 }
 function updateNPCs(dt,time){
@@ -994,30 +941,7 @@ function updateNPCs(dt,time){
   }
 }
 
-// puestos de las salas laterales
-plant(-14.5,2.2);plant(14.5,2.2);
-stand(-14.5,0,Math.PI/2,'Gastronomia tipica','Recetas y sabores de la region',101,1,
-  ['Trucha, cordero y frutas del valle','Recetas de la cocina rio-negrense','Recetario y degustacion en la mesa']);
-stand(14.5,0,-Math.PI/2,'Artesanias locales','Textiles y ceramica artesanal',102,2,
-  ['Tejidos mapuche y lana patagonica','Ceramica y madera de talleres locales','Piezas para probar y comprar']);
-bench(-12.6,2.3,0);bench(12.6,2.3,0);
 
-// pasillo
-bench(-2,-11,Math.PI/2);bench(2,-11,Math.PI/2);
-
-// salon principal
-bench(0,-24,0);
-stand(-4.5,-20.5,0,'Rutas de trekking','Senderos y paisajes',111,3,
-  ['Senderos graduados con mapa y duracion','Desnivel, duracion y puntos de descanso','Circuito Chico y Cerro Catedral']);
-stand(4.5,-20.5,0,'Turismo aventura','Kayak, cabalgata y ciclo',112,4,
-  ['Kayak, cabalgata y cicloturismo','Equipos, guias y seguros incluidos','Salidas para todos los niveles']);
-stand(-4.5,-26,0,'Alojamiento rural','Cabanas y camping',113,5,
-  ['Cabanas, camping y refugios','Servicios y comodidades para visitantes','Reservas, tarifas y temporada']);
-stand(4.5,-26,0,'Fauna patagonica','Huemul, condor y guanaco',114,6,
-  ['Huemul, condor y guanaco','Miradores y horarios de avistaje','Cuidado de las especies y del bosque']);
-plant(-11,-19.5);plant(11,-19.5);plant(-8.1,-28.5);plant(11,-28.5);
-banner(-7.5,3.1,-17.87,0,4.4,'SALON PRINCIPAL','Feria de Laguna Blanca');
-banner(2.6,2.3,-29.84,0,2.7,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
 
 /* ---------------- cuadros ---------------- */
 function painting(x,y,z,ry,seed,palette,scale){
@@ -1038,23 +962,7 @@ var P3=['#2b1055','#7597de','#ff9a9e','#fecfef','#ffffff'];
 var P4=['#3e2723','#6d4c41','#ffb300','#e53935','#fff59d'];
 var P5=['#000428','#004e92','#00d2ff','#f8ffae','#ffffff'];
 
-// murales y afiches de proyectos (turismo en Rio Negro)
-poster(-5.5,2.2,5.85,Math.PI,11,P1,1,'Mapa de Rio Negro','Circuitos y puntos de interes');
-poster(5.5,2.2,5.85,Math.PI,12,P4,1,'Como llegar','Rutas y transporte en la provincia');
-poster(-15.85,2.2,-2,Math.PI/2,13,P2,1,'Trucha y cordero','Gastronomia patagonica');
-poster(-12,2.2,-2.85,0,14,P3,1,'Fiesta de la Manzana','General Roca · cosecha');
-poster(15.85,2.2,-2,-Math.PI/2,15,P5,1,'Tejidos mapuche','Tradicion de la comunidad');
-poster(12,2.2,-2.85,0,16,P1,1,'Artesanias del sur','Madera, lana y ceramica');
-poster(-2.85,2.15,-9,Math.PI/2,17,P4,1,'Circuito Chico','Bariloche · 62 km');
-poster(2.85,2.15,-9,-Math.PI/2,18,P2,1,'Cerro Catedral','Esqui y trekking');
-poster(-2.85,2.15,-13.5,Math.PI/2,19,P3,1.25,'Viedma y el rio','Balnearios y faro');
-poster(2.85,2.15,-13.5,-Math.PI/2,20,P5,1.25,'Valle del Rio Negro','Frutas y cosecha');
-poster(-6,2.4,-29.85,0,21,P1,1.7,'Nahuel Huapi','Lagos y bosques andinos');
-poster(6,2.4,-29.85,0,22,P3,1.7,'Ruta 40','De la meseta a la cordillera');
-poster(-11.85,2.4,-24,Math.PI/2,23,P2,1.5,'El Bolson','Feria artesanal y cervecerias');
-poster(11.85,2.4,-24,-Math.PI/2,24,P4,1.5,'Sierra Grande','Playas y castillo');
-poster(-11.85,2.4,-20,Math.PI/2,25,P5,1.3,'Leyendas mapuche','Historias del Nahuel Huapi');
-poster(11.85,2.4,-20,-Math.PI/2,26,P1,1.3,'Pesca deportiva','Rios Limay y Negro');
+
 
 /* =========================================================================
    ALA DE CORREDORES TURÍSTICOS — ETAPA 1 (estructura liviana)
@@ -1235,7 +1143,9 @@ function counter(x,z,ry){
     b.position.set(o,1.0,0);b.castShadow=true;g.add(b);
   });
   g.position.set(x,0,z);g.rotation.y=ry||0;scene.add(g);
-  addCollider(x,z,2.4,.75,.82);
+  var cw=Math.abs(Math.cos(ry||0))*2.4+Math.abs(Math.sin(ry||0))*.75;
+  var cd=Math.abs(Math.sin(ry||0))*2.4+Math.abs(Math.cos(ry||0))*.75;
+  addCollider(x,z,cw,cd,.82);
 }
 function wallConPuertas(x,zN,zS,centros){
   var cur=zN,cs=centros.slice().sort(function(a,b){return b-a;}),i,hi,lo;
@@ -1247,61 +1157,64 @@ function wallConPuertas(x,zN,zS,centros){
   }
   if(cur>zS+.01)wall(x,cur,x,zS);
 }
+/* 9 pabellones alrededor de una plaza: frente abierto, sin pasillo */
+function pt(s,lx,lz){
+  var ca=Math.cos(s.ang), sa=Math.sin(s.ang);
+  return {x:s.cx+lx*ca+lz*sa, z:s.cz-lx*sa+lz*ca};
+}
+function rot(s,r){return r+s.ang;}
+var UBIC=[
+  {x:-9,z:-70,a:0}, {x:0,z:-70,a:0}, {x:9,z:-70,a:0},
+  {x:-9,z:-30,a:Math.PI}, {x:0,z:-30,a:Math.PI},
+  {x:-19,z:-56,a:Math.PI/2}, {x:-19,z:-44,a:Math.PI/2},
+  {x:19,z:-56,a:-Math.PI/2}, {x:19,z:-44,a:-Math.PI/2}
+];
 for(var ci=0;ci<CORREDORES.length;ci++){
-  var cr=CORREDORES[ci],oeste=ci<5,k=oeste?ci:ci-5;
-  var zN=-30-8*k,zS=zN-8,zc=zN-4;
-  SALAS.push({c:cr,west:oeste,x1:oeste?-26:-8,x2:oeste?-12:6,zN:zN,zS:zS,zc:zc});
+  var L=UBIC[ci], cr=CORREDORES[ci], W=8, D=6;
+  var A=pt({cx:L.x,cz:L.z,ang:L.a},-W/2,-D/2);
+  var B=pt({cx:L.x,cz:L.z,ang:L.a}, W/2,-D/2);
+  var C=pt({cx:L.x,cz:L.z,ang:L.a},-W/2, D/2);
+  var E=pt({cx:L.x,cz:L.z,ang:L.a}, W/2, D/2);
+  wall(A.x,A.z,B.x,B.z); wall(A.x,A.z,C.x,C.z); wall(B.x,B.z,E.x,E.z);
+  SALAS.push({c:cr,cx:L.x,cz:L.z,ang:L.a,W:W,D:D});
 }
-// muros del ala nueva
-wall(-26,-30,-26,-70); wall(6,-30,6,-62);
-wall(-26,-30,-12,-30);
-for(var si=0;si<SALAS.length;si++){
-  var sl=SALAS[si];
-  wall(sl.x1,sl.zS,sl.x2,sl.zS);
-}
-wallConPuertas(-12,-30,-70,SALAS.filter(function(S){return S.west;}).map(function(S){return S.zc;}));
-wallConPuertas(-8,-30,-70,SALAS.filter(function(S){return !S.west;}).map(function(S){return S.zc;}));
-wall(-12,-70,-8,-70);
-banner(-10,3.2,-30.16,Math.PI,7.2,'PASEO DE LOS CORREDORES','ESRN Rural Virtual · Feria de Turismo');
-/* el paseo deja de ser un pasillo: arcos de madera, guirnaldas y plazitas */
-SALAS.forEach(function(S){
-  arch(-12,S.zc); arch(-8,S.zc);
-  garland(-10,3.42,S.zc,3.7,0);
-  plaque(-11.72,2.55,S.zc,Math.PI/2,'CORREDOR '+S.c.n,S.c.nombre.toUpperCase());
-  plaque(-8.28,2.55,S.zc,-Math.PI/2,'CORREDOR '+S.c.n,S.c.nombre.toUpperCase());
+/* gazebo central con el video oficial y dos luces cálidas */
+[[-2.6,-2.6],[2.6,-2.6],[-2.6,2.6],[2.6,2.6]].forEach(function(p){
+  var post=new THREE.Mesh(new THREE.BoxGeometry(.16,3.8,.16),
+    new THREE.MeshStandardMaterial({color:0x7a4b2a,roughness:.75}));
+  post.position.set(p[0],1.9,-50+p[1]);scene.add(post);
 });
-[-38,-46,-54,-62].forEach(function(z){
-  plant(-11.5,z); plant(-8.5,z);
-  box(3.9,.14,.2,-10,WALL_H-.12,z,woodMat,false);
-  var lado=z<=-54?'Corredores 6 a 9':'Corredores 1 a 5';
-  banner(-11.72,2.65,z,Math.PI/2,3.0,'PASEO DE LOS CORREDORES',lado);
-  banner(-8.28,2.65,z,-Math.PI/2,3.0,'PASEO DE LOS CORREDORES',lado);
-});
-floorArrow(-10,-43,0);floorArrow(-10,-59,0);
+var techo=new THREE.Mesh(new THREE.BoxGeometry(6,.18,6),
+  new THREE.MeshStandardMaterial({color:0xb76838,roughness:.8}));
+techo.position.set(0,3.85,-50);scene.add(techo);
+garland(0,3.4,-47.3,5.6,0); garland(0,3.4,-52.7,5.6,0);
+banner(-2.45,2.05,-47.1,0,2.2,'SEDE LAGUNA BLANCA','ESRN Rural Virtual');
 
-// contenido de cada salón
-for(si=0;si<SALAS.length;si++){
-  sl=SALAS[si]; cr=sl.c;
-  var centroX=(sl.x1+sl.x2)/2;
-  rug(centroX,sl.zc,8.2,5.2,'#d9c7a6',cr.color);
-  warmLamp(centroX,sl.zc);
-  garland(centroX,2.98,sl.zN-.2,5.5,0);
-  counter(centroX,sl.zN-1.4,0);
-  bench(centroX+3.4,sl.zc,0);
-  var paredEx=sl.west?sl.x1:sl.x2, rySal=sl.west?Math.PI/2:-Math.PI/2;
-  banner(paredEx+(sl.west?.16:-.16),3.05,sl.zc,rySal,5.2,'CORREDOR '+cr.n,cr.nombre.toUpperCase());
+// contenido de cada pabellón
+for(var si=0;si<SALAS.length;si++){
+  var sl=SALAS[si], cr=sl.c;
+  var ctr=pt(sl,0,0), W=sl.W, D=sl.D;
+  var q=pt(sl,0,D/2-1.4), qb=pt(sl,0,-D/2+.14), qf=pt(sl,0,D/2-.2);
+  rug(ctr.x,ctr.z,W-1,D-1,'#d9c7a6',cr.color,sl.ang);
+  warmLamp(ctr.x,ctr.z);
+  garland(qf.x,2.98,qf.z,5.5,sl.ang);
+  counter(q.x,q.z,rot(sl,0));
+  q=pt(sl,W/2-1.2,0); bench(q.x,q.z,rot(sl,0));
+  q=pt(sl,-W/2+.16,0);
+  banner(q.x,3.05,q.z,rot(sl,Math.PI/2),5.2,'CORREDOR '+cr.n,cr.nombre.toUpperCase());
   var nombresSede=cr.sedes.map(function(sd){return sd.nombre;}), lineasSede=[];
   for(var jSede=0;jSede<nombresSede.length;jSede+=3){
     lineasSede.push(nombresSede.slice(jSede,jSede+3).join(' · '));
   }
   var panelSedes=new THREE.Mesh(new THREE.PlaneGeometry(3.1,1.05),
     new THREE.MeshStandardMaterial({map:fichaTex('Sedes del corredor','Corredor '+cr.n+' · '+cr.sedes.length+' sedes',lineasSede),roughness:.9}));
-  panelSedes.position.set(centroX,3.32,sl.zS+.14);scene.add(panelSedes);
+  panelSedes.position.set(qb.x,3.32,qb.z);panelSedes.rotation.y=rot(sl,0);scene.add(panelSedes);
   for(jSede=0;jSede<cr.sedes.length;jSede++){
     var sede=cr.sedes[jSede],dxSede=(jSede-(cr.sedes.length-1)/2)*1.48;
-    plaque(centroX+dxSede,1.45,sl.zN-.14,Math.PI,'SEDE '+sede.num,sede.nombre);
+    q=pt(sl,dxSede,D/2-.14);
+    plaque(q.x,1.45,q.z,rot(sl,0),'SEDE '+sede.num,sede.nombre);
   }
-  POI_EXTRA.push({x:centroX,z:sl.zc,tag:'CORREDOR '+cr.n,t:cr.nombre,d:cr.corto,full:textoCorredor(cr)});
+  POI_EXTRA.push({x:ctr.x,z:ctr.z,tag:'CORREDOR '+cr.n,t:cr.nombre,d:cr.corto,full:textoCorredor(cr)});
 
   /* --- material de los estudiantes --- */
   var conMat=cr.sedes.filter(function(sd){return !!MAT[String(sd.num)];});
@@ -1320,12 +1233,12 @@ for(si=0;si<SALAS.length;si++){
       var hV=1.45, gapV=0.18;
       var wsV=vids.map(function(g){return Math.min(2.6,hV*(g.it.videoAspect||g.it.aspect||1.6));});
       var totV=wsV.reduce(function(a,b){return a+b;},0)+gapV*(vids.length-1);
-      var scV=Math.min(1,7.4/totV), xV=paredEx+(sl.west?.25:-.25);
-      var cursorV=sl.zc-totV*scV/2;
+      var scV=Math.min(1,(D-.6)/totV), cursorV=-totV*scV/2;
       vids.forEach(function(g,j){
         var wj=wsV[j]*scV;
-        EXPO_SLOTS.push({file:'',id:'',cx:xV,cy:1.18,cz:cursorV+wj/2,
-          ry:rySal,w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
+        q=pt(sl,-W/2+.25,cursorV+wj/2);
+        EXPO_SLOTS.push({file:'',id:'',cx:q.x,cy:1.18,cz:q.z,
+          ry:rot(sl,Math.PI/2),w:wj,h:hV*scV,poster:g.it.wall||g.mm.poster,
           videoSrc:g.it.src,kindVideo:true,
           label:'SEDE '+g.sd.num+' · '+g.it.title.slice(0,32),
           media:g.mm.items,itemIndex:g.idx,full:g.mm.texto,sede:g.mm.sede,
@@ -1335,7 +1248,7 @@ for(si=0;si<SALAS.length;si++){
     }
     /* fotos y fichas: cuadros grandes, con la proporcion real de cada imagen */
     var gal=fotos.concat(textos), rows=gal.length>9?2:1;
-    var cols=Math.ceil(gal.length/rows), gapG=0.18, zGal=sl.zS+.22;
+    var cols=Math.ceil(gal.length/rows), gapG=0.18, zGal=-D/2+.22;
     var hG=rows>1?1.05:1.7;
     for(var row=0;row<rows;row++){
       var linea=gal.slice(row*cols,(row+1)*cols);
@@ -1343,10 +1256,11 @@ for(si=0;si<SALAS.length;si++){
         return Math.min(2.6,hG*((g.it&&(g.it.aspect||g.it.videoAspect))||1.6));
       });
       var tot=anchos.reduce(function(a,b){return a+b;},0)+gapG*(linea.length-1);
-      var sc=Math.min(1,13.2/tot), hh=hG*sc, x=centroX-tot*sc/2;
+      var sc=Math.min(1,(W-.6)/tot), hh=hG*sc, x=-tot*sc/2;
       var y=rows>1?2.0-row*(hh+0.30):1.15;
       linea.forEach(function(g,j){
-        var base={file:'',id:'',cx:x+anchos[j]*sc/2,cy:y,cz:zGal,ry:0,
+        q=pt(sl,x+anchos[j]*sc/2,zGal);
+        var base={file:'',id:'',cx:q.x,cy:y,cz:q.z,ry:rot(sl,0),
           w:anchos[j]*sc,h:hh,media:g.mm.items,itemIndex:g.idx,
           full:g.mm.texto,sede:g.mm.sede,proyecto:g.mm.proyecto,cor:cr.n};
         if(g.it){
@@ -1361,7 +1275,8 @@ for(si=0;si<SALAS.length;si++){
         x+=anchos[j]*sc+gapG*sc;
       });
     }
-    POI_EXTRA.push({x:paredEx+(sl.west?1.15:-1.15),z:sl.zc,
+    q=pt(sl,-W/2+1.15,0);
+    POI_EXTRA.push({x:q.x,z:q.z,
       tag:'EXPO · CORREDOR '+cr.n,t:'Material de los estudiantes',
       d:conMat.length+' sedes · videos en la pared, fotos y fichas',
       full:conMat.map(function(sd){
@@ -1369,11 +1284,10 @@ for(si=0;si<SALAS.length;si++){
         return 'SEDE '+sd.num+' · '+mm.sede+'\n'+mm.proyecto+'\n'+mm.texto;
       }).join('\n\n')});
   }
-
 }
 /* ---------------- videos embebidos en las paredes (Google Drive) ---------------- */
 var SCREENS=[
- {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:0, cy:2.15, cz:-29.79, ry:0, w:1.98, h:3.5, label:'Feria de Laguna Blanca'}
+ {file:'video_galeria.mp4', id:'1pICFLbgWk_Xpe80XHaS8wOCcJgaZZYAH', cx:0, cy:1.85, cz:-47.35, ry:0, w:1.98, h:3.5, label:'Feria de Laguna Blanca'}
 ].concat(EXPO_SLOTS);
 var screensWrap=document.getElementById('screens');
 function cornersOf(s){
@@ -1705,33 +1619,9 @@ function updateScreens(){
 
 /* ---------------- puntos de interés ---------------- */
 var POI=[
- {x:0,z:3.6,tag:'Punto',t:'Inscripcion',d:'Punto de partida: recibí el plano y el cronograma de la feria.'},
- {x:-5.5,z:5.4,tag:'Afiche',t:'Mapa de Rio Negro',d:'Circuitos, ciudades y parques nacionales de la provincia.'},
- {x:5.5,z:5.4,tag:'Afiche',t:'Como llegar',d:'Rutas, micros y aeropuertos para llegar a Rio Negro.'},
- {x:-14.5,z:0,tag:'Puesto',t:'Gastronomia tipica',d:'Mesa de recetas y sabores de la region para probar y preguntar.'},
- {x:-15.4,z:-2,tag:'Afiche',t:'Trucha y cordero',d:'Sabores patagonicos: trucha, cordero y frutas del valle.'},
- {x:-12,z:-2.7,tag:'Afiche',t:'Fiesta de la Manzana',d:'General Roca celebra la cosecha de frutas en verano.'},
- {x:14.5,z:0,tag:'Puesto',t:'Artesanias locales',d:'Textiles y ceramica hechos por talleres de la zona.'},
- {x:15.4,z:-2,tag:'Afiche',t:'Tejidos mapuche',d:'Tradicion textil de las comunidades de la zona.'},
- {x:12,z:-2.7,tag:'Afiche',t:'Artesanias del sur',d:'Madera, lana y ceramica de talleres rio-negrenses.'},
- {x:0,z:-9,tag:'Pasillo',t:'Pasillo de proyectos',d:'Murales sobre el turismo en Rio Negro: circuitos, naturaleza y cultura.'},
- {x:-2.6,z:-9,tag:'Mural',t:'Circuito Chico',d:'El clasico recorrido de 62 km alrededor de Bariloche.'},
- {x:2.6,z:-9,tag:'Mural',t:'Cerro Catedral',d:'Uno de los centros de esqui mas grandes de America del Sur.'},
- {x:-2.6,z:-13.5,tag:'Mural',t:'Viedma y el rio',d:'Balnearios, faro y las playas del rio Negro.'},
- {x:2.6,z:-13.5,tag:'Mural',t:'Valle del Rio Negro',d:'Fruticultura, cosecha y pueblos del valle.'},
- {x:0,z:-17,tag:'Sector',t:'Salon principal',d:'Aca estan los cuatro puestos y el video de la Feria de Laguna Blanca.'},
- {x:-4.5,z:-20.5,tag:'Puesto',t:'Rutas de trekking',d:'Senderos graduados con mapa, desnivel y duracion.'},
- {x:4.5,z:-20.5,tag:'Puesto',t:'Turismo aventura',d:'Kayak, cabalgata y ciclo turistico: equipos y seguros.'},
- {x:-4.5,z:-26,tag:'Puesto',t:'Alojamiento rural',d:'Cabanas, camping y servicios para visitantes.'},
- {x:4.5,z:-26,tag:'Puesto',t:'Fauna patagonica',d:'Huemul, condor y guanaco: especies que se pueden avistar.'},
- {x:-6,z:-28.5,tag:'Afiche',t:'Nahuel Huapi',d:'Parque Nacional: lagos, bosques y senderos del circuito.'},
- {x:6,z:-28.5,tag:'Afiche',t:'Ruta 40',d:'De la meseta patagonica a la cordillera, atravesando Rio Negro.'},
- {x:-11,z:-24,tag:'Afiche',t:'El Bolson',d:'Feria artesanal, cervecerias y Cerro Piltriquitron.'},
- {x:11,z:-24,tag:'Afiche',t:'Sierra Grande',d:'Playas del oceano Atlantico y el castillo de los Patos.'},
- {x:-11,z:-20,tag:'Afiche',t:'Leyendas mapuche',d:'Historias y tradiciones del lago Nahuel Huapi.'},
- {x:11,z:-20,tag:'Afiche',t:'Pesca deportiva',d:'Rios Limay y Negro: trucha y salmon.'},
- {x:2.6,z:-28.8,tag:'Sede',t:'Sede Laguna Blanca',d:'El video de al lado muestra la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual.'},
- {x:0,z:-28.2,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apunta la mirada a la pantalla y haz clic para reproducirlo con sonido.'}
+  {x:0,z:-42,tag:'Plaza',t:'Plaza de la feria',d:'Elegí a qué pabellón acercarte: los 9 corredores están alrededor de la plaza.'},
+  {x:0,z:-44.5,tag:'Video',t:'Feria de Laguna Blanca',d:'Video de la Feria de Laguna Blanca, una de las sedes de la ESRN Rural Virtual. Apuntá la mirada a la pantalla y hacé clic para reproducirlo con sonido.'},
+  {x:-2.45,z:-46.5,tag:'Sede',t:'Sede Laguna Blanca',d:'Una de las sedes de la ESRN Rural Virtual: el cartel del gazebo y el video muestran la Feria de Laguna Blanca.'}
 ];
 
 POI=POI.concat(POI_EXTRA);
@@ -1740,9 +1630,9 @@ POI=POI.concat(POI_EXTRA);
 var dust=(function(){
   var n=120,pos=new Float32Array(n*3),R=rnd32(31),i;
   for(i=0;i<n;i++){
-    pos[i*3]=(R()-.5)*22;
+    pos[i*3]=(R()-.5)*44;
     pos[i*3+1]=.4+R()*3.3;
-    pos[i*3+2]=6-R()*36;
+    pos[i*3+2]=-35-R()*34;
   }
   var g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.BufferAttribute(pos,3));
@@ -1752,7 +1642,7 @@ var dust=(function(){
 })();
 
 /* ---------------- colisión y movimiento ---------------- */
-var PX=0,PZ=5,PY=1.65,YAW=0,PITCH=0,VY=0,BOB=0,R=.34;
+var PX=0,PZ=-39,PY=1.65,YAW=0,PITCH=0,VY=0,BOB=0,R=.34;
 function blocked(x,z){
   for(var i=0;i<colliders.length;i++){
     var c=colliders[i];
@@ -1915,17 +1805,14 @@ sndBtn.addEventListener('click',function(e){
 });
 
 function zoneName(x,z){
-  if(z>-6.5)return (x<-9.2||x>9.2)?(x<0?'PUESTO GASTRONOMIA':'PUESTO ARTESANIAS'):'INFORMACION';
-  if(z>-17.5)return 'PASILLO DE PROYECTOS';
-  if(z<-30){
-    if(x>-12&&x<-8)return 'PASEO DE LOS CORREDORES';
-    for(var i=0;i<SALAS.length;i++){
-      var s=SALAS[i];
-      if(x>=s.x1&&x<=s.x2&&z<=s.zN&&z>=s.zS)
-        return 'CORREDOR '+s.c.n+' · '+s.c.nombre.toUpperCase();
-    }
+  for(var i=0;i<SALAS.length;i++){
+    var s=SALAS[i], dx=x-s.cx, dz=z-s.cz;
+    var ca=Math.cos(s.ang), sa=Math.sin(s.ang);
+    var lx=dx*ca-dz*sa, lz=dx*sa+dz*ca;
+    if(Math.abs(lx)<=s.W/2&&Math.abs(lz)<=s.D/2)
+      return 'CORREDOR '+s.c.n+' · '+s.c.nombre.toUpperCase();
   }
-  return 'GALERIA PRINCIPAL · LAGUNA BLANCA';
+  return 'PLAZA DE LA FERIA';
 }
 function nearPOI(){
   var best=null,bd=1.8;
@@ -1937,20 +1824,7 @@ function nearPOI(){
 }
 
 /* ---------------- fichas y foto ---------------- */
-var STANDS=[
- {n:1,t:'Gastronomia tipica',x:-14.5,z:0,dx:2.8,dz:0,
-  lines:['Trucha, cordero y frutas del valle','Recetas de la cocina rio-negrense','Recetario y degustacion en la mesa']},
- {n:2,t:'Artesanias locales',x:14.5,z:0,dx:-2.8,dz:0,
-  lines:['Tejidos mapuche y lana patagonica','Ceramica y madera de talleres locales','Piezas para probar y comprar']},
- {n:3,t:'Rutas de trekking',x:-4.5,z:-20.5,dx:0,dz:2.9,
-  lines:['Senderos graduados con mapa y duracion','Desnivel y puntos de descanso','Circuito Chico y Cerro Catedral']},
- {n:4,t:'Turismo aventura',x:4.5,z:-20.5,dx:0,dz:2.9,
-  lines:['Kayak, cabalgata y cicloturismo','Equipos, guias y seguros incluidos','Salidas para todos los niveles']},
- {n:5,t:'Alojamiento rural',x:-4.5,z:-26,dx:0,dz:2.9,
-  lines:['Cabanas, camping y refugios','Servicios y comodidades para visitantes','Reservas, tarifas y temporada']},
- {n:6,t:'Fauna patagonica',x:4.5,z:-26,dx:0,dz:2.9,
-  lines:['Huemul, condor y guanaco','Miradores y horarios de avistaje','Cuidado de las especies y del bosque']}
-];
+var STANDS=[];
 var modalEl=document.getElementById('modal'),mbox=document.getElementById('mbox'),
     toastBox=document.getElementById('toast'),promptEl=document.getElementById('prompt');
 function openModal(html){
