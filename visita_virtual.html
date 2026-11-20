@@ -152,7 +152,7 @@
 
 <div id="overlay">
   <div id="card">
-    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v22</div>
+    <div id="badge">ESRN RURAL VIRTUAL · FERIA 2026 · PLAZA 9 PABELLONES · v23</div>
     <h1>FERIA DE TURISMO<small>Río Negro · Rutas, sabores y voces de la escuela rural</small></h1>
     <p class="sub">Recorré los 9 corredores turísticos y descubrí los trabajos, fotos y videos que
        los estudiantes prepararon para la Feria de Laguna Blanca. Entrás directo a la plaza central: elegí a qué pabellón acercarte.
@@ -202,7 +202,7 @@
 <div id="screens"></div>
 
 <script>
-window.BUILD='plaza-lote16-20261120';
+window.BUILD='plaza-lote17-20261120';
 window.av=function(u){
   if(!u||/^https?:\/\//i.test(u)||/[?&]v=/.test(u))return u;
   return u+(u.indexOf('?')>=0?'&':'?')+'v='+encodeURIComponent(window.BUILD);
@@ -1036,10 +1036,10 @@ function makeSheepFollower(){
         acts[name]=npc.mixer.clipAction(clip);
       });
       npc.acts=acts;
-      var idle=acts.idle||acts.walk||acts[Object.keys(acts)[0]];
+      var idle=acts.idle||acts.graze||acts.walk||acts[Object.keys(acts)[0]];
       var walk=acts.walk||idle;
-      if(idle){idle.play(); idle.setEffectiveWeight(1);}
-      if(walk&&walk!==idle){walk.play(); walk.setEffectiveWeight(0);}
+      if(idle){idle.enabled=true; idle.setEffectiveWeight(1); idle.play();}
+      if(walk&&walk!==idle){walk.enabled=true; walk.setEffectiveWeight(0); walk.play();}
       npc.acts.idleA=idle; npc.acts.walkA=walk;
     }
   },undefined,function(){ /* falla de carga: se mantiene el contenedor vacío */ });
@@ -1073,8 +1073,15 @@ function updateNPCs(dt,time){
         // mezclar animaciones riggeadas (caminar/reposo)
         if(moving!==n.moving){
           n.moving=moving;
-          var from=moving?n.acts.idleA:n.acts.walkA, to=moving?n.acts.walkA:n.acts.idleA;
-          if(to!==from){to.reset();to.play();to.crossFadeFrom(from,0.25,true);} 
+          if(moving){ n.acts.walkA.enabled=true; n.acts.walkA.play(); }
+          else { n.acts.idleA.enabled=true; n.acts.idleA.play(); }
+        }
+        if(moving){
+          n.acts.walkA.setEffectiveWeight(1); n.acts.walkA.setEffectiveTimeScale(1);
+          n.acts.idleA.setEffectiveWeight(0);
+        }else{
+          n.acts.idleA.setEffectiveWeight(1); n.acts.idleA.setEffectiveTimeScale(1);
+          n.acts.walkA.setEffectiveWeight(0);
         }
         // animación controla el cuerpo; sin bob/rotación procedural extra
         n.g.rotation.x=0; n.g.rotation.z=0;
